@@ -13,7 +13,7 @@
   --radius-md: 0.5rem;
 }
 
-:root { color-scheme: light; --mineral: #f7f8f5; --ink: #0b2528; --teal: #B22222; --mint: #f3e3e8; --coral: #FFA07A; --sun: #FFA07A; --paper: #f1ede4; --line: rgba(11,37,40,.16); --muted: #5e6d6c; }
+:root { color-scheme: light; --mineral: #f7f8f5; --ink: #0b2528; --teal: #B22222; --mint: #f7f8f5; --coral: #FFA07A; --sun: #FFA07A; --paper: #f1ede4; --line: rgba(11,37,40,.16); --muted: #5e6d6c; }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; background: var(--mineral); }
 body { margin: 0; background: var(--mineral); color: var(--ink); font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.55; }
