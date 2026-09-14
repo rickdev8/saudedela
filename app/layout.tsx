@@ -1,10 +1,9 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { DM_Sans, Newsreader } from 'next/font/google'
+import { DM_Sans } from 'next/font/google'
 import './globals.css'
 
 const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-dm-sans' })
-const newsreader = Newsreader({ subsets: ['latin'], variable: '--font-newsreader' })
 
 export const metadata: Metadata = {
   title: 'SaúdeDela — Saúde feminina baseada em evidências',
@@ -20,7 +19,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pt-BR" className="bg-background">
-      <body className={`${dmSans.variable} ${newsreader.variable} antialiased`}>
+      <body className={`${dmSans.variable} antialiased`}>
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
