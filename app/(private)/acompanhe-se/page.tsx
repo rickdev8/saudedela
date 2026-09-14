@@ -1,5 +1,9 @@
+"use client"
+
 import Link from "next/link";
-import { AppSidebar } from "@/components/app-sidebar";
+import { AppSidebar } from "@/app/(private)/sidebar/app-sidebar";
+import { useAuth } from "@/app/context/auth";
+
 
 const symptoms = ["Cólicas", "Cansaço", "Inchaço"];
 const history = [
@@ -42,15 +46,17 @@ function PulseMark() {
 }
 
 export default function AcompanheSePage() {
+  const { logout } = useAuth()
+
   return (
     <main className="tracking-page">
       <AppSidebar active="/acompanhe-se" />
       <div className="tracking-main">
         <header className="tracking-header">
           <span className="mobile-page-title">Meu acompanhamento</span>
-          <Link className="login-link" href="/entrar">
+          <button onClick={logout} className="login-link">
             Sair
-          </Link>
+          </button>
         </header>
 
         <section className="tracking-hero section-wrap">

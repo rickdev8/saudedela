@@ -2,8 +2,9 @@
 "use client";
 
 import Link from "next/link";
-import { AppSidebar } from "@/components/app-sidebar";
+import { AppSidebar } from "@/app/(private)/sidebar/app-sidebar";
 import { useState } from "react";
+import { useAuth } from "@/app/context/auth";
 
 export default function AssistentePage() {
   const [message, setMessage] = useState("");
@@ -30,6 +31,8 @@ export default function AssistentePage() {
     setMessage(suggestion);
   };
 
+  const { logout } = useAuth()
+
   return (
     <main className="tracking-page">
       <AppSidebar active="/assistente" />
@@ -38,9 +41,9 @@ export default function AssistentePage() {
         <header className="tracking-header">
           <span className="mobile-page-title">Assistente</span>
 
-          <Link className="login-link" href="/entrar">
+          <button onClick={logout} className="login-link">
             Sair
-          </Link>
+          </button>
         </header>
 
         <section className="assistant-page section-wrap">
