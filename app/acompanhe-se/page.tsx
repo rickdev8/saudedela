@@ -69,9 +69,6 @@ export default function AcompanheSePage() {
             <i>◒</i>Gráficos
           </a>
           <Link className="sidebar-link" href="/ciclo"><i>◷</i>Meu ciclo</Link>
-          <a className="sidebar-link active" href="#registro"><i>＋</i>Registro diário</a>
-          <a className="sidebar-link" href="/historico"><i>≡</i>Histórico</a>
-          <a className="sidebar-link" href="/graficos"><i>◒</i>Gráficos</a>
 
           <span className="sidebar-label">SaúdeDela</span>
           <Link className="sidebar-link" href="/dados">
