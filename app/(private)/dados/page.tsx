@@ -1,0 +1,70 @@
+"use client";
+
+import Link from "next/link";
+import { AppSidebar } from "@/app/(private)/sidebar/app-sidebar";
+import { useAuth } from "@/app/context/auth";
+
+export default function DadosPage() {
+    const { logout } = useAuth()
+
+  return (
+    <main className="tracking-page">
+      <AppSidebar active="/dados" />
+      <div className="tracking-main">
+        <header className="tracking-header">
+          <span className="mobile-page-title">Dados públicos</span>
+          <button onClick={logout} className="login-link">
+            Sair
+          </button>
+        </header>
+        <section className="content-page section-wrap">
+          <p className="tracking-context">SaúdeDela</p>
+          <h1>
+            Informação que
+            <br />
+            <em>faz diferença.</em>
+          </h1>
+          <p className="tracking-lead">
+            Explore dados públicos sobre saúde feminina no Brasil, apresentados
+            com contexto e fontes para que você possa fazer perguntas melhores.
+          </p>
+          <div className="public-stat-grid">
+            <article>
+              <span>01</span>
+              <strong>42,8%</strong>
+              <p>das consultas na atenção básica em 2024 foram de mulheres.</p>
+              <small>Fonte: SISAB, 2024</small>
+            </article>
+            <article>
+              <span>02</span>
+              <strong>8,4 mi</strong>
+              <p>atendimentos relacionados à saúde da mulher registrados.</p>
+              <small>Fonte: DATASUS, 2023</small>
+            </article>
+            <article>
+              <span>03</span>
+              <strong>+18%</strong>
+              <p>crescimento de acompanhamentos preventivos no período.</p>
+              <small>Fonte: Ministério da Saúde</small>
+            </article>
+          </div>
+          <div className="source-panel">
+            <div>
+              <span className="card-index">Nossas fontes</span>
+              <h2>
+                Transparência antes
+                <br />
+                <em>de tudo.</em>
+              </h2>
+            </div>
+            <p>
+              Os dados são públicos e podem mudar conforme novas atualizações
+              oficiais. Consulte a fonte original para conhecer a metodologia
+              completa.
+            </p>
+          </div>
+        </section>
+      </div>
+    </main>
+  );
+}

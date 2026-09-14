@@ -362,7 +362,7 @@ export default function Page({ pulseMarkIcon }: AssistantHomeSectionProps) {
           </div>
         </div>
         <div className="footer-bottom">
-          <span>© 2024 SaúdeDela</span>
+          <span>© 2026 SaúdeDela</span>
           <span>Informação não substitui orientação médica.</span>
         </div>
       </footer>

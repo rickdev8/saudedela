@@ -70,13 +70,14 @@ export default function EntrarPage() {
       })
   
       const result = await response.json()
+      console.log(result)
   
       if (!response.ok) {
         setApiError(result.error ?? "E-mail ou senha incorretos")
         return
       }
   
-      router.push("/dados") // ou a rota inicial logada que fizer sentido
+      router.push("/acompanhe-se") 
     } catch {
       setApiError("Não foi possível conectar ao servidor")
     } finally {
