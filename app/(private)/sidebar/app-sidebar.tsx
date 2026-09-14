@@ -23,10 +23,8 @@ export function AppSidebar({ active }: { active: string }) {
   return (
     <aside className="tracking-sidebar">
       <Link className="brand sidebar-brand" href="/">
-        <span className="pulse-mark">◌</span>
-        <span>
-          Saúde<span>Dela</span>
-        </span>
+        <img src="/saudedela_fundo_claro.png" />
+       
       </Link>
       <div className="sidebar-user">
         <span className="avatar">{user?.name.charAt(0).toUpperCase()}</span>
