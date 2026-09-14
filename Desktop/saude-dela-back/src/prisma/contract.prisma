@@ -1,0 +1,77 @@
+// use prisma-next
+
+types {
+  Embedding1536 = pgvector.Vector(1536)
+}
+// ---------- Autenticação ----------
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt temporal.updatedAtString()
+
+  symptomEntries SymptomEntry[]
+
+  @@map("users")
+}
+
+// ---------- Tracker de ciclo/sintomas ----------
+
+enum FlowLevel {
+  @@type("pg/text@1")
+  None   = "none"
+  Light  = "light"
+  Medium = "medium"
+  Heavy  = "heavy"
+}
+
+model SymptomEntry {
+  id       String   @id @default(uuid())
+  userId   String
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  date      DateTime
+  mood      String?
+  flow      FlowLevel?
+  symptoms  String[]
+  notes     String?
+
+  createdAt DateTime @default(now())
+
+  @@index([userId, date])
+  @@map("symptom_entries")
+}
+
+// ---------- Base de conhecimento (RAG do chatbot) ----------
+
+model KnowledgeChunk {
+  id        String          @id @default(uuid())
+  source    String
+  title     String
+  url       String?
+  content   String
+  embedding Embedding1536?
+
+  createdAt DateTime @default(now())
+
+  @@map("knowledge_chunks")
+}
+
+// ---------- Dados públicos agregados (dashboard) ----------
+
+model HealthStatistic {
+  id            String    @id @default(uuid())
+  source        String
+  indicator     String
+  label         String
+  value         Float
+  unit          String?
+  referenceDate DateTime?
+
+  createdAt DateTime @default(now())
+
+  @@map("health_statistics")
+}
