@@ -19,6 +19,7 @@ export default function AcompanheSePage() {
         <div className="sidebar-user"><span className="avatar">M</span><div><strong>Olá, Marina</strong><small>Seu espaço pessoal</small></div></div>
         <nav className="sidebar-nav" aria-label="Navegação principal">
           <span className="sidebar-label">Acompanhe-se</span>
+          <Link className="sidebar-link" href="/ciclo"><i>◷</i>Meu ciclo</Link>
           <a className="sidebar-link active" href="#registro"><i>＋</i>Registro diário</a>
           <a className="sidebar-link" href="/historico"><i>≡</i>Histórico</a>
           <a className="sidebar-link" href="/graficos"><i>◒</i>Gráficos</a>
