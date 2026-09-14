@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { AppSidebar } from "@/components/app-sidebar"
 import { useMemo, useState } from "react"
 
 const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
@@ -22,18 +23,7 @@ export default function CicloPage() {
   const moveMonth = (direction: number) => setMonth(current => Math.min(11, Math.max(0, current + direction)))
 
   return <main className="tracking-page cycle-page">
-    <aside className="tracking-sidebar">
-      <Link className="brand sidebar-brand" href="/"><PulseMark /><span>Saúde<span>Dela</span></span></Link>
-      <div className="sidebar-user"><span className="avatar">M</span><div><strong>Olá, Marina</strong><small>Seu espaço pessoal</small></div></div>
-      <nav className="sidebar-nav" aria-label="Navegação principal">
-        <span className="sidebar-label">Acompanhe-se</span>
-        <Link className="sidebar-link active" href="/ciclo"><i>◷</i>Meu ciclo</Link>
-        <Link className="sidebar-link" href="/acompanhe-se"><i>＋</i>Registro diário</Link>
-        <Link className="sidebar-link" href="/historico"><i>≡</i>Histórico</Link>
-        <Link className="sidebar-link" href="/graficos"><i>◒</i>Gráficos</Link>
-        <span className="sidebar-label">SaúdeDela</span><Link className="sidebar-link" href="/dados"><i>◌</i>Dados públicos</Link><Link className="sidebar-link" href="/assistente"><i>?</i>Assistente</Link>
-      </nav><div className="sidebar-bottom"><Link href="/">Voltar para início</Link><Link href="/entrar">Sair da conta</Link></div>
-    </aside>
+    <AppSidebar active="/ciclo" />
     <div className="tracking-main"><header className="tracking-header"><span className="mobile-page-title">Meu ciclo</span><Link className="login-link" href="/entrar">Sair</Link></header>
       <section className="content-page section-wrap cycle-content">
         <div className="cycle-hero"><div><p className="tracking-context">Seu calendário pessoal</p><h1>Conhecer o seu<br /><em>ritmo.</em></h1><p className="tracking-lead">Marque os dias em que você geralmente menstrua. Assim, você começa a visualizar seu padrão de um jeito simples e sem julgamentos.</p></div><div className="cycle-status"><span>Seu padrão registrado</span><strong>{selected.length} dias</strong><small>por ciclo, em média</small></div></div>

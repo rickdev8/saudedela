@@ -2,6 +2,7 @@
 "use client";
 
 import Link from "next/link";
+import { AppSidebar } from "@/components/app-sidebar";
 import { useState } from "react";
 
 export default function AssistentePage() {
@@ -31,60 +32,7 @@ export default function AssistentePage() {
 
   return (
     <main className="tracking-page">
-      <aside className="tracking-sidebar">
-        <Link className="brand sidebar-brand" href="/">
-          <span className="pulse-mark">◌</span>
-
-          <span>
-            Saúde<span>Dela</span>
-          </span>
-        </Link>
-
-        <div className="sidebar-user">
-          <span className="avatar">M</span>
-
-          <div>
-            <strong>Olá, Marina</strong>
-            <small>Seu espaço pessoal</small>
-          </div>
-        </div>
-
-        <nav className="sidebar-nav">
-          <span className="sidebar-label">Acompanhe-se</span>
-
-          <Link className="sidebar-link" href="/acompanhe-se">
-            <i>＋</i>
-            Registro diário
-          </Link>
-
-          <Link className="sidebar-link" href="/historico">
-            <i>≡</i>
-            Histórico
-          </Link>
-
-          <Link className="sidebar-link" href="/graficos">
-            <i>◒</i>
-            Gráficos
-          </Link>
-
-          <span className="sidebar-label">SaúdeDela</span>
-
-          <Link className="sidebar-link" href="/dados">
-            <i>◌</i>
-            Dados públicos
-          </Link>
-
-          <Link className="sidebar-link active" href="/assistente">
-            <i>?</i>
-            Assistente
-          </Link>
-        </nav>
-
-        <div className="sidebar-bottom">
-          <Link href="/">Voltar para início</Link>
-          <Link href="/entrar">Sair da conta</Link>
-        </div>
-      </aside>
+      <AppSidebar active="/assistente" />
 
       <div className="tracking-main">
         <header className="tracking-header">
