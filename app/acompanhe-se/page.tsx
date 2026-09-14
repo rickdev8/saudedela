@@ -59,6 +59,7 @@ export default function AcompanheSePage() {
         </div>
         <nav className="sidebar-nav" aria-label="Navegação principal">
           <span className="sidebar-label">Acompanhe-se</span>
+<<<<<<< HEAD
           <a className="sidebar-link active" href="#registro">
             <i>＋</i>Registro diário
           </a>
@@ -68,6 +69,12 @@ export default function AcompanheSePage() {
           <a className="sidebar-link" href="/graficos">
             <i>◒</i>Gráficos
           </a>
+=======
+          <Link className="sidebar-link" href="/ciclo"><i>◷</i>Meu ciclo</Link>
+          <a className="sidebar-link active" href="#registro"><i>＋</i>Registro diário</a>
+          <a className="sidebar-link" href="/historico"><i>≡</i>Histórico</a>
+          <a className="sidebar-link" href="/graficos"><i>◒</i>Gráficos</a>
+>>>>>>> 426b9ce50a2f138443237cf6afc939efcd4ec373
           <span className="sidebar-label">SaúdeDela</span>
           <Link className="sidebar-link" href="/dados">
             <i>◌</i>Dados públicos
