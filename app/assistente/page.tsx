@@ -33,61 +33,6 @@ export default function AssistentePage() {
   return (
     <main className="tracking-page">
       <AppSidebar active="/assistente" />
-      {/* menu compartilhado acima */}
-      <div hidden>
-        <Link className="brand sidebar-brand" href="/">
-          <span className="pulse-mark">◌</span>
-
-          <span>
-            Saúde<span>Dela</span>
-          </span>
-        </Link>
-
-        <div className="sidebar-user">
-          <span className="avatar">M</span>
-
-          <div>
-            <strong>Olá, Marina</strong>
-            <small>Seu espaço pessoal</small>
-          </div>
-        </div>
-
-        <nav className="sidebar-nav">
-          <span className="sidebar-label">Acompanhe-se</span>
-
-          <Link className="sidebar-link" href="/acompanhe-se">
-            <i>＋</i>
-            Registro diário
-          </Link>
-
-          <Link className="sidebar-link" href="/historico">
-            <i>≡</i>
-            Histórico
-          </Link>
-
-          <Link className="sidebar-link" href="/graficos">
-            <i>◒</i>
-            Gráficos
-          </Link>
-
-          <span className="sidebar-label">SaúdeDela</span>
-
-          <Link className="sidebar-link" href="/dados">
-            <i>◌</i>
-            Dados públicos
-          </Link>
-
-          <Link className="sidebar-link active" href="/assistente">
-            <i>?</i>
-            Assistente
-          </Link>
-        </nav>
-
-        <div className="sidebar-bottom">
-          <Link href="/">Voltar para início</Link>
-          <Link href="/entrar">Sair da conta</Link>
-        </div>
-      </aside></div>
 
       <div className="tracking-main">
         <header className="tracking-header">
