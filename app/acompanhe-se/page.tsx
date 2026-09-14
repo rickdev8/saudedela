@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AppSidebar } from "@/components/app-sidebar";
 
 const symptoms = ["Cólicas", "Cansaço", "Inchaço"];
 const history = [
@@ -43,46 +44,7 @@ function PulseMark() {
 export default function AcompanheSePage() {
   return (
     <main className="tracking-page">
-      <aside className="tracking-sidebar">
-        <Link className="brand sidebar-brand" href="/">
-          <PulseMark />
-          <span>
-            Saúde<span>Dela</span>
-          </span>
-        </Link>
-        <div className="sidebar-user">
-          <span className="avatar">M</span>
-          <div>
-            <strong>Olá, Marina</strong>
-            <small>Seu espaço pessoal</small>
-          </div>
-        </div>
-        <nav className="sidebar-nav" aria-label="Navegação principal">
-          <span className="sidebar-label">Acompanhe-se</span>
-          <a className="sidebar-link active" href="#registro">
-            <i>＋</i>Registro diário
-          </a>
-          <a className="sidebar-link" href="/historico">
-            <i>≡</i>Histórico
-          </a>
-          <a className="sidebar-link" href="/graficos">
-            <i>◒</i>Gráficos
-          </a>
-          <Link className="sidebar-link" href="/ciclo"><i>◷</i>Meu ciclo</Link>
-
-          <span className="sidebar-label">SaúdeDela</span>
-          <Link className="sidebar-link" href="/dados">
-            <i>◌</i>Dados públicos
-          </Link>
-          <Link className="sidebar-link" href="/assistente">
-            <i>?</i>Assistente
-          </Link>
-        </nav>
-        <div className="sidebar-bottom">
-          <Link href="/">Voltar para início</Link>
-          <Link href="/entrar">Sair da conta</Link>
-        </div>
-      </aside>
+      <AppSidebar active="/acompanhe-se" />
       <div className="tracking-main">
         <header className="tracking-header">
           <span className="mobile-page-title">Meu acompanhamento</span>

@@ -2,6 +2,7 @@
 "use client";
 
 import Link from "next/link";
+import { AppSidebar } from "@/components/app-sidebar";
 import { useState } from "react";
 
 export default function AssistentePage() {
@@ -31,7 +32,9 @@ export default function AssistentePage() {
 
   return (
     <main className="tracking-page">
-      <aside className="tracking-sidebar">
+      <AppSidebar active="/assistente" />
+      {/* menu compartilhado acima */}
+      <div hidden>
         <Link className="brand sidebar-brand" href="/">
           <span className="pulse-mark">◌</span>
 
@@ -84,7 +87,7 @@ export default function AssistentePage() {
           <Link href="/">Voltar para início</Link>
           <Link href="/entrar">Sair da conta</Link>
         </div>
-      </aside>
+      </aside></div>
 
       <div className="tracking-main">
         <header className="tracking-header">
