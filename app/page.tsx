@@ -130,7 +130,7 @@ export default function Page({ pulseMarkIcon }: AssistantHomeSectionProps) {
             com profissionais e tomar decisões com mais clareza.
           </p>
           <div className="hero-actions">
-            <a className="button-primary" href="#dados">
+            <a className="button-primary" href="/dados">
               Explorar os dados
             </a>
             <a className="text-link" href="#assistente">
@@ -350,7 +350,7 @@ export default function Page({ pulseMarkIcon }: AssistantHomeSectionProps) {
         <div className="footer-links">
           <div>
             <span>Explorar</span>
-            <a href="#dados">Dados públicos</a>
+            <a href="/dados">Dados públicos</a>
             <a href="#assistente">Assistente</a>
             <a href="/acompanhe-se">Acompanhe-se</a>
           </div>
