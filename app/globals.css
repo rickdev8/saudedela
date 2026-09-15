@@ -1468,8 +1468,16 @@ select:focus-visible {
   }
   .cycle-page .calendar-grid .day,
   .cycle-page .calendar-grid span {
-    min-height: 38px;
+    min-height: 20px;
   }
+
+  .cycle-page .calendar-grid .day{
+    display: flex;
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 50% !important;
+  }
+
   .cycle-page .weekdays {
     margin-top: 28px;
     font-size: 9px;
@@ -1699,7 +1707,7 @@ select:focus-visible {
 .cycle-page .calendar-grid .day {
   display: grid;
   place-items: center;
-  min-height: 42px;
+  min-height: 42px ;
   border: 1px solid transparent;
   background: transparent;
   color: var(--ink);
@@ -1713,6 +1721,8 @@ select:focus-visible {
 .cycle-page .calendar-grid .day.selected {
   border-color: var(--coral);
   background: var(--coral);
+  min-height: 42px;
+  width: 52px !important;
   color: var(--ink);
   font-weight: 700;
 }
@@ -2087,10 +2097,12 @@ select:focus-visible {
     gap: 3px;
     margin-top: 20px;
   }
+
+
   .cycle-page .calendar-grid .day,
   .cycle-page .calendar-grid span {
     min-width: 0;
-    min-height: 40px;
+    min-height: 30px;
   }
   .cycle-page .calendar-legend {
     display: flex;
@@ -2388,8 +2400,8 @@ select:focus-visible {
     }
     .cycle-page .calendar-grid .day,
     .cycle-page .calendar-grid span {
-      min-width: 0;
-      min-height: 40px;
+      min-width: 30px !important;
+      min-height: 30px !important;
     }
     .cycle-page .calendar-legend {
       display: flex;
@@ -2571,7 +2583,7 @@ select:focus-visible {
     background: var(--mint);
   }
 }
-======= .cycle-page .calendar-grid {
+.cycle-page .calendar-grid {
   min-width: 0;
   overflow: hidden;
 }
@@ -4141,7 +4153,7 @@ select:focus-visible {
     background: var(--mint);
   }
 }
->>>>>>>2bd3a464306b38d69a769062dd2c95b4de1ab930 .button-primary,
+.button-primary,
 .download-button,
 .save-button,
 .auth-submit,
