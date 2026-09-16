@@ -2,63 +2,79 @@
 
 import Link from "next/link";
 import { AppSidebar } from "@/app/(private)/sidebar/app-sidebar";
-import { useMemo, useState } from "react";
+import { use, useState } from "react";
 import { useAuth } from "@/app/context/auth";
+import { useRouter } from "next/navigation";
+import { Loader } from "@/components/ui/loaders/loader-main";
 
-const monthNames = [
-  "Janeiro",
-  "Fevereiro",
-  "Março",
-  "Abril",
-  "Maio",
-  "Junho",
-  "Julho",
-  "Agosto",
-  "Setembro",
-  "Outubro",
-  "Novembro",
-  "Dezembro",
-];
 const weekDays = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
 
-function PulseMark() {
-  return (
-    <span className="pulse-mark" aria-hidden="true">
-      <i />
-      <i />
-      <i />
-    </span>
-  );
-}
+const date = new Date();
+
+const dayQuantity = new Date(
+  date.getFullYear(),
+  date.getMonth() + 1,
+  0,
+).getDate();
+
+const days = Array.from({ length: dayQuantity }, (_, index) => index + 1);
 
 export default function CicloPage() {
-  const { logout } = useAuth()
+  const { logout, user } = useAuth();
+  const router = useRouter();
 
-  const [month, setMonth] = useState(8);
   const [selected, setSelected] = useState<number[]>([3, 4, 5, 6, 7]);
-  const [saved, setSaved] = useState(false);
-  const [duration, setDuration] = useState("5 dias");
+  const [duration, setDuration] = useState(3);
   const [regularity, setRegularity] = useState("Regular");
-  const year = 2024;
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const firstDay = new Date(year, month, 1).getDay();
-  const days = useMemo(
-    () =>
-      Array.from({ length: firstDay + daysInMonth }, (_, i) =>
-        i < firstDay ? null : i - firstDay + 1,
-      ),
-    [firstDay, daysInMonth],
-  );
+  const [isSaving, setIsSaving] = useState(false);
+  const [apiError, setApiError] = useState<string | null>(null);
+
   const toggleDay = (day: number) => {
-    setSaved(false);
+    setApiError(null);
     setSelected((current) =>
       current.includes(day)
         ? current.filter((item) => item !== day)
         : [...current, day].sort((a, b) => a - b),
     );
   };
-  const moveMonth = (direction: number) =>
-    setMonth((current) => Math.min(11, Math.max(0, current + direction)));
+
+  const handleSubmit = async () => {
+    if (selected.length === 0) {
+      setApiError("Selecione ao menos um dia do seu ciclo");
+      return;
+    }
+
+    setApiError(null);
+    setIsSaving(true);
+
+    try {
+      const response = await fetch("/api/ciclo", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: user?.id,
+          durationDays: duration,
+          daysSelected: selected,
+          flow: regularity,
+        }),
+      });
+      console.log(user)
+      const result = await response.json();
+
+      if (!response.ok) {
+        setApiError(result.error ?? "Não foi possível salvar seu padrão");
+        return;
+      }
+
+      router.push("/acompanhe-se");
+    } catch {
+      setApiError("Não foi possível conectar ao servidor");
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   return (
     <main className="tracking-page cycle-page">
@@ -105,20 +121,6 @@ export default function CicloPage() {
                     <em>começar?</em>
                   </h2>
                 </div>
-                <div className="month-controls">
-                  <button
-                    onClick={() => moveMonth(-1)}
-                    aria-label="Mês anterior"
-                  >
-                    ←
-                  </button>
-                  <strong>
-                    {monthNames[month]} {year}
-                  </strong>
-                  <button onClick={() => moveMonth(1)} aria-label="Próximo mês">
-                    →
-                  </button>
-                </div>
               </div>
               <div className="calendar-grid weekdays">
                 {weekDays.map((day) => (
@@ -126,22 +128,17 @@ export default function CicloPage() {
                 ))}
               </div>
               <div className="calendar-grid">
-                {days.map((day, index) =>
-                  day ? (
-                    <button
-                      key={index}
-                      className={
-                        selected.includes(day) ? "day selected" : "day"
-                      }
-                      onClick={() => toggleDay(day)}
-                      aria-pressed={selected.includes(day)}
-                    >
-                      {day}
-                    </button>
-                  ) : (
-                    <span key={index} />
-                  ),
-                )}
+                {days.map((day) => (
+                  <button
+                    key={day}
+                    type="button"
+                    className={selected.includes(day) ? "day selected" : "day"}
+                    onClick={() => toggleDay(day)}
+                    aria-pressed={selected.includes(day)}
+                  >
+                    {day}
+                  </button>
+                ))}
               </div>
               <div className="calendar-legend">
                 <span>
@@ -164,13 +161,18 @@ export default function CicloPage() {
                   Duração média da menstruação
                   <select
                     value={duration}
-                    onChange={(event) => setDuration(event.target.value)}
+                    onChange={(event) =>
+                      setDuration(Number(event.target.value))
+                    }
                   >
-                    <option>3 dias</option>
-                    <option>4 dias</option>
-                    <option>5 dias</option>
-                    <option>6 dias</option>
-                    <option>7 dias</option>
+                    <option value={3}>3 dias</option>
+                    <option value={4}>4 dias</option>
+                    <option value={5}>5 dias</option>
+                    <option value={6}>6 dias</option>
+                    <option value={7}>7 dias</option>
+                    <option value={8}>8 dias</option>
+                    <option value={9}>9 dias</option>
+                    <option value={10}>10 dias</option>
                   </select>
                 </label>
                 <label>
@@ -185,11 +187,15 @@ export default function CicloPage() {
                     <option>Não sei dizer</option>
                   </select>
                 </label>
+
+                {apiError && <p className="chat-error">{apiError}</p>}
+
                 <button
                   className="button-primary save-cycle"
-                  onClick={() => setSaved(true)}
+                  onClick={handleSubmit}
+                  disabled={isSaving}
                 >
-                  {saved ? "Ciclo atualizado" : "Salvar meu padrão"}
+                  {isSaving ? <Loader /> : "Salvar meu padrão"}
                 </button>
               </section>
               <section className="cycle-note">

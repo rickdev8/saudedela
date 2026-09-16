@@ -70,7 +70,6 @@ export default function EntrarPage() {
       })
   
       const result = await response.json()
-      console.log(result)
   
       if (!response.ok) {
         setApiError(result.error ?? "E-mail ou senha incorretos")
