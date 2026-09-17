@@ -51,6 +51,7 @@ function PulseMark() {
 
 export default function AcompanheSePage() {
   const { logout } = useAuth()
+  const today = new Date()
   const [flow, setFlow] = useState("Moderado")
   const [mood, setMood] = useState("Normal")
   const [painIntensity, setPainIntensity] = useState("Nenhuma")
@@ -140,7 +141,9 @@ export default function AcompanheSePage() {
                 <span className="card-index">01</span>
                 <h2>Como você está hoje?</h2>
               </div>
-              <span className="date-label">Hoje, 18 jun</span>
+              <span className="date-label">
+                Hoje, {today.getDate()} de {today.toLocaleDateString("pt-BR", { month: "long" })}
+              </span>
             </div>
             <div className="field-group">
               <label>Fluxo menstrual</label>
