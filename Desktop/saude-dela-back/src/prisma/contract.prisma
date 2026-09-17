@@ -36,8 +36,11 @@ model SymptomEntry {
   date      DateTime
   mood      String?
   flow      FlowLevel?
-  symptoms  String[]
-  notes     String?
+  symptoms       String[]
+  painIntensity  String?
+  energy         String?
+  sleep          String?
+  notes          String?
 
   createdAt DateTime @default(now())
 
