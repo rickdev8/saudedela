@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { AppSidebar } from "@/app/(private)/sidebar/app-sidebar";
 import { useAuth } from "@/app/context/auth";
-import { useState } from "react";
+import { useState, type KeyboardEvent } from "react";
 
 const symptoms = ["Cólicas", "Cansaço", "Inchaço"];
 const history = [
@@ -50,6 +50,8 @@ export default function AcompanheSePage() {
   const [flow, setFlow] = useState("Moderado")
   const [mood, setMood] = useState("Normal")
   const [selectedSymptoms, setSelectedSymptoms] = useState(["Cólicas", "Cansaço", "Inchaço"])
+  const [customSymptom, setCustomSymptom] = useState("")
+  const [isAddingSymptom, setIsAddingSymptom] = useState(false)
   const [saved, setSaved] = useState(false)
 
   function toggleSymptom(item: string) {
@@ -59,6 +61,22 @@ export default function AcompanheSePage() {
 
   function saveEntry() {
     setSaved(true)
+  }
+
+  function addCustomSymptom() {
+    const symptom = customSymptom.trim()
+    if (!symptom) return
+    setSelectedSymptoms((current) => current.includes(symptom) ? current : [...current, symptom])
+    setCustomSymptom("")
+    setIsAddingSymptom(false)
+    setSaved(false)
+  }
+
+  function handleCustomSymptomKeyDown(event: KeyboardEvent<HTMLInputElement>) {
+    if (event.key === "Enter" && !event.nativeEvent.isComposing && event.keyCode !== 229) {
+      event.preventDefault()
+      addCustomSymptom()
+    }
   }
 
   return (
@@ -149,7 +167,27 @@ export default function AcompanheSePage() {
                     <span>×</span>
                   </button>
                 ))}
-                <button className="symptom">+ Outro sintoma</button>
+                {selectedSymptoms.filter((item) => !symptoms.includes(item)).map((item) => (
+                  <button className="symptom selected" onClick={() => toggleSymptom(item)} key={item}>
+                    {item}<span>×</span>
+                  </button>
+                ))}
+                {isAddingSymptom ? (
+                  <div className="custom-symptom-field">
+                    <input
+                      autoFocus
+                      aria-label="Digite outro sintoma"
+                      value={customSymptom}
+                      onChange={(event) => setCustomSymptom(event.target.value)}
+                      onKeyDown={handleCustomSymptomKeyDown}
+                      placeholder="Digite um sintoma"
+                    />
+                    <button type="button" onClick={addCustomSymptom}>Adicionar</button>
+                    <button type="button" className="cancel-custom-symptom" onClick={() => { setIsAddingSymptom(false); setCustomSymptom("") }}>Cancelar</button>
+                  </div>
+                ) : (
+                  <button className="symptom add-symptom" type="button" onClick={() => setIsAddingSymptom(true)}>+ Outro sintoma</button>
+                )}
               </div>
             </div>
             <div className="save-row">
