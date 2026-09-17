@@ -21,7 +21,7 @@ export function AuthProvider({ children }: { children: ReactNode }): ReactNode {
 
   async function fetchUser() {
     try {
-      const response = await fetch("/api/auth/acompanhe-se")
+      const response = await fetch("/api/acompanhe-se")
 
       if (!response.ok) {
         setUser(null)
