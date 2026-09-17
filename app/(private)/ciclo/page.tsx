@@ -22,7 +22,7 @@ const days = Array.from({ length: dayQuantity }, (_, index) => index + 1);
 export default function CicloPage() {
   const { logout, user } = useAuth();
   const router = useRouter();
-
+  const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<number[]>([3, 4, 5, 6, 7]);
   const [duration, setDuration] = useState(3);
   const [regularity, setRegularity] = useState("Regular");
@@ -38,43 +38,44 @@ export default function CicloPage() {
     );
   };
 
-  const handleSubmit = async () => {
-    if (selected.length === 0) {
-      setApiError("Selecione ao menos um dia do seu ciclo");
-      return;
-    }
-
+  async function handleSubmit() {
     setApiError(null);
     setIsSaving(true);
+    setLoading(true);
+
+    const startedAt = Date.now();
 
     try {
-      const response = await fetch("/api/ciclo", {
+      const response = await fetch("/api/acompanhe-se", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          id: user?.id,
           durationDays: duration,
           daysSelected: selected,
-          flow: regularity,
+          regularity: regularity,
         }),
       });
-      console.log(user)
+
       const result = await response.json();
 
       if (!response.ok) {
-        setApiError(result.error ?? "Não foi possível salvar seu padrão");
+        setApiError(result.error ?? "Não foi possível salvar seu registro");
         return;
       }
-
-      router.push("/acompanhe-se");
     } catch {
       setApiError("Não foi possível conectar ao servidor");
     } finally {
+      const elapsed = Date.now() - startedAt;
+      const remaining = 5000 - elapsed;
+
+      if (remaining > 0) {
+        await new Promise((resolve) => setTimeout(resolve, remaining));
+      }
+
       setIsSaving(false);
+      setLoading(false);
     }
-  };
+  }
 
   return (
     <main className="tracking-page cycle-page">
@@ -187,15 +188,12 @@ export default function CicloPage() {
                     <option>Não sei dizer</option>
                   </select>
                 </label>
-
-                {apiError && <p className="chat-error">{apiError}</p>}
-
                 <button
                   className="button-primary save-cycle"
                   onClick={handleSubmit}
                   disabled={isSaving}
                 >
-                  {isSaving ? <Loader /> : "Salvar meu padrão"}
+                  {loading ? <Loader /> : "Salvar meu padrão"}
                 </button>
               </section>
               <section className="cycle-note">
