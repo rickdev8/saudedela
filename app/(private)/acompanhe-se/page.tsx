@@ -1,9 +1,10 @@
-"use client"
+"use client";
 
 import Link from "next/link";
 import { AppSidebar } from "@/app/(private)/sidebar/app-sidebar";
 import { useAuth } from "@/app/context/auth";
 import { useState, type KeyboardEvent } from "react";
+import { Loader } from "@/components/ui/loaders/loader-main";
 
 const symptoms = ["Cólicas", "Cansaço", "Inchaço", "Dor de cabeça", "Sensibilidade nos seios", "Náusea", "Dor lombar", "Acne", "Alteração de apetite", "Alteração do sono"]
 const flowOptions = ["Sem fluxo", "Leve", "Moderado", "Intenso"]
@@ -49,6 +50,8 @@ function PulseMark() {
   );
 }
 
+const MIN_LOADING_TIME = 3000;
+
 export default function AcompanheSePage() {
   const { logout } = useAuth()
   const today = new Date()
@@ -67,8 +70,12 @@ export default function AcompanheSePage() {
   const [apiError, setApiError] = useState("")
 
   function toggleSymptom(item: string) {
-    setSelectedSymptoms((current) => current.includes(item) ? current.filter((symptom) => symptom !== item) : [...current, item])
-    setSaved(false)
+    setSelectedSymptoms((current) =>
+      current.includes(item)
+        ? current.filter((symptom) => symptom !== item)
+        : [...current, item],
+    );
+    setSaved(false);
   }
 
   async function saveEntry() {
@@ -87,18 +94,24 @@ export default function AcompanheSePage() {
   }
 
   function addCustomSymptom() {
-    const symptom = customSymptom.trim()
-    if (!symptom) return
-    setSelectedSymptoms((current) => current.includes(symptom) ? current : [...current, symptom])
-    setCustomSymptom("")
-    setIsAddingSymptom(false)
-    setSaved(false)
+    const symptom = customSymptom.trim();
+    if (!symptom) return;
+    setSelectedSymptoms((current) =>
+      current.includes(symptom) ? current : [...current, symptom],
+    );
+    setCustomSymptom("");
+    setIsAddingSymptom(false);
+    setSaved(false);
   }
 
   function handleCustomSymptomKeyDown(event: KeyboardEvent<HTMLInputElement>) {
-    if (event.key === "Enter" && !event.nativeEvent.isComposing && event.keyCode !== 229) {
-      event.preventDefault()
-      addCustomSymptom()
+    if (
+      event.key === "Enter" &&
+      !event.nativeEvent.isComposing &&
+      event.keyCode !== 229
+    ) {
+      event.preventDefault();
+      addCustomSymptom();
     }
   }
 
@@ -148,17 +161,18 @@ export default function AcompanheSePage() {
             <div className="field-group">
               <label>Fluxo menstrual</label>
               <div className="choice-row">
-                {["Sem fluxo", "Leve", "Moderado", "Intenso"].map(
-                  (item, index) => (
-                    <button
-                      className={flow === item ? "choice selected" : "choice"}
-                      onClick={() => { setFlow(item); setSaved(false) }}
-                      key={item}
-                    >
-                      {item}
-                    </button>
-                  ),
-                )}
+                {["Sem fluxo", "Leve", "Moderado", "Intenso"].map((item) => (
+                  <button
+                    className={flow === item ? "choice selected" : "choice"}
+                    onClick={() => {
+                      setFlow(item);
+                      setSaved(false);
+                    }}
+                    key={item}
+                  >
+                    {item}
+                  </button>
+                ))}
               </div>
             </div>
             <div className="field-group">
@@ -174,7 +188,10 @@ export default function AcompanheSePage() {
                 ].map((item, index) => (
                   <button
                     className={mood === item ? "mood selected" : "mood"}
-                    onClick={() => { setMood(item); setSaved(false) }}
+                    onClick={() => {
+                      setMood(item);
+                      setSaved(false);
+                    }}
                     key={item}
                   >
                     <i className={`mood-dot mood-${index}`} />
@@ -208,11 +225,28 @@ export default function AcompanheSePage() {
                       onKeyDown={handleCustomSymptomKeyDown}
                       placeholder="Digite um sintoma"
                     />
-                    <button type="button" onClick={addCustomSymptom}>Adicionar</button>
-                    <button type="button" className="cancel-custom-symptom" onClick={() => { setIsAddingSymptom(false); setCustomSymptom("") }}>Cancelar</button>
+                    <button type="button" onClick={addCustomSymptom}>
+                      Adicionar
+                    </button>
+                    <button
+                      type="button"
+                      className="cancel-custom-symptom"
+                      onClick={() => {
+                        setIsAddingSymptom(false);
+                        setCustomSymptom("");
+                      }}
+                    >
+                      Cancelar
+                    </button>
                   </div>
                 ) : (
-                  <button className="symptom add-symptom" type="button" onClick={() => setIsAddingSymptom(true)}>+ Outro sintoma</button>
+                  <button
+                    className="symptom add-symptom"
+                    type="button"
+                    onClick={() => setIsAddingSymptom(true)}
+                  >
+                    + Outro sintoma
+                  </button>
                 )}
               </div>
             </div>
@@ -271,7 +305,10 @@ export default function AcompanheSePage() {
               <button className="period-button" onClick={() => setSaved(false)}>
                 Junho 2024 <span>⌄</span>
               </button>
-              <button className="download-button" onClick={() => window.print()}>
+              <button
+                className="download-button"
+                onClick={() => window.print()}
+              >
                 Baixar relatório em PDF
               </button>
             </div>

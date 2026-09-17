@@ -1,16 +1,19 @@
-import { NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 import { cookies } from "next/headers"
 
-export async function GET() {
+export async function POST(req: NextRequest) {
   const cookieStore = await cookies()
+  const body = await req.json()
   const token = cookieStore.get("token")?.value
 
   if (!token) {
     return NextResponse.json({ user: null }, { status: 401 })
   }
 
-  const response = await fetch(`${process.env.BACKEND_URL}/acompanhe-se`, {
-    headers: { Authorization: `Bearer ${token}` },
+  const response = await fetch(`${process.env.BACKEND_URL}/acompanhe-se/post`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+    body: JSON.stringify(body),
   })
 
   if (!response.ok) {
