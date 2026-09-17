@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { AppSidebar } from "@/app/(private)/sidebar/app-sidebar";
 import { useAuth } from "@/app/context/auth";
 import { useState, type KeyboardEvent } from "react";
@@ -339,7 +338,7 @@ export default function AcompanheSePage() {
 
         <footer className="tracking-footer section-wrap">
           <span>Seus registros são privados e pertencem a você.</span>
-          <span>SaúdeDela · 2024</span>
+          <span>SaúdeDela · 2026</span>
         </footer>
       </div>
     </main>
