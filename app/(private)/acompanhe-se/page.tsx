@@ -6,7 +6,11 @@ import { useAuth } from "@/app/context/auth";
 import { useState, type KeyboardEvent } from "react";
 import { Loader } from "@/components/ui/loaders/loader-main";
 
-const symptoms = ["Cólicas", "Cansaço", "Inchaço"];
+const symptoms = ["Cólicas", "Cansaço", "Inchaço", "Dor de cabeça", "Sensibilidade nos seios", "Náusea", "Dor lombar", "Acne", "Alteração de apetite", "Alteração do sono"]
+const flowOptions = ["Sem fluxo", "Leve", "Moderado", "Intenso"]
+const painOptions = ["Nenhuma", "Leve", "Moderada", "Forte", "Muito forte"]
+const energyOptions = ["Baixa", "Normal", "Alta"]
+const sleepOptions = ["Ruim", "Regular", "Bom"];
 const history = [
   {
     date: "18 JUN 2024",
@@ -49,21 +53,20 @@ function PulseMark() {
 const MIN_LOADING_TIME = 3000;
 
 export default function AcompanheSePage() {
-  const { logout } = useAuth();
-  const [flow, setFlow] = useState("Moderado");
-  const [mood, setMood] = useState("Normal");
-  const [selectedSymptoms, setSelectedSymptoms] = useState([
-    "Cólicas",
-    "Cansaço",
-    "Inchaço",
-  ]);
-  const [customSymptom, setCustomSymptom] = useState("");
-  const [isAddingSymptom, setIsAddingSymptom] = useState(false);
-  const [saved, setSaved] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  const [apiError, setApiError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-  const date = new Date();
+  const { logout } = useAuth()
+  const [flow, setFlow] = useState("Moderado")
+  const [mood, setMood] = useState("Normal")
+  const [painIntensity, setPainIntensity] = useState("Nenhuma")
+  const [energy, setEnergy] = useState("Normal")
+  const [sleep, setSleep] = useState("Regular")
+  const [notes, setNotes] = useState("")
+  const [showMoreSymptoms, setShowMoreSymptoms] = useState(false)
+  const [selectedSymptoms, setSelectedSymptoms] = useState(["Cólicas", "Cansaço", "Inchaço"])
+  const [customSymptom, setCustomSymptom] = useState("")
+  const [isAddingSymptom, setIsAddingSymptom] = useState(false)
+  const [saved, setSaved] = useState(false)
+  const [isSaving, setIsSaving] = useState(false)
+  const [apiError, setApiError] = useState("")
 
   function toggleSymptom(item: string) {
     setSelectedSymptoms((current) =>
@@ -75,45 +78,17 @@ export default function AcompanheSePage() {
   }
 
   async function saveEntry() {
-    setApiError(null);
-    setIsSaving(true);
-    setLoading(true);
-
-    const startedAt = Date.now();
-
+    setSaved(false)
+    setApiError("")
+    setIsSaving(true)
     try {
-      const response = await fetch("/api/acompanhe-se", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          date: date.toISOString(),
-          flow,
-          mood,
-          symptoms: selectedSymptoms,
-          notes: null,
-        }),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        setApiError(result.error ?? "Não foi possível salvar seu registro");
-        return;
-      }
-
-      setSaved(true);
-    } catch {
-      setApiError("Não foi possível conectar ao servidor");
+      const response = await fetch("/api/tracker", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ date: new Date().toISOString(), flow, mood, symptoms: selectedSymptoms, painIntensity, energy, sleep, notes: notes.trim() || null }) })
+      if (!response.ok) throw new Error("Não foi possível salvar seu registro.")
+      setSaved(true)
+    } catch (error) {
+      setApiError(error instanceof Error ? error.message : "Não foi possível salvar seu registro.")
     } finally {
-      const elapsed = Date.now() - startedAt;
-      const remaining = MIN_LOADING_TIME - elapsed;
-
-      if (remaining > 0) {
-        await new Promise((resolve) => setTimeout(resolve, remaining));
-      }
-
-      setIsSaving(false);
-      setLoading(false);
+      setIsSaving(false)
     }
   }
 
@@ -230,32 +205,18 @@ export default function AcompanheSePage() {
             <div className="field-group">
               <label>O que você sentiu?</label>
               <div className="symptom-row choices">
-                {symptoms.map((item) => (
-                  <button
-                    className={
-                      selectedSymptoms.includes(item)
-                        ? "symptom selected"
-                        : "symptom"
-                    }
-                    onClick={() => toggleSymptom(item)}
-                    key={item}
-                  >
+                {symptoms.slice(0, showMoreSymptoms ? symptoms.length : 3).map((item) => (
+                  <button className={selectedSymptoms.includes(item) ? "symptom selected" : "symptom"} onClick={() => toggleSymptom(item)} key={item}>
                     {item}
                     <span>×</span>
                   </button>
                 ))}
-                {selectedSymptoms
-                  .filter((item) => !symptoms.includes(item))
-                  .map((item) => (
-                    <button
-                      className="symptom selected"
-                      onClick={() => toggleSymptom(item)}
-                      key={item}
-                    >
-                      {item}
-                      <span>×</span>
-                    </button>
-                  ))}
+                {selectedSymptoms.filter((item) => !symptoms.includes(item)).map((item) => (
+                  <button className="symptom selected" onClick={() => toggleSymptom(item)} key={item}>
+                    {item}<span>×</span>
+                  </button>
+                ))}
+                {symptoms.length > 3 && <button className="symptom more-symptoms" type="button" onClick={() => setShowMoreSymptoms((current) => !current)}>{showMoreSymptoms ? "Mostrar menos" : "Ver mais sintomas"}</button>}
                 {isAddingSymptom ? (
                   <div className="custom-symptom-field">
                     <input
@@ -291,19 +252,29 @@ export default function AcompanheSePage() {
                 )}
               </div>
             </div>
+            <div className="field-group">
+              <label>Intensidade da dor</label>
+              <div className="choice-row">{painOptions.map((item) => <button type="button" className={painIntensity === item ? "choice selected" : "choice"} onClick={() => setPainIntensity(item)} key={item}>{item}</button>)}</div>
+            </div>
+            <div className="field-group">
+              <label>Como está sua energia?</label>
+              <div className="choice-row">{energyOptions.map((item) => <button type="button" className={energy === item ? "choice selected" : "choice"} onClick={() => setEnergy(item)} key={item}>{item}</button>)}</div>
+            </div>
+            <div className="field-group">
+              <label>Como foi seu sono?</label>
+              <div className="choice-row">{sleepOptions.map((item) => <button type="button" className={sleep === item ? "choice selected" : "choice"} onClick={() => setSleep(item)} key={item}>{item}</button>)}</div>
+            </div>
+            <div className="field-group notes-field">
+              <label htmlFor="notes">Alguma observação?</label>
+              <textarea id="notes" maxLength={500} value={notes} onChange={(event) => setNotes(event.target.value)} placeholder="Escreva algo que queira lembrar..." />
+              <small>{notes.length}/500</small>
+            </div>
             <div className="save-row">
-              <button
-                className="button-primary save-button"
-                onClick={saveEntry}
-                disabled={isSaving}
-              >
-                {loading ? <Loader /> : saved ? "Registro salvo" : "Salvar registro"}
+              <button type="button" className="button-primary save-button" onClick={saveEntry} disabled={isSaving}>
+                {isSaving ? "Salvando..." : saved ? "Registro salvo" : "Salvar registro"}
               </button>
-              {saved && !loading && (
-                <span className="save-feedback" role="status">
-                  Anotação adicionada ao seu histórico.
-                </span>
-              )}
+              {saved && <span className="save-feedback" role="status">Anotação adicionada ao seu histórico.</span>}
+              {apiError && <span className="save-error" role="alert">{apiError}</span>}
             </div>
           </div>
 
