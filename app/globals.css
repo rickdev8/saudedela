@@ -1,6 +1,11 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "../styles/layout.css";
+@import "../styles/home.css";
+@import "../styles/tracking.css";
+@import "../styles/cycle.css";
+@import "../styles/assistant.css";
 
 @theme inline {
   --font-sans: "DM Sans", sans-serif;
