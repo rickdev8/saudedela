@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { AppSidebar } from "@/app/(private)/sidebar/app-sidebar";
 import { useAuth } from "@/app/context/auth";
-
+import { useState } from "react";
 
 const symptoms = ["Cólicas", "Cansaço", "Inchaço"];
 const history = [
@@ -47,6 +47,19 @@ function PulseMark() {
 
 export default function AcompanheSePage() {
   const { logout } = useAuth()
+  const [flow, setFlow] = useState("Moderado")
+  const [mood, setMood] = useState("Normal")
+  const [selectedSymptoms, setSelectedSymptoms] = useState(["Cólicas", "Cansaço", "Inchaço"])
+  const [saved, setSaved] = useState(false)
+
+  function toggleSymptom(item: string) {
+    setSelectedSymptoms((current) => current.includes(item) ? current.filter((symptom) => symptom !== item) : [...current, item])
+    setSaved(false)
+  }
+
+  function saveEntry() {
+    setSaved(true)
+  }
 
   return (
     <main className="tracking-page">
@@ -95,7 +108,8 @@ export default function AcompanheSePage() {
                 {["Sem fluxo", "Leve", "Moderado", "Intenso"].map(
                   (item, index) => (
                     <button
-                      className={index === 2 ? "choice selected" : "choice"}
+                      className={flow === item ? "choice selected" : "choice"}
+                      onClick={() => { setFlow(item); setSaved(false) }}
                       key={item}
                     >
                       {item}
@@ -116,7 +130,8 @@ export default function AcompanheSePage() {
                   "Cansada",
                 ].map((item, index) => (
                   <button
-                    className={index === 1 ? "mood selected" : "mood"}
+                    className={mood === item ? "mood selected" : "mood"}
+                    onClick={() => { setMood(item); setSaved(false) }}
                     key={item}
                   >
                     <i className={`mood-dot mood-${index}`} />
@@ -129,7 +144,7 @@ export default function AcompanheSePage() {
               <label>O que você sentiu?</label>
               <div className="symptom-row choices">
                 {symptoms.map((item) => (
-                  <button className="symptom selected" key={item}>
+                  <button className={selectedSymptoms.includes(item) ? "symptom selected" : "symptom"} onClick={() => toggleSymptom(item)} key={item}>
                     {item}
                     <span>×</span>
                   </button>
@@ -137,9 +152,12 @@ export default function AcompanheSePage() {
                 <button className="symptom">+ Outro sintoma</button>
               </div>
             </div>
-            <button className="button-primary save-button">
-              Salvar registro
-            </button>
+            <div className="save-row">
+              <button className="button-primary save-button" onClick={saveEntry}>
+                {saved ? "Registro salvo" : "Salvar registro"}
+              </button>
+              {saved && <span className="save-feedback" role="status">Anotação adicionada ao seu histórico.</span>}
+            </div>
           </div>
 
           <aside className="insight-card">
@@ -168,10 +186,10 @@ export default function AcompanheSePage() {
               <h2>Seu histórico</h2>
             </div>
             <div className="history-actions">
-              <button className="period-button">
+              <button className="period-button" onClick={() => setSaved(false)}>
                 Junho 2024 <span>⌄</span>
               </button>
-              <button className="download-button">
+              <button className="download-button" onClick={() => window.print()}>
                 Baixar relatório em PDF
               </button>
             </div>
