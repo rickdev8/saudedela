@@ -275,23 +275,6 @@ export default function AcompanheSePage() {
             </div>
           </div>
 
-          <aside className="insight-card">
-            <div className="insight-top">
-              <span>Observação do período</span>
-              <span className="soft-dot" />
-            </div>
-            <h2>
-              Você registrou
-              <br />
-              <em>cansaço</em> em 3 dias.
-            </h2>
-            <p>
-              Isso é apenas uma observação baseada nas suas anotações — não
-              representa um diagnóstico. Acompanhar por mais tempo pode ajudar a
-              entender se esse padrão continua.
-            </p>
-            <a href="#fontes">Entenda a recomendação</a>
-          </aside>
         </section>
 
         <section className="history-section section-wrap">
