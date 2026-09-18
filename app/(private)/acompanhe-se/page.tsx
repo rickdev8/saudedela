@@ -395,6 +395,7 @@ export default function AcompanheSePage() {
             </div>
           </div>
 
+
           <aside className="insight-card">
             <div className="insight-top">
               <span>Observação do período</span>
@@ -404,6 +405,7 @@ export default function AcompanheSePage() {
             </div>
             <p>{insight?.message ?? "Carregando observações..."}</p>
           </aside>
+
         </section>
 
         <footer className="tracking-footer section-wrap">
