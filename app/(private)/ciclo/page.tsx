@@ -46,7 +46,7 @@ export default function CicloPage() {
     const startedAt = Date.now();
 
     try {
-      const response = await fetch("/api/acompanhe-se", {
+      const response = await fetch("/api/ciclo", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
