@@ -26,15 +26,28 @@ export default function HistoricoPage() {
         </header>
         <section className="content-page section-wrap">
           <p className="tracking-context">Acompanhe-se</p>
-          <h1>
-            O que você
-            <br />
-            <em>tem percebido.</em>
-          </h1>
-          <p className="tracking-lead">
-            Um registro simples das suas observações ao longo do tempo. Use esse
-            espaço para reconhecer ritmos e preparar conversas mais claras.
-          </p>
+          <div className="history-heading-row">
+            <div className="history-heading-copy">
+              <h1>
+                O que você
+                <br />
+                <em>tem percebido.</em>
+              </h1>
+              <p className="tracking-lead">
+                Um registro simples das suas observações ao longo do tempo. Use esse
+                espaço para reconhecer ritmos e preparar conversas mais claras.
+              </p>
+            </div>
+            <aside className="insight-card history-insight">
+              <div className="insight-top">
+                <span>Observação do período</span>
+                <span className="soft-dot" />
+              </div>
+              <h2>Você registrou<br /><em>cansaço</em> em 3 dias.</h2>
+              <p>Isso é apenas uma observação baseada nas suas anotações — não representa um diagnóstico.</p>
+              <a href="#fontes">Entenda a recomendação</a>
+            </aside>
+          </div>
           <div className="history-toolbar">
             <button className="period-button">
               Junho 2024 <span>⌄</span>
@@ -59,23 +72,6 @@ export default function HistoricoPage() {
               </div>
             ))}
           </div>
-          <aside className="insight-card history-insight">
-            <div className="insight-top">
-              <span>Observação do período</span>
-              <span className="soft-dot" />
-            </div>
-            <h2>
-              Você registrou
-              <br />
-              <em>cansaço</em> em 3 dias.
-            </h2>
-            <p>
-              Isso é apenas uma observação baseada nas suas anotações — não
-              representa um diagnóstico. Acompanhar por mais tempo pode ajudar a
-              entender se esse padrão continua.
-            </p>
-            <a href="#fontes">Entenda a recomendação</a>
-          </aside>
           <p className="medical-note">
             Se os sintomas forem intensos, persistentes ou preocupantes, procure
             orientação de um profissional de saúde.
