@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { AppSidebar } from "@/app/(private)/sidebar/app-sidebar";
-import { useForm } from "react-hook-form";
 import { useAuth } from "@/app/context/auth";
+import { HealthCharts } from "./health-charts";
 
 export default function GraficosPage() {
     const { logout } = useAuth()
@@ -29,89 +29,8 @@ export default function GraficosPage() {
             Visualizações simples para ajudar você a perceber recorrências nas
             suas anotações. Elas não substituem uma avaliação profissional.
           </p>
-          <div className="chart-grid">
-            <article className="visual-card">
-              <div className="visual-card-heading">
-                <div>
-                  <span className="card-index">01</span>
-                  <h2>Humor no período</h2>
-                </div>
-                <span>Últimos 7 dias</span>
-              </div>
-              <div className="mood-bars">
-                <div>
-                  <b>Feliz</b>
-                  <i style={{ height: "82%" }} />
-                  <small>16</small>
-                </div>
-                <div>
-                  <b>Normal</b>
-                  <i style={{ height: "66%" }} />
-                  <small>17</small>
-                </div>
-                <div>
-                  <b>Ansiosa</b>
-                  <i style={{ height: "48%" }} />
-                  <small>18</small>
-                </div>
-                <div>
-                  <b>Cansada</b>
-                  <i style={{ height: "31%" }} />
-                  <small>19</small>
-                </div>
-                <div>
-                  <b>Normal</b>
-                  <i style={{ height: "58%" }} />
-                  <small>20</small>
-                </div>
-                <div>
-                  <b>Feliz</b>
-                  <i style={{ height: "72%" }} />
-                  <small>21</small>
-                </div>
-                <div>
-                  <b>Normal</b>
-                  <i style={{ height: "76%" }} />
-                  <small>22</small>
-                </div>
-              </div>
-            </article>
-            <article className="visual-card">
-              <div className="visual-card-heading">
-                <div>
-                  <span className="card-index">02</span>
-                  <h2>Sintomas registrados</h2>
-                </div>
-                <span>Junho</span>
-              </div>
-              <div className="symptom-meter">
-                <div>
-                  <span>Cansaço</span>
-                  <strong>3 dias</strong>
-                  <i>
-                    <b style={{ width: "72%" }} />
-                  </i>
-                </div>
-                <div>
-                  <span>Cólicas</span>
-                  <strong>2 dias</strong>
-                  <i>
-                    <b style={{ width: "48%" }} />
-                  </i>
-                </div>
-                <div>
-                  <span>Inchaço</span>
-                  <strong>1 dia</strong>
-                  <i>
-                    <b style={{ width: "26%" }} />
-                  </i>
-                </div>
-              </div>
-              <p className="chart-note">
-                A frequência mostra apenas o que foi registrado neste período.
-              </p>
-            </article>
-          </div>
+          <HealthCharts />
+
         </section>
       </div>
     </main>
