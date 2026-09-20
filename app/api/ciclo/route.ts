@@ -23,3 +23,23 @@ export async function POST(req: NextRequest) {
   const data = await response.json()
   return NextResponse.json(data)
 }
+
+export async function GET() {
+  const cookieStore = await cookies()
+  const token = cookieStore.get("token")?.value
+
+  if (!token) {
+    return NextResponse.json({ error: "Não autenticado" }, { status: 401 })
+  }
+
+  const response = await fetch(`${process.env.BACKEND_URL}/ciclo`, {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+
+  if (response.status === 404) {
+    return NextResponse.json(null)
+  }
+
+  const data = await response.json()
+  return NextResponse.json(data, { status: response.status })
+}
