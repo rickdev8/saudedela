@@ -28,6 +28,11 @@ export default function CicloPage() {
   const [regularity, setRegularity] = useState("Regular");
   const [isSaving, setIsSaving] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
+  const [cycleSaved, setCycleSaved] = useState(false);
+
+  const today = new Date();
+  const todayDay = today.getDate();
+  const predictedPeriodDays = Array.from({ length: duration }, (_, index) => todayDay + index).filter((day) => day <= dayQuantity);
 
   const toggleDay = (day: number) => {
     setApiError(null);
@@ -62,6 +67,7 @@ export default function CicloPage() {
         setApiError(result.error ?? "Não foi possível salvar seu registro");
         return;
       }
+      setCycleSaved(true);
     } catch {
       setApiError("Não foi possível conectar ao servidor");
     } finally {
@@ -115,11 +121,9 @@ export default function CicloPage() {
             >
               <div className="calendar-heading">
                 <div>
-                  <span className="card-index">01 / SELECIONE OS DIAS</span>
+                  <span className="card-index">01 / {cycleSaved ? "SEU CALENDÁRIO" : "SELECIONE OS DIAS"}</span>
                   <h2>
-                    Quando costuma
-                    <br />
-                    <em>começar?</em>
+                    {cycleSaved ? <>Seu ciclo<br /><em>previsto.</em></> : <>Quando costuma<br /><em>começar?</em></>}
                   </h2>
                 </div>
               </div>
@@ -133,9 +137,10 @@ export default function CicloPage() {
                   <button
                     key={day}
                     type="button"
-                    className={selected.includes(day) ? "day selected" : "day"}
-                    onClick={() => toggleDay(day)}
-                    aria-pressed={selected.includes(day)}
+                    className={`${cycleSaved && predictedPeriodDays.includes(day) ? "day selected predicted" : selected.includes(day) ? "day selected" : "day"} ${cycleSaved && day === todayDay ? "today" : ""}`}
+                    onClick={() => !cycleSaved && toggleDay(day)}
+                    aria-pressed={cycleSaved ? predictedPeriodDays.includes(day) : selected.includes(day)}
+                    aria-label={cycleSaved && day === todayDay ? `${day}, hoje` : `Dia ${day}`}
                   >
                     {day}
                   </button>
@@ -143,15 +148,16 @@ export default function CicloPage() {
               </div>
               <div className="calendar-legend">
                 <span>
-                  <i className="legend-period" /> Dias de menstruação
+                  <i className="legend-period" /> {cycleSaved ? "Dias previstos" : "Dias de menstruação"}
                 </span>
                 <span>
-                  <i /> Clique para selecionar
+                  <i className={cycleSaved ? "legend-today" : ""} /> {cycleSaved ? "Hoje" : "Clique para selecionar"}
                 </span>
               </div>
             </section>
             <aside className="cycle-side">
-              <section className="cycle-form-card">
+              <section className={`cycle-form-card ${cycleSaved ? "cycle-form-saved" : ""}`}>
+                {cycleSaved && <div className="cycle-saved-message" role="status">Seu padrão foi adicionado. O calendário agora mostra uma previsão baseada no seu registro.</div>}
                 <span className="card-index">02 / SOBRE O SEU CICLO</span>
                 <h2>
                   Algumas informações
@@ -188,6 +194,7 @@ export default function CicloPage() {
                     <option>Não sei dizer</option>
                   </select>
                 </label>
+                {cycleSaved && <button type="button" className="button-outline edit-cycle" onClick={() => setCycleSaved(false)}>Editar meu padrão</button>}
                 <button
                   className="button-primary save-cycle"
                   onClick={handleSubmit}
