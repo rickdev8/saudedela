@@ -43,8 +43,6 @@ export default function CicloPage() {
     setIsSaving(true);
     setLoading(true);
 
-    const startedAt = Date.now();
-
     try {
       const response = await fetch("/api/ciclo", {
         method: "POST",
@@ -65,13 +63,6 @@ export default function CicloPage() {
     } catch {
       setApiError("Não foi possível conectar ao servidor");
     } finally {
-      const elapsed = Date.now() - startedAt;
-      const remaining = 5000 - elapsed;
-
-      if (remaining > 0) {
-        await new Promise((resolve) => setTimeout(resolve, remaining));
-      }
-
       setIsSaving(false);
       setLoading(false);
     }
@@ -193,7 +184,7 @@ export default function CicloPage() {
                   onClick={handleSubmit}
                   disabled={isSaving}
                 >
-                  {loading ? <Loader /> : "Salvar meu padrão"}
+                  {loading ? <Loader show={loading} /> : "Salvar meu padrão"}
                 </button>
               </section>
               <section className="cycle-note">

@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image"
+import Image from "next/image";
 import { AppSidebar } from "@/app/(private)/sidebar/app-sidebar";
 import { useState } from "react";
 import { useAuth } from "@/app/context/auth";
@@ -21,7 +21,11 @@ const INITIAL_MESSAGES: ChatMessage[] = [
     content:
       "As mudanças podem acontecer por vários motivos. Registrar seu ciclo, humor e sintomas por alguns meses pode ajudar a identificar padrões para conversar com um profissional.",
     sources: [
-      { title: "Ministério da Saúde", source: "Ministério da Saúde", url: null },
+      {
+        title: "Ministério da Saúde",
+        source: "Ministério da Saúde",
+        url: null,
+      },
       { title: "FEBRASGO", source: "FEBRASGO", url: null },
     ],
   },
@@ -44,7 +48,10 @@ export default function AssistentePage() {
       return;
     }
 
-    const nextMessages: ChatMessage[] = [...messages, { role: "user", content: trimmedMessage }];
+    const nextMessages: ChatMessage[] = [
+      ...messages,
+      { role: "user", content: trimmedMessage },
+    ];
     setMessages(nextMessages);
     setMessage("");
     setErrorMessage(null);
@@ -56,22 +63,31 @@ export default function AssistentePage() {
         .slice(-MAX_HISTORY_MESSAGES)
         .map((m) => ({ role: m.role, content: m.content }));
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/assistant/ask`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: trimmedMessage, history }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/assistant/ask`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question: trimmedMessage, history }),
+        },
+      );
 
       const data = await response.json();
 
       if (!response.ok) {
-        setErrorMessage(data.error ?? "Não foi possível obter uma resposta agora.");
+        setErrorMessage(
+          data.error ?? "Não foi possível obter uma resposta agora.",
+        );
         return;
       }
 
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: data.answer, sources: data.sources ?? [] },
+        {
+          role: "assistant",
+          content: data.answer,
+          sources: data.sources ?? [],
+        },
       ]);
     } catch {
       setErrorMessage("Não foi possível conectar ao assistente.");
@@ -81,7 +97,11 @@ export default function AssistentePage() {
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter" && !event.nativeEvent.isComposing && event.keyCode !== 229) {
+    if (
+      event.key === "Enter" &&
+      !event.nativeEvent.isComposing &&
+      event.keyCode !== 229
+    ) {
       handleSendMessage();
     }
   };
@@ -153,14 +173,16 @@ export default function AssistentePage() {
 
                       {msg.sources && msg.sources.length > 0 && (
                         <div className="source-chips">
-                          {msg.sources.map((source, sourceIndex) => (
-                            <span key={sourceIndex}>{source.source}</span>
+                          {Array.from(
+                            new Set(msg.sources.map((s) => s.source)),
+                          ).map((sourceName, sourceIndex) => (
+                            <span key={sourceIndex}>{sourceName}</span>
                           ))}
                         </div>
                       )}
                     </div>
                   </div>
-                )
+                ),
               )}
 
               {isSending && (
@@ -173,7 +195,11 @@ export default function AssistentePage() {
                     className="bot-avatar"
                   />
                   <div>
-                    <span className="thinking-dots"><span /><span /><span /></span>
+                    <span className="thinking-dots">
+                      <span />
+                      <span />
+                      <span />
+                    </span>
                   </div>
                 </div>
               )}
@@ -206,15 +232,24 @@ export default function AssistentePage() {
           <div className="suggestion-row">
             <span>Experimente perguntar</span>
 
-            <button type="button" onClick={() => handleSuggestion("O que é um ciclo irregular?")}>
+            <button
+              type="button"
+              onClick={() => handleSuggestion("O que é um ciclo irregular?")}
+            >
               O que é um ciclo irregular?
             </button>
 
-            <button type="button" onClick={() => handleSuggestion("Quando procurar ajuda?")}>
+            <button
+              type="button"
+              onClick={() => handleSuggestion("Quando procurar ajuda?")}
+            >
               Quando procurar ajuda?
             </button>
 
-            <button type="button" onClick={() => handleSuggestion("Como registrar sintomas?")}>
+            <button
+              type="button"
+              onClick={() => handleSuggestion("Como registrar sintomas?")}
+            >
               Como registrar sintomas?
             </button>
           </div>

@@ -60,7 +60,7 @@ function PulseMark() {
   );
 }
 
-const MIN_LOADING_TIME = 3000;
+
 
 export default function AcompanheSePage() {
   const { logout } = useAuth();
@@ -83,17 +83,6 @@ export default function AcompanheSePage() {
   const [isSaving, setIsSaving] = useState(false);
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState("");
-
-  const [insight, setInsight] = useState<{
-    status: string;
-    message: string;
-  } | null>(null);
-
-  useEffect(() => {
-    fetch("/api/insight")
-      .then((res) => res.json())
-      .then(setInsight);
-  }, []);
 
   function toggleSymptom(item: string) {
     setSelectedSymptoms((current) =>
@@ -124,6 +113,7 @@ export default function AcompanheSePage() {
           notes: notes.trim() || null,
         }),
       });
+      sessionStorage.removeItem("saudedela:insight");
       if (!response.ok)
         throw new Error("Não foi possível salvar seu registro.");
       setSaved(true);
@@ -134,6 +124,7 @@ export default function AcompanheSePage() {
           : "Não foi possível salvar seu registro.",
       );
     } finally {
+  
       setLoading(false);
       setIsSaving(false);
     }
@@ -380,31 +371,15 @@ export default function AcompanheSePage() {
                 disabled={isSaving}
               >
                 {loading ? (
-                  <Loader />
+                  <Loader show={loading} />
                 ) : saved ? (
                   "Registro salvo"
                 ) : (
                   "Salvar registro"
                 )}
               </button>
-              {saved && (
-                <span className="save-feedback" role="status">
-                  Anotação adicionada ao seu histórico.
-                </span>
-              )}
             </div>
           </div>
-
-
-          <aside className="insight-card">
-            <div className="insight-top">
-              <span>Observação do período</span>
-              <span
-                className={`soft-dot ${insight?.status === "attention" ? "attention" : ""}`}
-              />
-            </div>
-            <p>{insight?.message ?? "Carregando observações..."}</p>
-          </aside>
 
         </section>
 
