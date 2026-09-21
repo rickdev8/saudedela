@@ -7,6 +7,7 @@ import { use, useEffect } from "react";
 const items = [
   ["/ciclo", "◷", "Meu ciclo"],
   ["/acompanhe-se", "＋", "Registro diário"],
+  ["/avaliacao", "✦", "Avaliação de saúde"],
   ["/historico", "≡", "Histórico"],
   ["/graficos", "◒", "Gráficos"],
   ["/dados", "◌", "Dados públicos"],
