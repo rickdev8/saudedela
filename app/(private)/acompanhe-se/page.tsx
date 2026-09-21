@@ -60,11 +60,20 @@ function PulseMark() {
   );
 }
 
+type HeadlinePart = { text: string; emphasis: boolean };
 
+type Insight = {
+  status: "insufficient_data" | "normal" | "attention";
+  headlineParts: HeadlinePart[];
+  description: string;
+};
+
+const INSIGHT_CACHE_KEY = "saudedela:insight";
 
 export default function AcompanheSePage() {
   const { logout } = useAuth();
   const today = new Date();
+  const [insight, setInsight] = useState<Insight | null>(null);
   const [flow, setFlow] = useState("Moderado");
   const [mood, setMood] = useState("Normal");
   const [painIntensity, setPainIntensity] = useState("Nenhuma");
@@ -93,6 +102,23 @@ export default function AcompanheSePage() {
     setSaved(false);
   }
 
+  useEffect(() => {
+    const cached = sessionStorage.getItem(INSIGHT_CACHE_KEY);
+
+    if (cached) {
+      setInsight(JSON.parse(cached));
+      return;
+    }
+
+    fetch("/api/insight")
+      .then((res) => res.json())
+      .then((data) => {
+        setInsight(data);
+        sessionStorage.setItem(INSIGHT_CACHE_KEY, JSON.stringify(data));
+      })
+      .catch(() => setInsight(null));
+  }, []);
+
   async function saveEntry() {
     setSaved(false);
     setApiError("");
@@ -113,9 +139,11 @@ export default function AcompanheSePage() {
           notes: notes.trim() || null,
         }),
       });
-      sessionStorage.removeItem("saudedela:insight");
+
       if (!response.ok)
         throw new Error("Não foi possível salvar seu registro.");
+
+      sessionStorage.removeItem("saudedela:insight");
       setSaved(true);
     } catch (error) {
       setApiError(
@@ -124,7 +152,6 @@ export default function AcompanheSePage() {
           : "Não foi possível salvar seu registro.",
       );
     } finally {
-  
       setLoading(false);
       setIsSaving(false);
     }
@@ -269,7 +296,7 @@ export default function AcompanheSePage() {
                       <span>×</span>
                     </button>
                   ))}
-                
+
                 {isAddingSymptom ? (
                   <div className="custom-symptom-field">
                     <input
@@ -380,9 +407,29 @@ export default function AcompanheSePage() {
               </button>
             </div>
           </div>
+          <aside className="insight-card">
+            <div className="insight-top">
+              <span>Observação do período</span>
+              <span
+                className={`soft-dot ${insight?.status === "attention" ? "attention" : ""}`}
+              />
+            </div>
 
+            <h2>
+              {insight?.headlineParts?.map((part, index) =>
+                part.emphasis ? (
+                  <em key={index}>{part.text}</em>
+                ) : (
+                  <span key={index}>{part.text}</span>
+                ),
+              ) ?? "Carregando observações..."}
+            </h2>
+
+            <p>{insight?.description ?? ""}</p>
+
+            <a href="#fontes">Entenda a recomendação</a>
+          </aside>
         </section>
-
         <footer className="tracking-footer section-wrap">
           <span>Seus registros são privados e pertencem a você.</span>
           <span>SaúdeDela · 2026</span>

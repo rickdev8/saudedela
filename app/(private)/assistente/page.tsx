@@ -204,7 +204,7 @@ export default function AssistentePage() {
                 </div>
               )}
 
-              {errorMessage && <p className="chat-error">{errorMessage}</p>}
+              
             </div>
 
             <div className="chat-input">

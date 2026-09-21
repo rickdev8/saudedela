@@ -81,9 +81,28 @@ export default function HistoricoPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  async function downloadReport() {
+    setIsDownloading(true);
+    try {
+      const response = await fetch("/api/report");
+      if (!response.ok) return;
+
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "relatorio-saudedela.pdf";
+      link.click();
+      URL.revokeObjectURL(url);
+    } finally {
+      setIsDownloading(false);
+    }
+  }
+
   useEffect(() => {
     setIsLoading(true);
-    let timeoutId: NodeJS.Timeout;
 
     fetch(`/api/acompanhe-se?page=${page}`)
       .then((res) => res.json())
@@ -92,12 +111,8 @@ export default function HistoricoPage() {
         setPagination(data.pagination ?? null);
       })
       .finally(() => {
-        timeoutId = setTimeout(() => {
-          setIsLoading(false);
-        }, 5000);
+        setIsLoading(false);
       });
-
-    return () => clearTimeout(timeoutId);
   }, [page]);
 
   useEffect(() => {
@@ -171,7 +186,13 @@ export default function HistoricoPage() {
             <button className="period-button">
               Junho 2024 <span>⌄</span>
             </button>
-            <button className="download-button">Baixar relatório em PDF</button>
+            <button
+              className="download-button"
+              onClick={downloadReport}
+              disabled={isDownloading}
+            >
+              {isDownloading ? "Gerando..." : "Baixar relatório em PDF"}
+            </button>
           </div>
           <div className="history-table full-table">
             <div className="table-row table-head">
