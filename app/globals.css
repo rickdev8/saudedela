@@ -6,6 +6,7 @@
 @import "../styles/tracking.css";
 @import "../styles/cycle.css";
 @import "../styles/assistant.css";
+@import "../styles/charts.css";
 
 @theme inline {
   --font-sans: "DM Sans", sans-serif;
