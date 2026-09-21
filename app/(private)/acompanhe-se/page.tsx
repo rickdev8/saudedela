@@ -75,9 +75,10 @@ export default function AcompanheSePage() {
   const today = new Date();
   const [insight, setInsight] = useState<Insight | null>(null);
   const [flow, setFlow] = useState("Moderado");
+  const moodOptions = ["Feliz", "Bem", "Normal", "Cansada", "Sensível"];
   const [mood, setMood] = useState("Normal");
   const [painIntensity, setPainIntensity] = useState("Nenhuma");
-  const [energy, setEnergy] = useState("Normal");
+  const [energy, setEnergy] = useState(2);
   const [sleep, setSleep] = useState("Regular");
   const [notes, setNotes] = useState("");
   const [showMoreSymptoms, setShowMoreSymptoms] = useState(false);
@@ -134,7 +135,7 @@ export default function AcompanheSePage() {
           mood,
           symptoms: selectedSymptoms,
           painIntensity,
-          energy,
+          energy: ["Baixa", "Abaixo do normal", "Normal", "Boa", "Alta"][energy - 1],
           sleep,
           notes: notes.trim() || null,
         }),
@@ -194,9 +195,9 @@ export default function AcompanheSePage() {
           <div>
             <p className="tracking-context">Seu espaço pessoal</p>
             <h1>
-              Conhecer seus padrões
+              Como você está
               <br />
-              <em>é cuidar de você.</em>
+              <em>hoje?</em>
             </h1>
             <p className="tracking-lead">
               Registre como você está se sentindo. Com o tempo, pequenas
@@ -212,7 +213,7 @@ export default function AcompanheSePage() {
         </section>
 
         <section className="tracking-content section-wrap">
-          <div className="entry-card">
+          <div className="entry-card daily-checkin-card">
             <div className="card-heading">
               <div>
                 <span className="card-index">01</span>
@@ -224,39 +225,13 @@ export default function AcompanheSePage() {
               </span>
             </div>
             <div className="field-group">
-              <label>Fluxo menstrual</label>
-              <div className="choice-row">
-                {["Sem fluxo", "Leve", "Moderado", "Intenso"].map((item) => (
-                  <button
-                    className={flow === item ? "choice selected" : "choice"}
-                    onClick={() => {
-                      setFlow(item);
-                      setSaved(false);
-                    }}
-                    key={item}
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div className="field-group">
               <label>Como está seu humor?</label>
               <div className="mood-row">
-                {[
-                  "Feliz",
-                  "Normal",
-                  "Ansiosa",
-                  "Triste",
-                  "Irritada",
-                  "Cansada",
-                ].map((item, index) => (
+                {moodOptions.map((item, index) => (
                   <button
+                    type="button"
                     className={mood === item ? "mood selected" : "mood"}
-                    onClick={() => {
-                      setMood(item);
-                      setSaved(false);
-                    }}
+                    onClick={() => { setMood(item); setSaved(false); }}
                     key={item}
                   >
                     <i className={`mood-dot mood-${index}`} />
@@ -268,8 +243,8 @@ export default function AcompanheSePage() {
             <div className="field-group">
               <label>O que você sentiu?</label>
               <div className="symptom-row choices">
-                {selectedSymptoms
-                  .slice(0, showMoreSymptoms ? symptoms.length : 3)
+                {symptoms
+                  .slice(0, showMoreSymptoms ? symptoms.length : 5)
                   .map((item) => (
                     <button
                       className={
@@ -281,7 +256,7 @@ export default function AcompanheSePage() {
                       key={item}
                     >
                       {item}
-                      <span>×</span>
+                      {selectedSymptoms.includes(item) && <span aria-hidden="true">✓</span>}
                     </button>
                   ))}
                 {selectedSymptoms
@@ -293,7 +268,7 @@ export default function AcompanheSePage() {
                       key={item}
                     >
                       {item}
-                      <span>×</span>
+                      {selectedSymptoms.includes(item) && <span aria-hidden="true">✓</span>}
                     </button>
                   ))}
 
@@ -349,20 +324,10 @@ export default function AcompanheSePage() {
                 ))}
               </div>
             </div>
-            <div className="field-group">
-              <label>Como está sua energia?</label>
-              <div className="choice-row">
-                {energyOptions.map((item) => (
-                  <button
-                    type="button"
-                    className={energy === item ? "choice selected" : "choice"}
-                    onClick={() => setEnergy(item)}
-                    key={item}
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
+            <div className="field-group energy-field">
+              <div className="field-label-row"><label htmlFor="energy">Como está sua energia?</label><strong>{["Baixa", "Abaixo do normal", "Normal", "Boa", "Alta"][energy - 1]}</strong></div>
+              <input id="energy" type="range" min="1" max="5" step="1" value={energy} onChange={(event) => { setEnergy(Number(event.target.value)); setSaved(false); }} aria-label="Nível de energia" />
+              <div className="range-labels"><span>Baixa</span><span>Alta</span></div>
             </div>
             <div className="field-group">
               <label>Como foi seu sono?</label>
@@ -429,6 +394,19 @@ export default function AcompanheSePage() {
 
             <a href="#fontes">Entenda a recomendação</a>
           </aside>
+
+          <section className="daily-history-preview" aria-labelledby="recent-days-title">
+            <h2 id="recent-days-title">Últimos registros</h2>
+            <div className="daily-history-list">
+              {history.map((item) => (
+                <article className="daily-history-item" key={item.date}>
+                  <strong>{item.date}</strong>
+                  <span>{item.mood} · {item.flow}</span>
+                  <small>{item.symptoms}</small>
+                </article>
+              ))}
+            </div>
+          </section>
         </section>
         <footer className="tracking-footer section-wrap">
           <span>Seus registros são privados e pertencem a você.</span>
