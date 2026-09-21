@@ -8,6 +8,7 @@
 @import "../styles/assistant.css";
 @import "../styles/charts.css";
 @import "../styles/daily-checkin.css";
+@import "../styles/history.css";
 
 @theme inline {
   --font-sans: "DM Sans", sans-serif;
