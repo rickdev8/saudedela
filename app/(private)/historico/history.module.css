@@ -19,11 +19,6 @@
   min-height: 50px;
   background: var(--teal);
   color: var(--mineral);
-  border-bottom: 0;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
 }
 
 .historyTable.full-table .tableHead span { color: var(--mineral); }

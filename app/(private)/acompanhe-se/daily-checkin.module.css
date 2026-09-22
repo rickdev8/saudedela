@@ -1,14 +1,138 @@
 /* Registro diário: uma leitura rápida, visual e confortável. */
-.daily-checkin-card { overflow: hidden; border: 1px solid var(--line); background: var(--paper); box-shadow: 0 12px 30px rgba(23,19,19,.07); }
-.daily-checkin-card .card-heading { padding-bottom: 22px; border-bottom: 1px solid var(--line); }
-.daily-checkin-card .field-group { padding: 24px 0; border-bottom: 1px solid var(--line); }
-.daily-checkin-card .field-group:last-of-type { border-bottom: 0; }
-.daily-checkin-card .field-group > label, .field-label-row label { color: var(--teal); font-size: 13px; font-weight: 700; }
-.field-label-row { display:flex; align-items:center; justify-content:space-between; gap:16px; }.field-label-row strong { color:var(--coral); font-size:12px; }
-.daily-checkin-card .mood-row, .daily-checkin-card .symptom-row, .daily-checkin-card .choice-row { gap:10px; }
-.daily-checkin-card .mood { min-height:44px; padding:0 14px; border-radius:999px; }.daily-checkin-card .mood-dot { width:9px; height:9px; }
-.daily-checkin-card .symptom { min-height:40px; padding:0 14px; border-radius:999px; }.daily-checkin-card .symptom span { margin-left:6px; color:var(--coral); font-weight:800; }
-.daily-checkin-card input[type="range"] { display:block; width:100%; height:8px; margin:22px 0 10px; accent-color:var(--coral); cursor:pointer; }.range-labels { display:flex; justify-content:space-between; color:var(--muted); font-size:10px; }
-.daily-checkin-card .notes-field textarea { min-height:82px; }.daily-checkin-card .save-row { justify-content:flex-end; padding-top:26px; border-top:1px solid var(--line); }.daily-checkin-card .save-button { min-width:160px; }
-.daily-history-preview { margin-top:28px; }.daily-history-preview h2 { margin-bottom:14px; color:var(--teal); font-size:20px; }.daily-history-list { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }.daily-history-item { padding:16px; border:1px solid var(--line); border-radius:12px; background:var(--paper); }.daily-history-item strong { display:block; color:var(--teal); font-size:11px; }.daily-history-item span { display:block; margin-top:9px; color:var(--ink); font-size:12px; }.daily-history-item small { display:block; margin-top:8px; color:var(--muted); font-size:10px; }
-@media (max-width:800px) { .daily-checkin-card .card-heading { gap:14px; }.field-label-row { align-items:flex-start; flex-direction:column; gap:8px; }.daily-history-list { grid-template-columns:1fr; }.daily-checkin-card .save-row { justify-content:stretch; }.daily-checkin-card .save-button { width:100%; } }
+.daily-checkin-card {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  box-shadow: 0 12px 30px rgba(23, 19, 19, 0.07);
+}
+.daily-checkin-card .card-heading {
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+}
+.daily-checkin-card .field-group {
+  padding: 24px 0;
+  border-bottom: 1px solid var(--line);
+}
+.daily-checkin-card .field-group:last-of-type {
+  border-bottom: 0;
+}
+.daily-checkin-card .field-group > label,
+.field-label-row label {
+  color: var(--teal);
+  font-size: 13px;
+  font-weight: 700;
+}
+.field-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.field-label-row strong {
+  color: var(--coral);
+  font-size: 12px;
+}
+.daily-checkin-card .mood-row,
+.daily-checkin-card .symptom-row,
+.daily-checkin-card .choice-row {
+  gap: 10px;
+}
+.daily-checkin-card .mood {
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 999px;
+}
+.daily-checkin-card .mood-dot {
+  width: 9px;
+  height: 9px;
+}
+.daily-checkin-card .symptom {
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+}
+.daily-checkin-card .symptom span {
+  margin-left: 6px;
+  color: var(--coral);
+  font-weight: 800;
+}
+.daily-checkin-card input[type="range"] {
+  display: block;
+  width: 100%;
+  height: 8px;
+  margin: 22px 0 10px;
+  accent-color: var(--coral);
+  cursor: pointer;
+}
+.range-labels {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 10px;
+}
+.daily-checkin-card .notes-field textarea {
+  min-height: 82px;
+}
+.daily-checkin-card .save-row {
+  justify-content: flex-end;
+  padding-top: 26px;
+  border-top: 1px solid var(--line);
+}
+.daily-checkin-card .save-button {
+  min-width: 160px;
+}
+.daily-history-preview {
+  margin-top: 28px;
+}
+.daily-history-preview h2 {
+  margin-bottom: 14px;
+  color: var(--teal);
+  font-size: 20px;
+}
+.daily-history-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.daily-history-item {
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+}
+.daily-history-item strong {
+  display: block;
+  color: var(--teal);
+  font-size: 11px;
+}
+.daily-history-item span {
+  display: block;
+  margin-top: 9px;
+  color: var(--ink);
+  font-size: 12px;
+}
+.daily-history-item small {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 10px;
+}
+@media (max-width: 800px) {
+  .daily-checkin-card .card-heading {
+    gap: 14px;
+  }
+  .field-label-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .daily-history-list {
+    grid-template-columns: 1fr;
+  }
+  .daily-checkin-card .save-row {
+    justify-content: stretch;
+  }
+  .daily-checkin-card .save-button {
+    width: 100%;
+  }
+}
