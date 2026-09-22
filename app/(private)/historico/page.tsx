@@ -202,6 +202,7 @@ export default function HistoricoPage() {
               <span>Sintomas</span>
               <span />
             </div>
+
             {isLoading ? (
               <Loader show={isLoading} />
             ) : entries.length === 0 ? (
@@ -211,17 +212,22 @@ export default function HistoricoPage() {
                 <div key={entry.id}>
                   <div className="table-row">
                     <strong>{formatDate(entry.date)}</strong>
-                    <span>
+
+                    {/* Adicionada a classe flow-badge aqui */}
+                    <span className="flow-badge">
                       {entry.flow
                         ? (flowLabels[entry.flow] ?? entry.flow)
                         : "—"}
                     </span>
+
                     <span>{entry.mood ?? "—"}</span>
-                    <span>
+
+                    <span style={{ color: "#6b7280", fontSize: "0.9rem" }}>
                       {entry.symptoms.length > 0
                         ? entry.symptoms.join(", ")
                         : "Nenhum sintoma"}
                     </span>
+
                     <button
                       aria-label={`Mais opções para ${formatDate(entry.date)}`}
                       onClick={() => toggleExpanded(entry.id)}
