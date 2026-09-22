@@ -1,4 +1,5 @@
 import styles from "./home.module.css";
+import sharedStyles from "./(private)/shared.module.css";
 import Link from "next/link";
 
 const bars = [58, 72, 64, 86, 77, 94, 82];
@@ -66,7 +67,7 @@ function MiniLineChart() {
 
 function Header() {
   return (
-    <header className={styles["site-header"]}>
+    <header className={sharedStyles.siteHeader}>
       <a className="brand" href="/inicio" aria-label="SaúdeDela, início">
         <PulseMark />
         <span>

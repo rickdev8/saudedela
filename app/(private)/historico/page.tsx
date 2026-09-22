@@ -5,8 +5,6 @@ import styles from "./history.module.css";
 import { useEffect, useState } from "react";
 import { AppSidebar } from "@/app/(private)/sidebar/app-sidebar";
 import { useAuth } from "@/app/context/auth";
-
-const cx = (...names: string[]) => names.map((name) => styles[name] ?? name).join(" ");
 import { Loader } from "@/components/ui/loaders/loader-main";
 
 type HeadlinePart = { text: string; emphasis: boolean };
@@ -198,8 +196,8 @@ export default function HistoricoPage() {
               {isDownloading ? "Gerando..." : "Baixar relatório em PDF"}
             </button>
           </div>
-          <div className={cx("history-table", "full-table")}>
-            <div className={cx("table-row", "table-head")}>
+          <div className={`${styles.historyTable} full-table`}>
+            <div className={`${styles.tableRow} ${styles.tableHead}`}>
               <span>Data</span>
               <span>Fluxo</span>
               <span>Humor</span>
@@ -213,7 +211,7 @@ export default function HistoricoPage() {
             ) : (
               entries.map((entry) => (
                 <div key={entry.id}>
-                  <div className={cx("table-row")}>
+                  <div className={styles.tableRow}>
                     <strong>{formatDate(entry.date)}</strong>
                     <span>
                       {entry.flow
@@ -235,7 +233,7 @@ export default function HistoricoPage() {
                   </div>
 
                   {expandedId === entry.id && (
-                    <div className={cx("table-row-detail")}>
+                    <div className={styles.tableRowDetail}>
                       <div>
                         <span>Intensidade da dor</span>
                         <strong>

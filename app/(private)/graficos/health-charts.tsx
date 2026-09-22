@@ -2,7 +2,6 @@
 
 import styles from "./charts.module.css";
 
-const cx = (...names: string[]) => names.map((name) => styles[name] ?? name).join(" ");
 
 import ReactECharts from "echarts-for-react";
 
@@ -24,5 +23,5 @@ export function HealthCharts() {
     ["Intensidade dos registros", "Junho de 2024", calendarOption, "wide"],
   ] as const;
 
-  return <div className={cx("echarts-grid")} >{charts.map(([title, period, option, size], index) => <article className={cx("echart-card", size)} key={title}><header><div><span className="card-index">0{index + 1}</span><h2>{title}</h2></div><span>{period}</span></header><ReactECharts option={option} style={{ height: size === "compact" ? 270 : 285, width: "100%" }} opts={{ renderer: "svg" }} /></article>)}</div>;
+  return <div className={styles.echartsGrid} >{charts.map(([title, period, option, size], index) => <article className={`${styles.echartCard} ${styles[size]}`} key={title}><header><div><span className="card-index">0{index + 1}</span><h2>{title}</h2></div><span>{period}</span></header><ReactECharts option={option} style={{ height: size === "compact" ? 270 : 285, width: "100%" }} opts={{ renderer: "svg" }} /></article>)}</div>;
 }
