@@ -6,7 +6,7 @@ const months = ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL"];
 
 function PulseMark() {
   return (
-    <span className={styles["pulse-mark"]} aria-hidden="true">
+    <span className={styles.pulseMark} aria-hidden="true">
       <svg viewBox="0 0 32 32" fill="none">
         <circle
           cx="16"
@@ -87,7 +87,7 @@ function Header() {
 
 function EvidenceCard() {
   return (
-    <div className={styles["evidence-card"]}>
+    <div className={styles.evidenceCard}>
       <div className="evidence-top">
         <span className="live-dot">
           <i /> atualizado hoje
@@ -122,11 +122,11 @@ export default function Page({ pulseMarkIcon }: AssistantHomeSectionProps) {
     <main id="inicio">
       <Header />
       <section className={`${styles.hero} section-wrap`}>
-        <div className={styles["hero-copy"]}>
+        <div className={styles.heroCopy}>
           <h1>
             O que os dados dizem sobre <em>a sua saúde?</em>
           </h1>
-          <p className={styles["hero-description"]}>
+          <p className={styles.heroDescription}>
             Informação confiável para você entender seu corpo, conversar melhor
             com profissionais e tomar decisões com mais clareza.
           </p>
@@ -259,7 +259,7 @@ export default function Page({ pulseMarkIcon }: AssistantHomeSectionProps) {
 
             <div className="bot-message">
               <span className="bot-avatar">
-                {pulseMarkIcon ?? <span className={styles["pulse-mark"]}>◌</span>}
+                {pulseMarkIcon ?? <span className={styles.pulseMark}>◌</span>}
               </span>
 
               <div>
