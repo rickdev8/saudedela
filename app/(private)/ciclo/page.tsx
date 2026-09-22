@@ -1,5 +1,6 @@
 "use client";
 
+import "./cycle.module.css";
 import Link from "next/link";
 import { AppSidebar } from "@/app/(private)/sidebar/app-sidebar";
 import { useEffect, useState } from "react";

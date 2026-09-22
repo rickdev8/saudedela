@@ -1,3 +1,4 @@
+import "./home.module.css";
 import Link from "next/link";
 
 const bars = [58, 72, 64, 86, 77, 94, 82];
