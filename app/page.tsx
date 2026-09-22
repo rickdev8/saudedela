@@ -1,4 +1,4 @@
-import "./home.module.css";
+import styles from "./home.module.css";
 import Link from "next/link";
 
 const bars = [58, 72, 64, 86, 77, 94, 82];
@@ -6,7 +6,7 @@ const months = ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL"];
 
 function PulseMark() {
   return (
-    <span className="pulse-mark" aria-hidden="true">
+    <span className={styles["pulse-mark"]} aria-hidden="true">
       <svg viewBox="0 0 32 32" fill="none">
         <circle
           cx="16"
@@ -66,7 +66,7 @@ function MiniLineChart() {
 
 function Header() {
   return (
-    <header className="site-header">
+    <header className={styles["site-header"]}>
       <a className="brand" href="/inicio" aria-label="SaúdeDela, início">
         <PulseMark />
         <span>
@@ -87,7 +87,7 @@ function Header() {
 
 function EvidenceCard() {
   return (
-    <div className="evidence-card">
+    <div className={styles["evidence-card"]}>
       <div className="evidence-top">
         <span className="live-dot">
           <i /> atualizado hoje
@@ -121,12 +121,12 @@ export default function Page({ pulseMarkIcon }: AssistantHomeSectionProps) {
   return (
     <main id="inicio">
       <Header />
-      <section className="hero section-wrap">
-        <div className="hero-copy">
+      <section className={`${styles.hero} section-wrap`}>
+        <div className={styles["hero-copy"]}>
           <h1>
             O que os dados dizem sobre <em>a sua saúde?</em>
           </h1>
-          <p className="hero-description">
+          <p className={styles["hero-description"]}>
             Informação confiável para você entender seu corpo, conversar melhor
             com profissionais e tomar decisões com mais clareza.
           </p>
@@ -259,7 +259,7 @@ export default function Page({ pulseMarkIcon }: AssistantHomeSectionProps) {
 
             <div className="bot-message">
               <span className="bot-avatar">
-                {pulseMarkIcon ?? <span className="pulse-mark">◌</span>}
+                {pulseMarkIcon ?? <span className={styles["pulse-mark"]}>◌</span>}
               </span>
 
               <div>
