@@ -1,5 +1,7 @@
 "use client";
 
+import "./charts.module.css";
+
 import ReactECharts from "echarts-for-react";
 
 const colors = { wine: "#8f1d2c", petrol: "#2b4c4a", gold: "#c9973f", coral: "#f6a27f", ink: "#3a3a3a", muted: "#817b77", line: "rgba(58,58,58,.12)", mineral: "#f6efe9" };
