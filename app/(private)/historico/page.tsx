@@ -1,5 +1,7 @@
 "use client";
 
+import "./history.module.css";
+
 import { useEffect, useState } from "react";
 import { AppSidebar } from "@/app/(private)/sidebar/app-sidebar";
 import { useAuth } from "@/app/context/auth";

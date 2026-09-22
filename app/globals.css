@@ -1,14 +1,14 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "./layout.css";
-@import "./home.css";
-@import "./(private)/shared.css";
-@import "./(private)/ciclo/cycle.css";
-@import "./(private)/assistente/assistant.css";
-@import "./(private)/graficos/charts.css";
-@import "./(private)/acompanhe-se/daily-checkin.css";
-@import "./(private)/historico/history.css";
+@import "./layout.module.css";
+@import "./home.module.css";
+@import "./(private)/shared.module.css";
+@import "./(private)/ciclo/cycle.module.css";
+@import "./(private)/assistente/assistant.module.css";
+@import "./(private)/graficos/charts.module.css";
+@import "./(private)/acompanhe-se/daily-checkin.module.css";
+@import "./(private)/historico/history.module.css";
 
 @theme inline {
   --font-sans: "DM Sans", sans-serif;
