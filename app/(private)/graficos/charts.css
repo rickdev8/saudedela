@@ -1,0 +1,119 @@
+/* Container principal da tabela */
+.history-table {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+    border: 1px solid #eaeaea;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #374151;
+  }
+  
+  /* Estrutura de grid para alinhar as colunas perfeitamente */
+  .table-row {
+    display: grid;
+    /* Proporções: Data, Fluxo, Humor, Sintomas, Botão */
+    grid-template-columns: 1.2fr 1fr 1fr 2fr 48px;
+    align-items: center;
+    padding: 16px 24px;
+    border-bottom: 1px solid #f3f4f6;
+    transition: background-color 0.2s ease;
+  }
+  
+  .table-row:last-child {
+    border-bottom: none;
+  }
+  
+  /* Efeito de hover nas linhas (exceto cabeçalho) */
+  .table-row:not(.table-head):hover {
+    background-color: #f9fafb;
+  }
+  
+  /* Cabeçalho mais elegante e neutro */
+  .table-head {
+    background-color: #f9fafb;
+    color: #6b7280;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  /* Estilo em formato de "pílula" para a coluna de Fluxo */
+  .table-row span.flow-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background-color: #fff1f2; /* Tom pastel avermelhado/rosado */
+    color: #e11d48;
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-align: center;
+    width: fit-content;
+  }
+  
+  /* Botão de expandir */
+  .table-row button {
+    background: transparent;
+    border: 1px solid #e5e7eb;
+    color: #6b7280;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .table-row button:hover {
+    background: #f3f4f6;
+    color: #111827;
+  }
+  
+  /* Área de detalhes expandida */
+  .table-row-detail {
+    background-color: #fafafa;
+    padding: 20px 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    border-bottom: 1px solid #f3f4f6;
+    box-shadow: inset 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .table-row-detail div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .table-row-detail span {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  
+  .table-row-detail strong {
+    font-size: 0.95rem;
+    color: #1f2937;
+    font-weight: 500;
+  }
+  
+  /* Observações na área expandida */
+  .table-row-detail-note {
+    grid-column: 1 / -1; /* Ocupa a largura total */
+    margin-top: 8px;
+    padding-top: 16px;
+    border-top: 1px dashed #e5e7eb;
+  }
+  
+  .table-row-detail-note p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #4b5563;
+    line-height: 1.5;
+  }
