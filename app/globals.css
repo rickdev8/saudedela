@@ -8,7 +8,7 @@
 @import "./(private)/assistente/assistant.module.css";
 @import "./(private)/graficos/charts.module.css";
 @import "./(private)/acompanhe-se/daily-checkin.module.css";
-@import "./(private)/historico/history.module.css";
+@import "./(private)/historico/history.css";
 
 @theme inline {
   --font-sans: "DM Sans", sans-serif;
