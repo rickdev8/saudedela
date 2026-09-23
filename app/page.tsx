@@ -1,3 +1,5 @@
+import styles from "./home.module.css";
+import layoutStyles from "./layout.module.css";
 import Link from "next/link";
 
 const bars = [58, 72, 64, 86, 77, 94, 82];
@@ -5,7 +7,7 @@ const months = ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL"];
 
 function PulseMark() {
   return (
-    <span className="pulse-mark" aria-hidden="true">
+    <span className={styles.pulseMark} aria-hidden="true">
       <svg viewBox="0 0 32 32" fill="none">
         <circle
           cx="16"
@@ -65,7 +67,7 @@ function MiniLineChart() {
 
 function Header() {
   return (
-    <header className="site-header">
+    <header className={layoutStyles.siteHeader}>
       <a className="brand" href="/inicio" aria-label="SaúdeDela, início">
         <PulseMark />
         <span>
@@ -77,7 +79,7 @@ function Header() {
         <a href="/assistente">Assistente</a>
         <a href="/acompanhe-se">Acompanhe-se</a>
       </nav>
-      <a className="login-link" href="/entrar">
+      <a className={layoutStyles.loginLink} href="/entrar">
         Entrar
       </a>
     </header>
@@ -86,7 +88,7 @@ function Header() {
 
 function EvidenceCard() {
   return (
-    <div className="evidence-card">
+    <div className={styles.evidenceCard}>
       <div className="evidence-top">
         <span className="live-dot">
           <i /> atualizado hoje
@@ -120,12 +122,12 @@ export default function Page({ pulseMarkIcon }: AssistantHomeSectionProps) {
   return (
     <main id="inicio">
       <Header />
-      <section className="hero section-wrap">
-        <div className="hero-copy">
+      <section className={`${styles.hero} ${layoutStyles.sectionWrap}`}>
+        <div className={styles.heroCopy}>
           <h1>
             O que os dados dizem sobre <em>a sua saúde?</em>
           </h1>
-          <p className="hero-description">
+          <p className={styles.heroDescription}>
             Informação confiável para você entender seu corpo, conversar melhor
             com profissionais e tomar decisões com mais clareza.
           </p>
@@ -133,7 +135,7 @@ export default function Page({ pulseMarkIcon }: AssistantHomeSectionProps) {
             <a className="button-primary" href="/dados">
               Explorar os dados
             </a>
-            <a className="text-link" href="#assistente">
+            <a className={layoutStyles.textLink} href="#assistente">
               Conheça o assistente
             </a>
           </div>
@@ -258,7 +260,7 @@ export default function Page({ pulseMarkIcon }: AssistantHomeSectionProps) {
 
             <div className="bot-message">
               <span className="bot-avatar">
-                {pulseMarkIcon ?? <span className="pulse-mark">◌</span>}
+                {pulseMarkIcon ?? <span className={styles.pulseMark}>◌</span>}
               </span>
 
               <div>

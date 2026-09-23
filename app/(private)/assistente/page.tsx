@@ -1,5 +1,7 @@
 "use client";
 
+import "./assistant.module.css";
+
 import Image from "next/image";
 import { AppSidebar } from "@/app/(private)/sidebar/app-sidebar";
 import { useState } from "react";
