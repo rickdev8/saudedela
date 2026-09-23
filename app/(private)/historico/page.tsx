@@ -1,5 +1,7 @@
 "use client";
 
+import styles from "./history.module.css";
+
 import { useEffect, useState } from "react";
 import { AppSidebar } from "@/app/(private)/sidebar/app-sidebar";
 import { useAuth } from "@/app/context/auth";
@@ -194,8 +196,8 @@ export default function HistoricoPage() {
               {isDownloading ? "Gerando..." : "Baixar relatório em PDF"}
             </button>
           </div>
-          <div className="history-table full-table">
-            <div className="table-row table-head">
+          <div className={`${styles.historyTable} full-table`}>
+            <div className={`${styles.tableRow} ${styles.tableHead}`}>
               <span>Data</span>
               <span>Fluxo</span>
               <span>Humor</span>
@@ -209,7 +211,7 @@ export default function HistoricoPage() {
             ) : (
               entries.map((entry) => (
                 <div key={entry.id}>
-                  <div className="table-row">
+                  <div className={styles.tableRow}>
                     <strong>{formatDate(entry.date)}</strong>
                     <span>
                       {entry.flow
@@ -231,7 +233,7 @@ export default function HistoricoPage() {
                   </div>
 
                   {expandedId === entry.id && (
-                    <div className="table-row-detail">
+                    <div className={styles.tableRowDetail}>
                       <div>
                         <span>Intensidade da dor</span>
                         <strong>

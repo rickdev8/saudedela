@@ -1,3 +1,4 @@
+import "./shared.module.css"
 import type { ReactNode } from "react"
 import { AuthProvider } from "../context/auth"
 
