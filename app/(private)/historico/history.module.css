@@ -26,35 +26,195 @@
   text-transform: uppercase;
 }
 
-.historyTable.full-table .tableHead span { color: var(--mineral); }
-.historyTable.full-table .tableRow:not(.tableHead) { background: var(--paper); }
-.historyTable.full-table .tableRow:not(.tableHead):hover { background: var(--mint); }
+.historyTable.full-table .tableHead span {
+  color: var(--mineral);
+}
+
+.historyTable.full-table .tableRow:not(.tableHead) {
+  background: var(--paper);
+}
+
+.historyTable.full-table .tableRow:not(.tableHead):hover {
+  background: var(--mint);
+}
+
 .historyTable.full-table .tableRow strong,
-.historyTable.full-table .tableRow > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.historyTable.full-table .tableRow strong { color: var(--teal); font-size: 12px; font-weight: 700; }
-.historyTable.full-table .tableRow > span { color: var(--teal); font-size: 12px; line-height: 1.4; }
-.historyTable.full-table .tableRow > span:nth-child(2) { display: inline-flex; align-items: center; width: fit-content; max-width: 100%; padding: 7px 11px; border: 1px solid color-mix(in srgb, var(--teal) 18%, transparent); border-radius: 999px; background: var(--mint); color: var(--teal); font-size: 11px; font-weight: 700; }
-.historyTable.full-table .tableRow > span:nth-child(3) { color: var(--coral); font-weight: 700; }
-.historyTable.full-table .tableRow > span:nth-child(4) { color: var(--muted); font-size: 11px; }
-.historyTable.full-table .tableRow > button { display: inline-grid; width: 36px; height: 36px; place-items: center; border: 1px solid color-mix(in srgb, var(--coral) 38%, var(--line)); border-radius: 50%; background: var(--paper); color: var(--coral); cursor: pointer; font-size: 16px; font-weight: 800; letter-spacing: 0; line-height: 1; transition: transform 180ms ease, background 180ms ease, color 180ms ease; }
-.historyTable.full-table .tableRow > button:hover, .historyTable.full-table .tableRow > button:focus-visible { background: var(--coral); color: var(--mineral); transform: scale(1.08); outline: none; }
-.historyTable.full-table .tableRowDetail { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 0 18px 16px; padding: 20px; border: 1px solid color-mix(in srgb, var(--teal) 14%, var(--line)); border-radius: 14px; background: var(--mineral); }
-.historyTable.full-table .tableRowDetail > div { display: flex; flex-direction: column; gap: 6px; min-width: 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
-.historyTable.full-table .tableRowDetail span { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-.historyTable.full-table .tableRowDetail strong { color: var(--teal); font-size: 13px; font-weight: 700; overflow-wrap: anywhere; }
-.historyTable.full-table .tableRowDetail .tableRowDetail-note { grid-column: 1 / -1; }
-.historyTable.full-table .tableRowDetail p { margin: 0; color: var(--ink); font-size: 12px; line-height: 1.6; overflow-wrap: anywhere; }
-.historyToolbar { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
-.historyToolbar button { min-height: 42px; padding: 0 18px; border-radius: 999px; font-size: 11px; font-weight: 700; }
-.periodButton { border: 1px solid color-mix(in srgb, var(--teal) 18%, var(--line)); background: var(--mint); color: var(--teal); }
-.downloadButton { border: 1px solid var(--teal); background: var(--teal); color: var(--mineral); }
+.historyTable.full-table .tableRow > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.historyTable.full-table .tableRow strong {
+  color: var(--teal);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.historyTable.full-table .tableRow > span {
+  color: var(--teal);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.historyTable.full-table .tableRow > span:nth-child(2) {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  padding: 7px 11px;
+  border: 1px solid color-mix(in srgb, var(--teal) 18%, transparent);
+  border-radius: 999px;
+  background: var(--mint);
+  color: var(--teal);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.historyTable.full-table .tableRow > span:nth-child(3) {
+  color: var(--coral);
+  font-weight: 700;
+}
+
+.historyTable.full-table .tableRow > span:nth-child(4) {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.historyTable.full-table .tableRow > button {
+  display: inline-grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--coral) 38%, var(--line));
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--coral);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1;
+  transition: transform 180ms ease, background 180ms ease, color 180ms ease;
+}
+
+.historyTable.full-table .tableRow > button:hover,
+.historyTable.full-table .tableRow > button:focus-visible {
+  background: var(--coral);
+  color: var(--mineral);
+  transform: scale(1.08);
+  outline: none;
+}
+
+.historyTable.full-table .tableRowDetail {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0 18px 16px;
+  padding: 20px;
+  border: 1px solid color-mix(in srgb, var(--teal) 14%, var(--line));
+  border-radius: 14px;
+  background: var(--mineral);
+}
+
+.historyTable.full-table .tableRowDetail > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--paper);
+}
+
+.historyTable.full-table .tableRowDetail span {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.historyTable.full-table .tableRowDetail strong {
+  color: var(--teal);
+  font-size: 13px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.historyTable.full-table .tableRowDetail .tableRowDetail-note {
+  grid-column: 1 / -1;
+}
+
+.historyTable.full-table .tableRowDetail p {
+  margin: 0;
+  color: var(--ink);
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.historyToolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.historyToolbar button {
+  min-height: 42px;
+  padding: 0 18px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.periodButton {
+  border: 1px solid color-mix(in srgb, var(--teal) 18%, var(--line));
+  background: var(--mint);
+  color: var(--teal);
+}
+
+.downloadButton {
+  border: 1px solid var(--teal);
+  background: var(--teal);
+  color: var(--mineral);
+}
 
 @media (max-width: 800px) {
-  .historyTable.full-table { border-radius: 16px; }
-  .historyTable.full-table .tableRow { grid-template-columns: minmax(82px, 1fr) minmax(78px, 1fr) minmax(80px, 1fr) 38px; gap: 8px; min-height: 66px; padding: 0 12px; }
-  .historyTable.full-table .tableRow > span:nth-child(4), .historyTable.full-table .tableHead span:nth-child(4) { display: none; }
-  .historyTable.full-table .tableRowDetail { grid-template-columns: 1fr; margin-inline: 8px; padding: 12px; }
-  .historyTable.full-table .tableRowDetail .tableRowDetail-note { grid-column: auto; }
-  .historyToolbar { flex-direction: column; align-items: stretch; }
-  .historyToolbar button { width: 100%; }
+  .historyTable.full-table {
+    border-radius: 16px;
+  }
+
+  .historyTable.full-table .tableRow {
+    grid-template-columns: minmax(82px, 1fr) minmax(78px, 1fr) minmax(80px, 1fr) 38px;
+    gap: 8px;
+    min-height: 66px;
+    padding: 0 12px;
+  }
+
+  .historyTable.full-table .tableRow > span:nth-child(4),
+  .historyTable.full-table .tableHead span:nth-child(4) {
+    display: none;
+  }
+
+  .historyTable.full-table .tableRowDetail {
+    grid-template-columns: 1fr;
+    margin-inline: 8px;
+    padding: 12px;
+  }
+
+  .historyTable.full-table .tableRowDetail .tableRowDetail-note {
+    grid-column: auto;
+  }
+
+  .historyToolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .historyToolbar button {
+    width: 100%;
+  }
 }
