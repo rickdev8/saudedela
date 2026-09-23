@@ -1,5 +1,5 @@
 import styles from "./home.module.css";
-import sharedStyles from "./(private)/shared.module.css";
+import layoutStyles from "./layout.module.css";
 import Link from "next/link";
 
 const bars = [58, 72, 64, 86, 77, 94, 82];
@@ -67,7 +67,7 @@ function MiniLineChart() {
 
 function Header() {
   return (
-    <header className={sharedStyles.siteHeader}>
+    <header className={layoutStyles.siteHeader}>
       <a className="brand" href="/inicio" aria-label="SaúdeDela, início">
         <PulseMark />
         <span>
@@ -79,7 +79,7 @@ function Header() {
         <a href="/assistente">Assistente</a>
         <a href="/acompanhe-se">Acompanhe-se</a>
       </nav>
-      <a className="login-link" href="/entrar">
+      <a className={layoutStyles.loginLink} href="/entrar">
         Entrar
       </a>
     </header>
@@ -122,7 +122,7 @@ export default function Page({ pulseMarkIcon }: AssistantHomeSectionProps) {
   return (
     <main id="inicio">
       <Header />
-      <section className={`${styles.hero} section-wrap`}>
+      <section className={`${styles.hero} ${layoutStyles.sectionWrap}`}>
         <div className={styles.heroCopy}>
           <h1>
             O que os dados dizem sobre <em>a sua saúde?</em>
@@ -135,7 +135,7 @@ export default function Page({ pulseMarkIcon }: AssistantHomeSectionProps) {
             <a className="button-primary" href="/dados">
               Explorar os dados
             </a>
-            <a className="text-link" href="#assistente">
+            <a className={layoutStyles.textLink} href="#assistente">
               Conheça o assistente
             </a>
           </div>
