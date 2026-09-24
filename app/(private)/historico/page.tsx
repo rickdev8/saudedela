@@ -159,28 +159,6 @@ export default function HistoricoPage() {
                 claras.
               </p>
             </div>
-            <aside className="insight-card history-insight">
-              <div className="insight-top">
-                <span>Observação do período</span>
-                <span
-                  className={`soft-dot ${insight?.status === "attention" ? "attention" : ""}`}
-                />
-              </div>
-
-              <h2>
-                {insight?.headlineParts?.map((part, index) =>
-                  part.emphasis ? (
-                    <em key={index}>{part.text}</em>
-                  ) : (
-                    <span key={index}>{part.text}</span>
-                  ),
-                ) ?? "Carregando observações..."}
-              </h2>
-
-              <p>{insight?.description ?? ""}</p>
-
-              <a href="#fontes">Entenda a recomendação</a>
-            </aside>
           </div>
           <div className="history-toolbar">
             <button className="period-button">

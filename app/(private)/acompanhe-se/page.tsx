@@ -106,21 +106,31 @@ export default function AcompanheSePage() {
 
   useEffect(() => {
     const cached = sessionStorage.getItem(INSIGHT_CACHE_KEY);
-
+  
     if (cached) {
       setInsight(JSON.parse(cached));
       return;
     }
-
+  
     fetch("/api/insight")
-      .then((res) => res.json())
-      .then((data) => {
+      .then(async (res) => {
+        const data = await res.json();
+  
+        if (!res.ok) {
+          console.error("ERRO INSIGHT (frontend):", data);
+          setInsight(null);
+          return;
+        }
+  
         setInsight(data);
         sessionStorage.setItem(INSIGHT_CACHE_KEY, JSON.stringify(data));
       })
-      .catch(() => setInsight(null));
+      .catch((err) => {
+        console.error("ERRO INSIGHT (fetch falhou):", err);
+        setInsight(null);
+      });
   }, []);
-
+  
   async function saveEntry() {
     setSaved(false);
     setApiError("");
@@ -395,19 +405,6 @@ export default function AcompanheSePage() {
 
             <a href="#fontes">Entenda a recomendação</a>
           </aside>
-
-          <section className="daily-history-preview" aria-labelledby="recent-days-title">
-            <h2 id="recent-days-title">Últimos registros</h2>
-            <div className="daily-history-list">
-              {history.map((item) => (
-                <article className="daily-history-item" key={item.date}>
-                  <strong>{item.date}</strong>
-                  <span>{item.mood} · {item.flow}</span>
-                  <small>{item.symptoms}</small>
-                </article>
-              ))}
-            </div>
-          </section>
         </section>
         <footer className="tracking-footer section-wrap">
           <span>Seus registros são privados e pertencem a você.</span>
