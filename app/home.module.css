@@ -1,5 +1,0 @@
-/* Página inicial: hero, evidências, dados e chamadas editoriais. */
-.hero { min-height: 690px; display: grid; grid-template-columns: 1.03fr .97fr; gap: 84px; align-items: center; padding: 76px 0 100px; }
-.heroCopy h1 { max-width: 650px; }.heroDescription { max-width: 530px; margin: 28px 0 32px; }.heroActions { display:flex; align-items:center; gap:18px; }.evidenceCard { border-radius: 14px; box-shadow: 0 4px 16px rgba(0,0,0,.06); }
-.dataSection, .trackSection { padding: 110px 0; }.statGrid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }.statCard { padding:24px; border:1px solid var(--line); border-radius:14px; background:var(--paper); box-shadow:0 4px 16px rgba(0,0,0,.06); }
-@media (max-width:800px) { .hero { min-height: auto; display:flex; flex-direction:column; gap:42px; padding:54px 0 78px; }.heroActions { flex-wrap:wrap; }.dataSection, .trackSection { padding:72px 0; }.statGrid { grid-template-columns:1fr; } }
