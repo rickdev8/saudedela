@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import styles from "./loader.module.css";
 
 const MIN_VISIBLE_TIME = 600; // ms
 
@@ -33,5 +32,5 @@ export function Loader({ show }: LoaderProps) {
 
   if (!visible) return null;
 
-  return <div className={styles.loader}></div>;
+  return <div className="loader"></div>;
 }
