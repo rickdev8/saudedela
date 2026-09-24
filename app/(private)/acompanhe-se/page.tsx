@@ -1,6 +1,5 @@
 "use client";
 
-import "./daily-checkin.module.css";
 
 import { AppSidebar } from "@/app/(private)/sidebar/app-sidebar";
 import { useAuth } from "@/app/context/auth";
