@@ -22,5 +22,5 @@ export function HealthCharts() {
     ["Intensidade dos registros", "Junho de 2024", calendarOption, "wide"],
   ] as const;
 
-  return <div className={"echartsGrid"} >{charts.map(([title, period, option, size], index) => <article className={`${"echartCard"} ${size}`} key={title}><header><div><span className="card-index">0{index + 1}</span><h2>{title}</h2></div><span>{period}</span></header><ReactECharts option={option} style={{ height: size === "compact" ? 270 : 285, width: "100%" }} opts={{ renderer: "svg" }} /></article>)}</div>;
+  return <div className={"echartsGrid"} >{charts.map(([title, period, option, size], index) => <article className={`echart-card ${size}`} key={title}><header><div><span className="card-index">0{index + 1}</span><h2>{title}</h2></div><span>{period}</span></header><ReactECharts option={option} style={{ height: size === "compact" ? 270 : 285, width: "100%" }} opts={{ renderer: "svg" }} /></article>)}</div>;
 }
