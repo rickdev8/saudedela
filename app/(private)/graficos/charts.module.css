@@ -1,0 +1,91 @@
+/* charts.module.css */
+
+.echartsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    width: 100%;
+  }
+  
+  .echartCard {
+    display: flex;
+    flex-direction: column;
+    padding: 24px 20px 16px;
+    background: var(--paper, #fdf9f6);
+    border: 1px solid var(--line, rgba(58, 58, 58, 0.1));
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(58, 58, 58, 0.05);
+    transition: box-shadow 180ms ease, transform 180ms ease;
+  }
+  
+  .echartCard:hover {
+    box-shadow: 0 8px 24px rgba(58, 58, 58, 0.08);
+  }
+  
+  .echartCard.wide {
+    grid-column: span 2;
+  }
+  
+  .echartCard.compact {
+    grid-column: span 1;
+  }
+  
+  .echartCard header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  
+  .echartCard header > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .echartCard header h2 {
+    margin: 0;
+    color: var(--ink, #3a3a3a);
+    font-family: "DM Sans", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  
+  .echartCard header > span {
+    padding-top: 2px;
+    color: #6f7f9e;
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  
+  .cardIndex {
+    color: var(--wine, #8f1d2c);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  
+  .message {
+    grid-column: span 2;
+    padding: 48px 24px;
+    color: var(--muted, #817b77);
+    font-size: 13px;
+    text-align: center;
+  }
+  
+  @media (max-width: 860px) {
+    .echartsGrid {
+      grid-template-columns: 1fr;
+    }
+  
+    .echartCard.wide,
+    .echartCard.compact {
+      grid-column: span 1;
+    }
+  
+    .message {
+      grid-column: span 1;
+    }
+  }

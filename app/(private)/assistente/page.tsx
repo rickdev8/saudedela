@@ -218,8 +218,7 @@ export default function AssistentePage() {
                 aria-label="Digite uma pergunta"
                 disabled={isSending}
               />
-
-              <button
+               <button
                 type="button"
                 onClick={handleSendMessage}
                 disabled={!message.trim() || isSending}
@@ -228,6 +227,7 @@ export default function AssistentePage() {
                 {isSending ? "Enviando..." : "Enviar"}
               </button>
             </div>
+          
           </div>
 
           <div className="suggestion-row">
