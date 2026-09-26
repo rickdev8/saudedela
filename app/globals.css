@@ -6412,6 +6412,26 @@ select:focus-visible {
   }
 }
 
+/* Layout dos gráficos: duas colunas e último card em largura total */
+.echarts-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.echart-card.compact {
+  grid-column: span 1;
+}
+
+.echart-card.wide:last-child {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 800px) {
+  .echart-card.compact,
+  .echart-card.wide:last-child {
+    grid-column: 1;
+  }
+}
+
 /* Loader */
 .loader {
   width: 28px;
