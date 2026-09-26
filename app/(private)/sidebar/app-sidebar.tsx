@@ -17,14 +17,10 @@ const items = [
 export function AppSidebar({ active }: { active: string }) {
   const { user, logout } = useAuth();
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
-
   return (
     <aside className="tracking-sidebar">
       <Link className="brand sidebar-brand" href="/">
-        <img src="/saudedela_fundo_claro.png" />
+        <img src="/saudedela_fundo_claro.png" alt="SaúdeDela" />
        
       </Link>
       <div className="sidebar-user">
