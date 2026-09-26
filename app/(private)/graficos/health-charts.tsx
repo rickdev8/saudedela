@@ -558,5 +558,4 @@ export function HealthCharts() {
     </div>
   );
 }
-}
 
