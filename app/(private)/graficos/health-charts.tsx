@@ -1,6 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+<<<<<<< HEAD
+=======
+
+>>>>>>> 834000b093b05ecc301344d5a11b41904d62f3e3
 import ReactECharts from "echarts-for-react";
 
 import styles from "./charts.module.css";
@@ -118,19 +122,28 @@ export function HealthCharts() {
   }, []);
 
   if (isLoading) {
+<<<<<<< HEAD
     return (
       <div className={styles.echartsGrid}>
         <p className={styles.message}>Carregando gráficos...</p>
       </div>
     );
+=======
+    return <div className="echarts-grid"><p>Carregando gráficos...</p></div>;
+>>>>>>> 834000b093b05ecc301344d5a11b41904d62f3e3
   }
 
   if (!data || data.totalRegistros === 0) {
     return (
+<<<<<<< HEAD
       <div className={styles.echartsGrid}>
         <p className={styles.message}>
           Ainda não há registros suficientes neste mês para gerar os gráficos.
         </p>
+=======
+      <div className="echarts-grid">
+        <p>Ainda não há registros suficientes neste mês para gerar os gráficos.</p>
+>>>>>>> 834000b093b05ecc301344d5a11b41904d62f3e3
       </div>
     );
   }
@@ -549,6 +562,7 @@ export function HealthCharts() {
     ],
   ] as const;
 
+<<<<<<< HEAD
   return (
     <div className={styles.echartsGrid}>
       {charts.map(
@@ -586,3 +600,7 @@ export function HealthCharts() {
     </div>
   );
 }
+=======
+  return <div className={"echartsGrid"} >{charts.map(([title, period, option, size], index) => <article className={`echart-card ${size}`} key={title}><header><div><span className="card-index">0{index + 1}</span><h2>{title}</h2></div><span>{period}</span></header><ReactECharts option={option} style={{ height: size === "compact" ? 270 : 285, width: "100%" }} opts={{ renderer: "svg" }} /></article>)}</div>;
+}
+>>>>>>> 834000b093b05ecc301344d5a11b41904d62f3e3
