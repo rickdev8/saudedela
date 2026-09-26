@@ -3,7 +3,7 @@
 
 
 import { useEffect, useState } from "react";
-import styles from "./charts.module.css";
+
 import ReactECharts from "echarts-for-react";
 
 const colors = {
@@ -75,12 +75,12 @@ export function HealthCharts() {
   }, []);
 
   if (isLoading) {
-    return <div className={styles.echartsGrid}><p>Carregando gráficos...</p></div>;
+    return <div className="echarts-grid"><p>Carregando gráficos...</p></div>;
   }
 
   if (!data || data.totalRegistros === 0) {
     return (
-      <div className={styles.echartsGrid}>
+      <div className="echarts-grid">
         <p>Ainda não há registros suficientes neste mês para gerar os gráficos.</p>
       </div>
     );
