@@ -163,6 +163,22 @@ export default function HistoricoPage() {
                 claras.
               </p>
             </div>
+            {insight && (
+              <aside className="insight-card history-insight" aria-label="Insight do seu histórico">
+                <div className="insight-top">
+                  <span className="card-index">INSIGHT</span>
+                  <span className="insight-status">{insight.status === "attention" ? "Atenção" : "Seu ritmo"}</span>
+                </div>
+                <h2>
+                  {insight.headlineParts.map((part, index) => (
+                    <span key={`${part.text}-${index}`} className={part.emphasis ? "insight-emphasis" : undefined}>
+                      {part.text}{" "}
+                    </span>
+                  ))}
+                </h2>
+                <p>{insight.description}</p>
+              </aside>
+            )}
           </div>
           <div className="history-toolbar">
             <button className="period-button">
