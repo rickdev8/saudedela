@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import { AppSidebar } from "@/app/(private)/sidebar/app-sidebar";
 import { useAuth } from "@/app/context/auth";
 import { Loader } from "@/components/ui/loaders/loader-main";
+import { History } from "@/components/ui/loaders/loader-history";
 
 type HeadlinePart = { text: string; emphasis: boolean };
 
@@ -127,7 +128,10 @@ export default function HistoricoPage() {
         setInsight(data);
         sessionStorage.setItem(INSIGHT_CACHE_KEY, JSON.stringify(data));
       })
-      .catch(() => setInsight(null));
+      .catch(() => {
+        setInsight(null);
+        setIsLoading(false);
+      });
   }, []);
 
   function toggleExpanded(id: string) {
@@ -172,81 +176,112 @@ export default function HistoricoPage() {
               {isDownloading ? "Gerando..." : "Baixar relatório em PDF"}
             </button>
           </div>
-          <div className="history-table full-table">
-            <div className="table-row table-head">
-              <span>Data</span>
-              <span>Fluxo</span>
-              <span>Humor</span>
-              <span>Sintomas</span>
-              <span />
-            </div>
-            {isLoading ? (
-              <Loader show={isLoading} />
-            ) : entries.length === 0 ? (
-              <p className="table-empty">Nenhum registro encontrado ainda.</p>
-            ) : (
-              entries.map((entry) => (
-                <div key={entry.id}>
-                  <div className="table-row">
-                    <strong>{formatDate(entry.date)}</strong>
-                    <span>
-                      {entry.flow
-                        ? (flowLabels[entry.flow] ?? entry.flow)
-                        : "—"}
-                    </span>
-                    <span>{entry.mood ?? "—"}</span>
-                    <span>
-                      {entry.symptoms.length > 0
-                        ? entry.symptoms.join(", ")
-                        : "Nenhum sintoma"}
-                    </span>
-                    <button
-                      aria-label={`Mais opções para ${formatDate(entry.date)}`}
-                      onClick={() => toggleExpanded(entry.id)}
-                    >
-                      {expandedId === entry.id ? "×" : "···"}
-                    </button>
-                  </div>
 
-                  {expandedId === entry.id && (
-                    <div className="table-row-detail">
-                      <div>
-                        <span>Intensidade da dor</span>
-                        <strong>
-                          {entry.painIntensity
-                            ? (painLabels[entry.painIntensity] ??
-                              entry.painIntensity)
-                            : "—"}
-                        </strong>
-                      </div>
-                      <div>
-                        <span>Energia</span>
-                        <strong>
-                          {entry.energy
-                            ? (energyLabels[entry.energy] ?? entry.energy)
-                            : "—"}
-                        </strong>
-                      </div>
-                      <div>
-                        <span>Sono</span>
-                        <strong>
-                          {entry.sleep
-                            ? (sleepLabels[entry.sleep] ?? entry.sleep)
-                            : "—"}
-                        </strong>
-                      </div>
-                      {entry.notes && (
-                        <div className="table-row-detail-note">
-                          <span>Observação</span>
-                          <p>{entry.notes}</p>
-                        </div>
-                      )}
-                    </div>
+          {isLoading ? (
+            <History show={isLoading} />
+          ) : (
+            <div className="table-wrapper">
+              <table className="history-table">
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th>Fluxo</th>
+                    <th>Humor</th>
+                    <th>Sintomas</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {entries.length === 0 ? (
+                    <tr>
+                      <td colSpan={5} className="table-empty">
+                        Nenhum registro encontrado ainda.
+                      </td>
+                    </tr>
+                  ) : (
+                    entries.map((entry) => (
+                      <Fragment key={entry.id}>
+                        <tr
+                          className={`table-row ${
+                            expandedId === entry.id ? "expanded" : ""
+                          }`}
+                        >
+                          <td>
+                            <strong className="date-text">
+                              {formatDate(entry.date)}
+                            </strong>
+                          </td>
+                          <td>
+                            {entry.flow
+                              ? flowLabels[entry.flow] ?? entry.flow
+                              : "—"}
+                          </td>
+                          <td>{entry.mood ?? "—"}</td>
+                          <td>
+                            {entry.symptoms.length > 0
+                              ? entry.symptoms.join(", ")
+                              : "Nenhum sintoma"}
+                          </td>
+                          <td className="action-cell">
+                            <button
+                              className="action-button"
+                              aria-label={`Mais opções para ${formatDate(
+                                entry.date
+                              )}`}
+                              onClick={() => toggleExpanded(entry.id)}
+                            >
+                              {expandedId === entry.id ? "×" : "···"}
+                            </button>
+                          </td>
+                        </tr>
+
+                        {expandedId === entry.id && (
+                          <tr className="table-row-expanded">
+                            <td colSpan={5}>
+                              <div className="table-row-detail">
+                                <div>
+                                  <span>Intensidade da dor</span>
+                                  <strong>
+                                    {entry.painIntensity
+                                      ? painLabels[entry.painIntensity] ??
+                                        entry.painIntensity
+                                      : "—"}
+                                  </strong>
+                                </div>
+                                <div>
+                                  <span>Energia</span>
+                                  <strong>
+                                    {entry.energy
+                                      ? energyLabels[entry.energy] ??
+                                        entry.energy
+                                      : "—"}
+                                  </strong>
+                                </div>
+                                <div>
+                                  <span>Sono</span>
+                                  <strong>
+                                    {entry.sleep
+                                      ? sleepLabels[entry.sleep] ?? entry.sleep
+                                      : "—"}
+                                  </strong>
+                                </div>
+                                {entry.notes && (
+                                  <div className="table-row-detail-note">
+                                    <span>Observação</span>
+                                    <p>{entry.notes}</p>
+                                  </div>
+                                )}
+                              </div>
+                            </td>
+                          </tr>
+                        )}
+                      </Fragment>
+                    ))
                   )}
-                </div>
-              ))
-            )}
-          </div>
+                </tbody>
+              </table>
+            </div>
+          )}
 
           {pagination && pagination.totalPages > 1 && (
             <div className="pagination-row">
@@ -262,7 +297,7 @@ export default function HistoricoPage() {
               <button
                 onClick={() =>
                   setPage((current) =>
-                    Math.min(pagination.totalPages, current + 1),
+                    Math.min(pagination.totalPages, current + 1)
                   )
                 }
                 disabled={page === pagination.totalPages}

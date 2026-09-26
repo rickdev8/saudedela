@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 
-const PROTECTED_ROUTES = ["/acompanhe-se"] 
+const PROTECTED_ROUTES = ["/acompanhe-se", "/ciclo", "/assisstente"] 
 
 export function middleware(req: NextRequest) {
   const token = req.cookies.get("token")
