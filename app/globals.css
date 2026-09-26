@@ -1502,9 +1502,13 @@ select:focus-visible {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px;
+  min-height: 42px;
+  padding: 0 12px;
+  border: 1px solid transparent;
+  border-radius: 10px;
   color: var(--muted);
   font-size: 12px;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
 }
 .sidebar-link i {
   display: grid;
@@ -1515,12 +1519,17 @@ select:focus-visible {
   font-style: normal;
 }
 .sidebar-link.active {
+  border-color: color-mix(in srgb, var(--teal) 12%, var(--line));
   background: var(--mint);
   color: var(--teal);
   font-weight: 700;
+  box-shadow: 0 6px 16px rgba(43, 76, 74, .06);
 }
 .sidebar-link:hover {
+  border-color: var(--line);
+  background: color-mix(in srgb, var(--mint) 58%, var(--paper));
   color: var(--teal);
+  transform: translateX(2px);
 }
 .sidebar-bottom {
   display: flex;
@@ -3343,9 +3352,13 @@ select:focus-visible {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px;
+  min-height: 42px;
+  padding: 0 12px;
+  border: 1px solid transparent;
+  border-radius: 10px;
   color: var(--muted);
   font-size: 12px;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
 }
 .sidebar-link i {
   display: grid;
@@ -3356,12 +3369,17 @@ select:focus-visible {
   font-style: normal;
 }
 .sidebar-link.active {
+  border-color: color-mix(in srgb, var(--teal) 12%, var(--line));
   background: var(--mint);
   color: var(--teal);
   font-weight: 700;
+  box-shadow: 0 6px 16px rgba(43, 76, 74, .06);
 }
 .sidebar-link:hover {
+  border-color: var(--line);
+  background: color-mix(in srgb, var(--mint) 58%, var(--paper));
   color: var(--teal);
+  transform: translateX(2px);
 }
 .sidebar-bottom {
   display: flex;
@@ -6285,6 +6303,74 @@ select:focus-visible {
   .history-table.full-table .table-row-detail {
     grid-template-columns: 1fr;
     padding: 12px 10px;
+  }
+}
+
+/* Gráficos */
+.echarts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 40px;
+}
+.echart-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--paper);
+  box-shadow: 0 14px 32px rgba(43, 76, 74, .07);
+}
+.echart-card.compact {
+  grid-column: span 1;
+}
+.echart-card:not(.compact) {
+  grid-column: span 2;
+}
+.echart-card header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px 0;
+}
+.echart-card header > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.echart-card .card-index {
+  color: var(--coral);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+.echart-card h2 {
+  overflow: hidden;
+  margin: 0;
+  color: var(--teal);
+  font-size: 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.echart-card header > span {
+  color: var(--muted);
+  font-size: 10px;
+  white-space: nowrap;
+}
+@media (max-width: 800px) {
+  .echarts-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-top: 28px;
+  }
+  .echart-card.compact,
+  .echart-card:not(.compact) {
+    grid-column: span 1;
+  }
+  .echart-card header {
+    padding-inline: 14px;
   }
 }
 
