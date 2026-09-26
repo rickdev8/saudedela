@@ -5,7 +5,7 @@ const months = ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL"];
 
 function PulseMark() {
   return (
-    <span className={"pulseMark"} aria-hidden="true">
+    <span className="pulse-mark" aria-hidden="true">
       <svg viewBox="0 0 32 32" fill="none">
         <circle
           cx="16"
@@ -65,7 +65,7 @@ function MiniLineChart() {
 
 function Header() {
   return (
-    <header className={"siteHeader"}>
+    <header className="site-header">
       <a className="brand" href="/inicio" aria-label="SaúdeDela, início">
         <PulseMark />
         <span>
@@ -77,7 +77,7 @@ function Header() {
         <a href="/assistente">Assistente</a>
         <a href="/acompanhe-se">Acompanhe-se</a>
       </nav>
-      <a className={"loginLink"} href="/entrar">
+      <a className="login-link" href="/entrar">
         Entrar
       </a>
     </header>
@@ -86,7 +86,7 @@ function Header() {
 
 function EvidenceCard() {
   return (
-    <div className={"evidenceCard"}>
+    <div className="evidence-card">
       <div className="evidence-top">
         <span className="live-dot">
           <i /> atualizado hoje
@@ -133,7 +133,7 @@ export default function Page({ pulseMarkIcon }: AssistantHomeSectionProps) {
             <a className="button-primary" href="/dados">
               Explorar os dados
             </a>
-            <a className={"textLink"} href="#assistente">
+            <a className="text-link" href="#assistente">
               Conheça o assistente
             </a>
           </div>
@@ -258,7 +258,7 @@ export default function Page({ pulseMarkIcon }: AssistantHomeSectionProps) {
 
             <div className="bot-message">
               <span className="bot-avatar">
-                {pulseMarkIcon ?? <span className={"pulseMark"}>◌</span>}
+                {pulseMarkIcon ?? <span className="pulse-mark">◌</span>}
               </span>
 
               <div>

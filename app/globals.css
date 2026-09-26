@@ -6244,6 +6244,127 @@ select:focus-visible {
   }
 }
 
+/* Refinos da home */
+.site-header {
+  position: relative;
+  z-index: 10;
+  height: 76px;
+  border-bottom-color: color-mix(in srgb, var(--teal) 14%, var(--line));
+}
+
+.site-header nav a,
+.login-link,
+.text-link {
+  transition: color 180ms ease, opacity 180ms ease, transform 180ms ease;
+}
+
+.site-header nav a:hover,
+.login-link:hover,
+.text-link:hover {
+  transform: translateY(-1px);
+}
+
+.hero {
+  min-height: 640px;
+  gap: clamp(42px, 7vw, 84px);
+}
+
+.hero-copy {
+  min-width: 0;
+}
+
+.hero h1 {
+  text-wrap: balance;
+}
+
+.button-primary {
+  min-height: 46px;
+  border-radius: 9px;
+  box-shadow: 0 8px 18px rgba(143, 29, 44, .16);
+}
+
+.button-primary:hover {
+  background: color-mix(in srgb, var(--teal) 86%, #000);
+  transform: translateY(-2px);
+}
+
+.evidence-card {
+  min-width: 0;
+  border: 1px solid color-mix(in srgb, var(--teal) 12%, var(--line));
+  border-radius: 18px;
+  box-shadow: 16px 18px 0 var(--paper), 0 20px 38px rgba(23, 19, 19, .07);
+}
+
+.evidence-question {
+  text-wrap: balance;
+}
+
+.data-board {
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--paper);
+  box-shadow: 0 14px 30px rgba(23, 19, 19, .05);
+}
+
+.bar-chart {
+  min-width: 0;
+}
+
+.assistant-section,
+.track-section {
+  border-radius: 18px;
+}
+
+@media (max-width: 860px) {
+  .site-header {
+    width: min(100% - 32px, 1180px);
+  }
+
+  .site-header nav {
+    gap: 18px;
+    font-size: 12px;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding: 56px 0 76px;
+  }
+
+  .evidence-card {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .site-header {
+    height: 70px;
+  }
+
+  .site-header nav {
+    display: none;
+  }
+
+  .hero-actions {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .button-primary {
+    width: 100%;
+  }
+
+  .trust-row {
+    flex-wrap: wrap;
+    margin-top: 38px;
+  }
+
+  .evidence-card {
+    padding: 24px 20px;
+  }
+}
+
 /* Loader */
 .loader {
   width: 28px;
