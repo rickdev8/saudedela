@@ -520,7 +520,10 @@ export function HealthCharts() {
     ["Intensidade dos registros", periodLabel, calendarOption, "wide"],
   ] as const;
 
+
+
   return <div className="echarts-grid">{charts.map(([title, period, option, size], index) => <article className={`echart-card ${size}`} key={title}><header><div><span className="card-index">0{index + 1}</span><h2>{title}</h2></div><span>{period}</span></header><ReactECharts option={option} style={{ height: size === "compact" ? 270 : 285, width: "100%" }} opts={{ renderer: "svg" }} /></article>)}</div>;
+
   return (
     <div className={styles.echartsGrid}>
       {charts.map(
@@ -557,5 +560,6 @@ export function HealthCharts() {
       )}
     </div>
   );
+
 }
 
