@@ -13,49 +13,69 @@ export default function DadosPage() {
       <div className="tracking-main">
        
         <section className="content-page section-wrap">
-          <p className="tracking-context">SaúdeDela</p>
-          <h1>
-            Informação que
-            <br />
-            <em>faz diferença.</em>
-          </h1>
-          <p className="tracking-lead">
-            Explore dados públicos sobre saúde feminina no Brasil, apresentados
-            com contexto e fontes para que você possa fazer perguntas melhores.
-          </p>
+          <div className="data-intro">
+            <div>
+              <p className="tracking-context">Dados públicos</p>
+              <h1>
+                Informação para
+                <br />
+                <em>cuidar melhor.</em>
+              </h1>
+              <p className="tracking-lead">
+                Uma leitura clara de temas que atravessam a saúde feminina no Brasil — com contexto, fontes e caminhos para saber mais.
+              </p>
+            </div>
+            <div className="data-intro-note">
+              <span>01</span>
+              <p>Dados públicos precisam ser compreensíveis para também serem úteis.</p>
+            </div>
+          </div>
           <section className="dignidade-banner" aria-labelledby="dignidade-title">
-            <div className="dignidade-badge">DIREITO E CUIDADO</div>
             <div className="dignidade-content">
               <p className="card-index">Programa Dignidade Menstrual</p>
-              <h2 id="dignidade-title">Absorvente gratuito também é política de saúde.</h2>
+              <h2 id="dignidade-title">Absorvente gratuito é acesso à saúde.</h2>
               <p>
-                O programa do Governo Federal oferece absorventes gratuitos para pessoas que menstruam em situação de vulnerabilidade. A retirada é feita em farmácias credenciadas, com autorização emitida pelo Meu SUS Digital.
+                O programa do Governo Federal oferece absorventes gratuitos para pessoas que menstruam em situação de vulnerabilidade. A retirada acontece em farmácias credenciadas, com autorização emitida pelo Meu SUS Digital.
               </p>
               <a className="dignidade-link" href="https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/d/dignidade-menstrual" target="_blank" rel="noreferrer">
-                Entenda o programa no portal do Governo Federal <span aria-hidden="true">↗</span>
+                Conheça o programa no portal do Governo Federal
               </a>
             </div>
+            <div className="dignidade-side" aria-hidden="true">
+              <span>Direito</span>
+              <strong>cuidado</strong>
+              <span>e dignidade</span>
+            </div>
           </section>
-          <div className="public-stat-grid">
-            <article>
-              <span>01</span>
-              <strong>42,8%</strong>
-              <p>das consultas na atenção básica em 2024 foram de mulheres.</p>
-              <small>Fonte: SISAB, 2024</small>
-            </article>
-            <article>
-              <span>02</span>
-              <strong>8,4 mi</strong>
-              <p>atendimentos relacionados à saúde da mulher registrados.</p>
-              <small>Fonte: DATASUS, 2023</small>
-            </article>
-            <article>
-              <span>03</span>
-              <strong>+18%</strong>
-              <p>crescimento de acompanhamentos preventivos no período.</p>
-              <small>Fonte: Ministério da Saúde</small>
-            </article>
-          </div>
+          <section className="data-section-block" aria-labelledby="panorama-title">
+            <div className="section-heading-line">
+              <div>
+                <p className="card-index">Panorama</p>
+                <h2 id="panorama-title">O que os dados ajudam a enxergar.</h2>
+              </div>
+              <p>Indicadores selecionados para abrir conversas sobre acesso, prevenção e cuidado.</p>
+            </div>
+            <div className="public-stat-grid">
+              <article>
+                <span>Consultas</span>
+                <strong>42,8%</strong>
+                <p>das consultas na atenção básica em 2024 foram de mulheres.</p>
+                <small>Fonte: SISAB, 2024</small>
+              </article>
+              <article>
+                <span>Atendimentos</span>
+                <strong>8,4 mi</strong>
+                <p>registros relacionados à saúde da mulher no período.</p>
+                <small>Fonte: DATASUS, 2023</small>
+              </article>
+              <article>
+                <span>Prevenção</span>
+                <strong>+18%</strong>
+                <p>de crescimento em acompanhamentos preventivos.</p>
+                <small>Fonte: Ministério da Saúde</small>
+              </article>
+            </div>
+          </section>
           <section className="data-topic-grid" aria-label="Temas de saúde feminina">
             <article>
               <span className="topic-number">01</span>
