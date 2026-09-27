@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, Fragment } from "react";
+import React, { useEffect, useState, Fragment, useRef } from "react";
 import { AppSidebar } from "@/app/(private)/sidebar/app-sidebar";
 import { useAuth } from "@/app/context/auth";
 import { Loader } from "@/components/ui/loaders/loader-main";
@@ -71,7 +71,7 @@ function formatDate(isoDate: string) {
     .replace(".", "");
 }
 
-const INSIGHT_CACHE_KEY = "saudedela:insight";
+
 
 export default function HistoricoPage() {
   const { logout } = useAuth();
@@ -116,24 +116,50 @@ export default function HistoricoPage() {
       });
   }, [page]);
 
+  const INSIGHT_CACHE_KEY = "saudedela:insight";
+  const CACHE_TTL = 1000 * 60 * 15; // 15 minutos
+
+
+  const hasFetchedInsight = useRef(false);
+  
   useEffect(() => {
-    const cached = sessionStorage.getItem(INSIGHT_CACHE_KEY);
-    if (cached) {
-      setInsight(JSON.parse(cached));
-      return;
+    if (hasFetchedInsight.current) return;
+    hasFetchedInsight.current = true;
+  
+    const cachedRaw = sessionStorage.getItem(INSIGHT_CACHE_KEY);
+  
+    if (cachedRaw) {
+      try {
+        const cached = JSON.parse(cachedRaw);
+        if (cached) {
+          setInsight(cached);
+          return;
+        }
+        sessionStorage.removeItem(INSIGHT_CACHE_KEY);
+      } catch {
+        sessionStorage.removeItem(INSIGHT_CACHE_KEY);
+      }
     }
+  
     fetch("/api/insight")
-      .then((res) => res.json())
-      .then((data) => {
+      .then(async (res) => {
+        const data = await res.json();
+  
+        if (!res.ok) {
+          console.error("ERRO INSIGHT (backend):", data);
+          setInsight(null);
+          return;
+        }
+  
         setInsight(data);
         sessionStorage.setItem(INSIGHT_CACHE_KEY, JSON.stringify(data));
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error("ERRO INSIGHT (fetch falhou):", err);
         setInsight(null);
-        setIsLoading(false);
       });
   }, []);
-
+  
   function toggleExpanded(id: string) {
     setExpandedId((current) => (current === id ? null : id));
   }
@@ -142,12 +168,7 @@ export default function HistoricoPage() {
     <main className="tracking-page">
       <AppSidebar active="/historico" />
       <div className="tracking-main">
-        <header className="tracking-header">
-          <span className="mobile-page-title">Histórico</span>
-          <button onClick={logout} className="login-link">
-            Sair
-          </button>
-        </header>
+       
         <section className="content-page section-wrap">
           <p className="tracking-context">Acompanhe-se</p>
           <div className="history-heading-row">

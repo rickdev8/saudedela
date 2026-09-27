@@ -157,12 +157,7 @@ export default function AvaliacaoPage() {
     <main className="tracking-page evaluation-page">
       <AppSidebar active="/avaliacao" />
       <div className="tracking-main">
-        <header className="tracking-header">
-          <span className="mobile-page-title">Avaliação de saúde</span>
-          <button onClick={logout} className="login-link">
-            Sair
-          </button>
-        </header>
+       
         <section className="tracking-hero section-wrap evaluation-hero">
           <div>
             <p className="tracking-context">Um retrato mais amplo</p>

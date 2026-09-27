@@ -195,13 +195,7 @@ export default function AcompanheSePage() {
     <main className="tracking-page">
       <AppSidebar active="/acompanhe-se" />
       <div className="tracking-main">
-        <header className="tracking-header">
-          <span className="mobile-page-title">Meu acompanhamento</span>
-          <button onClick={logout} className="login-link">
-            Sair
-          </button>
-        </header>
-
+       
         <section className="tracking-hero section-wrap">
           <div>
             <p className="tracking-context">Seu espaço pessoal</p>

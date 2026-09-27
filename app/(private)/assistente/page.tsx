@@ -116,14 +116,7 @@ export default function AssistentePage() {
       <AppSidebar active="/assistente" />
 
       <div className="tracking-main">
-        <header className="tracking-header">
-          <span className="mobile-page-title">Assistente</span>
-
-          <button onClick={logout} className="login-link">
-            Sair
-          </button>
-        </header>
-
+      
         <section className="assistant-page section-wrap">
           <div className="assistant-intro">
             <p className="tracking-context">Converse com evidências</p>
