@@ -204,12 +204,7 @@ export default function AcompanheSePage() {
 
         <section className="tracking-hero section-wrap">
           <div>
-            <p className="tracking-context">Seu espaço pessoal</p>
-            <h1>
-              Como você está
-              <br />
-              <em>hoje?</em>
-            </h1>
+            <h1>Como você está hoje?</h1>
             <p className="tracking-lead">
               Registre como você está se sentindo. Com o tempo, pequenas
               anotações podem ajudar a levar mais clareza para a sua próxima
@@ -227,8 +222,7 @@ export default function AcompanheSePage() {
           <div className="entry-card daily-checkin-card">
             <div className="card-heading">
               <div>
-                <span className="card-index">01</span>
-                <h2>Como você está hoje?</h2>
+                <h2>Registro de hoje</h2>
               </div>
               <span className="date-label">
                 Hoje, {today.getDate()} de{" "}
@@ -403,7 +397,7 @@ export default function AcompanheSePage() {
 
             <p>{insight?.description ?? ""}</p>
 
-            <a href="#fontes">Entenda a recomendação</a>
+            <p className="insight-disclaimer">Este insight é informativo e não representa um diagnóstico.</p>
           </aside>
         </section>
         <footer className="tracking-footer section-wrap">
