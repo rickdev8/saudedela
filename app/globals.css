@@ -6580,6 +6580,196 @@ select:focus-visible {
   }
 }
 
+/* Registro diário — composição editorial */
+.tracking-hero {
+  align-items: end;
+  padding-block: 72px 58px;
+}
+
+.tracking-hero h1 {
+  max-width: 680px;
+  color: var(--teal);
+  font-size: clamp(2.8rem, 6vw, 5.3rem);
+  font-weight: 650;
+  letter-spacing: -.065em;
+  line-height: .94;
+}
+
+.tracking-hero h1 em {
+  color: inherit;
+  font-style: normal;
+}
+
+.daily-checkin-card {
+  border: 1px solid color-mix(in srgb, var(--teal) 14%, var(--line));
+  border-radius: 18px;
+  background: var(--paper);
+  box-shadow: 0 18px 38px rgba(43, 76, 74, .08);
+}
+
+.daily-checkin-card .card-heading {
+  align-items: end;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 22px;
+}
+
+.daily-checkin-card .card-heading h2 {
+  margin: 0;
+  color: var(--teal);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  letter-spacing: -.035em;
+}
+
+.daily-checkin-card .date-label {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.daily-checkin-card .field-group {
+  padding-block: 24px;
+  border-bottom: 1px solid color-mix(in srgb, var(--teal) 10%, var(--line));
+}
+
+.daily-checkin-card .field-group > label,
+.daily-checkin-card .field-label-row label {
+  color: var(--teal);
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.daily-checkin-card .mood-row {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.daily-checkin-card .mood {
+  min-height: 46px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--mineral);
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.daily-checkin-card .mood.selected {
+  border-color: var(--teal);
+  background: var(--mint);
+  color: var(--teal);
+  box-shadow: inset 0 -2px 0 var(--teal);
+}
+
+.daily-checkin-card .symptom-row.choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.daily-checkin-card .symptom {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.daily-checkin-card .symptom.selected {
+  border-color: color-mix(in srgb, var(--coral) 55%, var(--line));
+  background: color-mix(in srgb, var(--coral) 10%, var(--paper));
+  color: var(--coral);
+}
+
+.daily-checkin-card .choice-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.daily-checkin-card .choice {
+  min-width: 80px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--mineral);
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.daily-checkin-card .choice.selected {
+  border-color: var(--teal);
+  background: var(--teal);
+  color: var(--mineral);
+}
+
+.daily-checkin-card .notes-field textarea {
+  min-height: 120px;
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--mineral);
+  resize: vertical;
+}
+
+.daily-checkin-card .save-row {
+  padding-top: 26px;
+}
+
+.insight-card {
+  border: 1px solid var(--plum, #4a1f3d);
+  border-radius: 18px;
+  background: #4a1f3d;
+  color: var(--mineral);
+  box-shadow: 0 18px 38px rgba(74, 31, 61, .16);
+}
+
+.insight-card .insight-top span:first-child {
+  color: var(--mint);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.insight-card h2 {
+  color: var(--mineral);
+  font-size: clamp(1.55rem, 3vw, 2.2rem);
+  letter-spacing: -.04em;
+  line-height: 1.08;
+}
+
+.insight-card h2 em {
+  color: var(--coral);
+  font-style: normal;
+}
+
+.insight-card > p:not(.insight-disclaimer) {
+  color: color-mix(in srgb, var(--mineral) 82%, transparent);
+  line-height: 1.65;
+}
+
+.insight-disclaimer {
+  margin-top: 26px;
+  padding-top: 14px;
+  border-top: 1px solid color-mix(in srgb, var(--mint) 22%, transparent);
+  color: color-mix(in srgb, var(--mineral) 68%, transparent);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+@media (max-width: 700px) {
+  .daily-checkin-card .mood-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .daily-checkin-card .card-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
 /* Loader */
 .loader {
   width: 28px;
