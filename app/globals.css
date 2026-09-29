@@ -1612,10 +1612,8 @@ select:focus-visible {
   font-weight: 500;
 }
 .tracking-content {
-  display: grid;
-  grid-template-columns: 1.38fr 0.62fr;
-  gap: 28px;
-  align-items: start;
+  display: block;
+  max-width: 920px;
 }
 .entry-card,
 .insight-card {
@@ -3313,10 +3311,8 @@ select:focus-visible {
   font-weight: 500;
 }
 .tracking-content {
-  display: grid;
-  grid-template-columns: 1.38fr 0.62fr;
-  gap: 28px;
-  align-items: start;
+  display: block;
+  max-width: 920px;
 }
 .entry-card,
 .insight-card {
