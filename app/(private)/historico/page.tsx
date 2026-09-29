@@ -71,7 +71,7 @@ function formatDate(isoDate: string) {
     .replace(".", "");
 }
 
-const INSIGHT_CACHE_KEY = "saudedela:insight";
+
 
 export default function HistoricoPage() {
   const { logout } = useAuth();
@@ -129,18 +129,26 @@ export default function HistoricoPage() {
       setInsight(JSON.parse(cached));
       return;
     }
+  
     fetch("/api/insight")
-      .then((res) => res.json())
-      .then((data) => {
+      .then(async (res) => {
+        const data = await res.json();
+  
+        if (!res.ok) {
+          console.error("ERRO INSIGHT (backend):", data);
+          setInsight(null);
+          return;
+        }
+  
         setInsight(data);
         sessionStorage.setItem(INSIGHT_CACHE_KEY, JSON.stringify(data));
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error("ERRO INSIGHT (fetch falhou):", err);
         setInsight(null);
-        setIsLoading(false);
       });
   }, []);
-
+  
   function toggleExpanded(id: string) {
     setExpandedId((current) => (current === id ? null : id));
   }
@@ -165,12 +173,7 @@ export default function HistoricoPage() {
     <main className="tracking-page">
       <AppSidebar active="/historico" />
       <div className="tracking-main">
-        <header className="tracking-header">
-          <span className="mobile-page-title">Histórico</span>
-          <button onClick={logout} className="login-link">
-            Sair
-          </button>
-        </header>
+       
         <section className="content-page section-wrap">
           <p className="tracking-context">Acompanhe-se</p>
           <div className="history-heading-row">
