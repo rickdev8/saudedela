@@ -3,7 +3,7 @@
 
 import { AppSidebar } from "@/app/(private)/sidebar/app-sidebar";
 import { useAuth } from "@/app/context/auth";
-import { useEffect, useState, type KeyboardEvent } from "react";
+import { useState, type KeyboardEvent } from "react";
 import { Loader } from "@/components/ui/loaders/loader-main";
 
 const symptoms = [
@@ -61,20 +61,9 @@ function PulseMark() {
   );
 }
 
-type HeadlinePart = { text: string; emphasis: boolean };
-
-type Insight = {
-  status: "insufficient_data" | "normal" | "attention";
-  headlineParts: HeadlinePart[];
-  description: string;
-};
-
-const INSIGHT_CACHE_KEY = "saudedela:insight";
-
 export default function AcompanheSePage() {
   const { logout } = useAuth();
   const today = new Date();
-  const [insight, setInsight] = useState<Insight | null>(null);
   const [flow, setFlow] = useState("Moderado");
   const moodOptions = ["Feliz", "Bem", "Normal", "Cansada", "Sensível"];
   const [mood, setMood] = useState("Normal");
@@ -104,33 +93,6 @@ export default function AcompanheSePage() {
     setSaved(false);
   }
 
-  useEffect(() => {
-    const cached = sessionStorage.getItem(INSIGHT_CACHE_KEY);
-  
-    if (cached) {
-      setInsight(JSON.parse(cached));
-      return;
-    }
-  
-    fetch("/api/insight")
-      .then(async (res) => {
-        const data = await res.json();
-  
-        if (!res.ok) {
-          console.error("ERRO INSIGHT (frontend):", data);
-          setInsight(null);
-          return;
-        }
-  
-        setInsight(data);
-        sessionStorage.setItem(INSIGHT_CACHE_KEY, JSON.stringify(data));
-      })
-      .catch((err) => {
-        console.error("ERRO INSIGHT (fetch falhou):", err);
-        setInsight(null);
-      });
-  }, []);
-  
   async function saveEntry() {
     setSaved(false);
     setApiError("");
@@ -155,7 +117,6 @@ export default function AcompanheSePage() {
       if (!response.ok)
         throw new Error("Não foi possível salvar seu registro.");
 
-      sessionStorage.removeItem("saudedela:insight");
       setSaved(true);
     } catch (error) {
       setApiError(
