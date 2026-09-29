@@ -922,8 +922,30 @@ select:focus-visible {
 .save-row {
   display: flex;
   align-items: center;
-  gap: 16px;
+  justify-content: flex-end;
+  gap: 12px;
+  min-height: 46px;
   flex-wrap: wrap;
+}
+
+.save-row .button-primary,
+.save-row .button-outline,
+.save-row .save-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: 46px;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.save-row .button-primary {
+  min-width: 168px;
+}
+
+.save-row .button-outline {
+  min-width: 104px;
 }
 .save-feedback {
   color: var(--teal);
