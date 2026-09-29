@@ -371,28 +371,6 @@ export default function AcompanheSePage() {
               </button>
             </div>
           </div>
-          <aside className="insight-card">
-            <div className="insight-top">
-              <span>Observação do período</span>
-              <span
-                className={`soft-dot ${insight?.status === "attention" ? "attention" : ""}`}
-              />
-            </div>
-
-            <h2>
-              {insight?.headlineParts?.map((part, index) =>
-                part.emphasis ? (
-                  <em key={index}>{part.text}</em>
-                ) : (
-                  <span key={index}>{part.text}</span>
-                ),
-              ) ?? "Carregando observações..."}
-            </h2>
-
-            <p>{insight?.description ?? ""}</p>
-
-            <p className="insight-disclaimer">Este insight é informativo e não representa um diagnóstico.</p>
-          </aside>
         </section>
         <footer className="tracking-footer section-wrap">
           <span>Seus registros são privados e pertencem a você.</span>
