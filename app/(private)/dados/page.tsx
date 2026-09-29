@@ -11,12 +11,7 @@ export default function DadosPage() {
     <main className="tracking-page">
       <AppSidebar active="/dados" />
       <div className="tracking-main">
-        <header className="tracking-header">
-          <span className="mobile-page-title">Dados públicos</span>
-          <button onClick={logout} className="login-link">
-            Sair
-          </button>
-        </header>
+       
         <section className="content-page section-wrap">
           <div className="data-intro">
             <div>

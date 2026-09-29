@@ -90,12 +90,7 @@ export default function CicloPage() {
     <main className="tracking-page cycle-page">
       <AppSidebar active="/ciclo" />
       <div className="tracking-main">
-        <header className="tracking-header">
-          <span className="mobile-page-title">Meu ciclo</span>
-          <button onClick={logout} className="login-link">
-            Sair
-          </button>
-        </header>
+       
         <section className="content-page section-wrap cycle-content">
           <div className="cycle-hero">
             <div>
