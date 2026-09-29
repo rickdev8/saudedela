@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { AppSidebar } from "@/app/(private)/sidebar/app-sidebar";
 import { useAuth } from "@/app/context/auth";
@@ -109,10 +109,15 @@ export default function AvaliacaoPage() {
   const updateNote = (key: keyof typeof notes, value: string) =>
     setNotes((current) => ({ ...current, [key]: value }));
 
+  const isSubmittingRef = useRef(false);
+
   async function submitAssessment() {
+    if (isSubmittingRef.current) return; 
+    isSubmittingRef.current = true;
+  
     setApiError("");
     setIsSaving(true);
-
+  
     try {
       const response = await fetch("/api/avaliacao", {
         method: "POST",
@@ -132,9 +137,9 @@ export default function AvaliacaoPage() {
           otherNotes: notes.other.trim() || null,
         }),
       });
-
+  
       const result = await response.json();
-
+  
       if (!response.ok) {
         const message =
           typeof result.error === "string"
@@ -143,13 +148,14 @@ export default function AvaliacaoPage() {
         setApiError(message);
         return;
       }
-
+  
       setAnalysis(result.analysis);
       setSaved(true);
     } catch {
       setApiError("Não foi possível conectar ao servidor.");
     } finally {
       setIsSaving(false);
+      isSubmittingRef.current = false;
     }
   }
 
@@ -157,12 +163,7 @@ export default function AvaliacaoPage() {
     <main className="tracking-page evaluation-page">
       <AppSidebar active="/avaliacao" />
       <div className="tracking-main">
-        <header className="tracking-header">
-          <span className="mobile-page-title">Avaliação de saúde</span>
-          <button onClick={logout} className="login-link">
-            Sair
-          </button>
-        </header>
+       
         <section className="tracking-hero section-wrap evaluation-hero">
           <div>
             <p className="tracking-context">Um retrato mais amplo</p>

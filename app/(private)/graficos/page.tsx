@@ -11,12 +11,7 @@ export default function GraficosPage() {
     <main className="tracking-page">
       <AppSidebar active="/graficos" />
       <div className="tracking-main">
-        <header className="tracking-header">
-          <span className="mobile-page-title">Gráficos</span>
-          <button onClick={logout} className="login-link">
-            Sair
-          </button>
-        </header>
+      
         <section className="content-page section-wrap">
           <p className="tracking-context">Acompanhe-se</p>
           <h1>

@@ -54,12 +54,6 @@ export function AppSidebar({ active }: { active: string }) {
           </Link>
         ))}
       </nav>
-      <div className="sidebar-bottom">
-        <Link href="/">Voltar para início</Link>
-        <button onClick={logout} className="login-link">
-            Sair
-          </button>
-      </div>
     </aside>
   );
 }
