@@ -33,6 +33,8 @@ type Pagination = {
   totalPages: number;
 };
 
+const INSIGHT_CACHE_KEY = "saudedela:insight";
+
 const flowLabels: Record<string, string> = {
   none: "Sem fluxo",
   light: "Leve",
@@ -118,29 +120,16 @@ export default function HistoricoPage() {
       });
   }, [page]);
 
-  const INSIGHT_CACHE_KEY = "saudedela:insight";
-  const CACHE_TTL = 1000 * 60 * 15; // 15 minutos
-
-
   const hasFetchedInsight = useRef(false);
-  
+
   useEffect(() => {
     if (hasFetchedInsight.current) return;
     hasFetchedInsight.current = true;
-  
-    const cachedRaw = sessionStorage.getItem(INSIGHT_CACHE_KEY);
-  
-    if (cachedRaw) {
-      try {
-        const cached = JSON.parse(cachedRaw);
-        if (cached) {
-          setInsight(cached);
-          return;
-        }
-        sessionStorage.removeItem(INSIGHT_CACHE_KEY);
-      } catch {
-        sessionStorage.removeItem(INSIGHT_CACHE_KEY);
-      }
+
+    const cached = sessionStorage.getItem(INSIGHT_CACHE_KEY);
+    if (cached) {
+      setInsight(JSON.parse(cached));
+      return;
     }
   
     fetch("/api/insight")
