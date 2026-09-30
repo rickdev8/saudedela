@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, Fragment, useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState, Fragment } from "react";
 import { AppSidebar } from "@/app/(private)/sidebar/app-sidebar";
 import { useAuth } from "@/app/context/auth";
 import { Loader } from "@/components/ui/loaders/loader-main";
@@ -118,29 +118,16 @@ export default function HistoricoPage() {
       });
   }, [page]);
 
-  const INSIGHT_CACHE_KEY = "saudedela:insight";
-  const CACHE_TTL = 1000 * 60 * 15; // 15 minutos
-
-
   const hasFetchedInsight = useRef(false);
-  
+
   useEffect(() => {
     if (hasFetchedInsight.current) return;
     hasFetchedInsight.current = true;
-  
-    const cachedRaw = sessionStorage.getItem(INSIGHT_CACHE_KEY);
-  
-    if (cachedRaw) {
-      try {
-        const cached = JSON.parse(cachedRaw);
-        if (cached) {
-          setInsight(cached);
-          return;
-        }
-        sessionStorage.removeItem(INSIGHT_CACHE_KEY);
-      } catch {
-        sessionStorage.removeItem(INSIGHT_CACHE_KEY);
-      }
+
+    const cached = sessionStorage.getItem(INSIGHT_CACHE_KEY);
+    if (cached) {
+      setInsight(JSON.parse(cached));
+      return;
     }
   
     fetch("/api/insight")
