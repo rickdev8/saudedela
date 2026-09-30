@@ -33,6 +33,8 @@ type Pagination = {
   totalPages: number;
 };
 
+const INSIGHT_CACHE_KEY = "saudedela:insight";
+
 const flowLabels: Record<string, string> = {
   none: "Sem fluxo",
   light: "Leve",
