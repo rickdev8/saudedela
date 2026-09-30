@@ -9,14 +9,19 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Não autenticado" }, { status: 401 })
   }
 
-  const page = req.nextUrl.searchParams.get("page") ?? "1"
+  const params = req.nextUrl.searchParams.toString()
+  const url = `${process.env.BACKEND_URL}/acompanhe-se${params ? `?${params}` : ""}`
 
-  const response = await fetch(`${process.env.BACKEND_URL}/acompanhe-se?page=${page}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  })
-
-  const data = await response.json()
-  return NextResponse.json(data, { status: response.status })
+  try {
+    const response = await fetch(url, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    const data = await response.json()
+    return NextResponse.json(data, { status: response.status })
+  } catch (err) {
+    console.error("ERRO PROXY ACOMPANHE-SE:", err)
+    return NextResponse.json({ error: "Não foi possível conectar ao servidor" }, { status: 500 })
+  }
 }
 
 export async function POST(req: NextRequest) {

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState, Fragment } from "react";
+import React, { useEffect, useMemo, useRef, useState, Fragment } from "react";
 import { AppSidebar } from "@/app/(private)/sidebar/app-sidebar";
 import { useAuth } from "@/app/context/auth";
 import { Loader } from "@/components/ui/loaders/loader-main";
@@ -83,8 +83,6 @@ export default function HistoricoPage() {
   const [insight, setInsight] = useState<Insight | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [expandedId, setExpandedId] = useState<string | null>(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filterBy, setFilterBy] = useState<"all" | "flow" | "mood" | "symptoms">("all");
 
   const [isDownloading, setIsDownloading] = useState(false);
 
@@ -120,7 +118,12 @@ export default function HistoricoPage() {
       });
   }, [page]);
 
+  const hasFetchedInsight = useRef(false);
+
   useEffect(() => {
+    if (hasFetchedInsight.current) return;
+    hasFetchedInsight.current = true;
+
     const cached = sessionStorage.getItem(INSIGHT_CACHE_KEY);
     if (cached) {
       setInsight(JSON.parse(cached));
@@ -150,22 +153,6 @@ export default function HistoricoPage() {
     setExpandedId((current) => (current === id ? null : id));
   }
 
-  const visibleEntries = useMemo(() => {
-    const normalizedSearch = searchTerm.trim().toLocaleLowerCase("pt-BR");
-    if (!normalizedSearch && filterBy === "all") return entries;
-
-    return entries.filter((entry) => {
-      const value = filterBy === "flow"
-        ? flowLabels[entry.flow ?? ""] ?? entry.flow ?? ""
-        : filterBy === "mood"
-          ? entry.mood ?? ""
-          : filterBy === "symptoms"
-            ? entry.symptoms.join(" ")
-            : [formatDate(entry.date), flowLabels[entry.flow ?? ""] ?? entry.flow ?? "", entry.mood ?? "", entry.symptoms.join(" "), entry.notes ?? ""].join(" ");
-      return value.toLocaleLowerCase("pt-BR").includes(normalizedSearch);
-    });
-  }, [entries, filterBy, searchTerm]);
-
   return (
     <main className="tracking-page">
       <AppSidebar active="/historico" />
@@ -193,7 +180,7 @@ export default function HistoricoPage() {
                   <span className="insight-status">{insight.status === "attention" ? "Atenção" : "Seu ritmo"}</span>
                 </div>
                 <h2>
-                  {(Array.isArray(insight.headlineParts) ? insight.headlineParts : [{ text: "Seu histórico começa a mostrar padrões.", emphasis: false }]).map((part, index) => (
+                  {insight.headlineParts.map((part, index) => (
                     <span key={`${part.text}-${index}`} className={part.emphasis ? "insight-emphasis" : undefined}>
                       {part.text}{" "}
                     </span>
@@ -204,28 +191,11 @@ export default function HistoricoPage() {
             )}
           </div>
           <div className="history-toolbar">
-            <div className="history-filters" role="search">
-              <label className="history-search">
-                <span className="sr-only">Pesquisar no histórico</span>
-                <span aria-hidden="true">⌕</span>
-                <input
-                  type="search"
-                  value={searchTerm}
-                  onChange={(event) => setSearchTerm(event.target.value)}
-                  placeholder="Pesquisar no histórico"
-                />
-              </label>
-              <label className="history-filter-select">
-                <span className="sr-only">Filtrar por</span>
-                <select value={filterBy} onChange={(event) => setFilterBy(event.target.value as typeof filterBy)}>
-                  <option value="all">Filtrar por</option>
-                  <option value="flow">Fluxo</option>
-                  <option value="mood">Humor</option>
-                  <option value="symptoms">Sintomas</option>
-                </select>
-              </label>
-            </div>
-            <button className="download-button"
+            <button className="period-button">
+              Junho 2024 <span>⌄</span>
+            </button>
+            <button
+              className="download-button"
               onClick={downloadReport}
               disabled={isDownloading}
             >
@@ -248,14 +218,14 @@ export default function HistoricoPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {visibleEntries.length === 0 ? (
+                  {entries.length === 0 ? (
                     <tr>
                       <td colSpan={5} className="table-empty">
-                        {entries.length === 0 ? "Nenhum registro encontrado ainda." : "Nenhum registro corresponde à sua busca."}
+                        Nenhum registro encontrado ainda.
                       </td>
                     </tr>
                   ) : (
-                    visibleEntries.map((entry) => (
+                    entries.map((entry) => (
                       <Fragment key={entry.id}>
                         <tr
                           className={`table-row ${
