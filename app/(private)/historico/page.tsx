@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState, Fragment } from "react";
+import React, { useEffect, useMemo, useState, Fragment } from "react";
 import { AppSidebar } from "@/app/(private)/sidebar/app-sidebar";
 import { useAuth } from "@/app/context/auth";
 import { Loader } from "@/components/ui/loaders/loader-main";
@@ -120,12 +120,7 @@ export default function HistoricoPage() {
       });
   }, [page]);
 
-  const hasFetchedInsight = useRef(false);
-
   useEffect(() => {
-    if (hasFetchedInsight.current) return;
-    hasFetchedInsight.current = true;
-
     const cached = sessionStorage.getItem(INSIGHT_CACHE_KEY);
     if (cached) {
       setInsight(JSON.parse(cached));
