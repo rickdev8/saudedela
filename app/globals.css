@@ -148,7 +148,8 @@ a {
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
-.kicker > span {
+.kicker
+ span {
   width: 24px;
   height: 1px;
   background: var(--coral);
@@ -344,7 +345,7 @@ h2 em {
   font-size: clamp(2.7rem, 4vw, 4rem);
 }
 .section-intro {
-  
+
   max-width: 310px;
   color: var(--muted);
   font-size: 15px;
@@ -368,7 +369,8 @@ h2 em {
   display: flex;
   flex-direction: column;
 }
-.stat > span {
+.stat
+ span {
   color: var(--coral);
   font-size: 15px;
   font-weight: 700;
@@ -446,7 +448,8 @@ h2 em {
   color: var(--coral);
   font-size: 10px;
 }
-.bar-wrap > span {
+.bar-wrap
+ span {
   color: var(--muted);
   font-size: 9px;
 }
@@ -598,7 +601,8 @@ h2 em {
   align-items: center;
   padding: 132px 0;
 }
-.track-intro > p:not(.kicker) {
+.track-intro
+ p:not(.kicker) {
   max-width: 380px;
   margin: 30px 0;
   color: var(--muted);
@@ -1118,7 +1122,8 @@ select:focus-visible {
   font-size: 12px;
   font-weight: 700;
 }
-.auth-heading > p:last-child {
+.auth-heading
+ p:last-child {
   max-width: 360px;
   margin: 24px 0 0;
   color: var(--muted);
@@ -1239,7 +1244,8 @@ select:focus-visible {
   width: 38px;
   height: 38px;
 }
-.auth-panel > p {
+.auth-panel
+ p {
   margin: auto 0 20px;
   color: var(--mint);
   font-size: 12px;
@@ -1676,7 +1682,8 @@ select:focus-visible {
   color: var(--muted);
   font-size: 11px;
 }
-.tracking-footer > a:last-child {
+.tracking-footer
+ a:last-child {
   color: var(--teal);
   font-weight: 700;
 }
@@ -2152,7 +2159,8 @@ select:focus-visible {
 .visual-card-heading h2 {
   font-size: 28px;
 }
-.visual-card-heading > span {
+.visual-card-heading
+ span {
   color: var(--muted);
   font-size: 11px;
 }
@@ -2165,7 +2173,8 @@ select:focus-visible {
   padding-bottom: 0;
   border-bottom: 1px solid var(--line);
 }
-.mood-bars > div {
+.mood-bars
+ div {
   flex: 1;
   height: 100%;
   display: flex;
@@ -2185,7 +2194,8 @@ select:focus-visible {
   min-height: 15px;
   background: var(--teal);
 }
-.mood-bars > div:nth-child(2n) i {
+.mood-bars
+ div:nth-child(2n) i {
   background: var(--coral);
 }
 .mood-bars small {
@@ -2198,7 +2208,8 @@ select:focus-visible {
   flex-direction: column;
   gap: 25px;
 }
-.symptom-meter > div {
+.symptom-meter
+ div {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 9px;
@@ -2382,7 +2393,8 @@ select:focus-visible {
     min-height: 280px;
     padding: 24px 18px;
   }
-  .conversation-card .bot-message > div {
+  .conversation-card .bot-message
+ div {
     max-width: calc(100% - 50px);
   }
   .conversation-card .chat-input {
@@ -2426,7 +2438,7 @@ select:focus-visible {
   .assistant-page {
     padding: 58px 0 85px;
   }
-  
+
   .history-toolbar {
     flex-wrap: wrap;
   }
@@ -2595,7 +2607,8 @@ select:focus-visible {
     border-radius: 50%;
     background: var(--mint);
   }
-  .conversation-card .bot-message > div {
+  .conversation-card .bot-message
+ div {
     max-width: 650px;
     padding: 17px 19px;
     border: 1px solid var(--line);
@@ -3487,7 +3500,8 @@ select:focus-visible {
   color: var(--muted);
   font-size: 11px;
 }
-.tracking-footer > a:last-child {
+.tracking-footer
+ a:last-child {
   color: var(--teal);
   font-weight: 700;
 }
@@ -3864,7 +3878,8 @@ select:focus-visible {
 .visual-card-heading h2 {
   font-size: 28px;
 }
-.visual-card-heading > span {
+.visual-card-heading
+ span {
   color: var(--muted);
   font-size: 11px;
 }
@@ -3877,7 +3892,8 @@ select:focus-visible {
   padding-bottom: 0;
   border-bottom: 1px solid var(--line);
 }
-.mood-bars > div {
+.mood-bars
+ div {
   flex: 1;
   height: 100%;
   display: flex;
@@ -3897,7 +3913,8 @@ select:focus-visible {
   min-height: 15px;
   background: var(--teal);
 }
-.mood-bars > div:nth-child(2n) i {
+.mood-bars
+ div:nth-child(2n) i {
   background: var(--coral);
 }
 .mood-bars small {
@@ -3910,7 +3927,8 @@ select:focus-visible {
   flex-direction: column;
   gap: 25px;
 }
-.symptom-meter > div {
+.symptom-meter
+ div {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 9px;
@@ -4341,7 +4359,8 @@ select:focus-visible {
 .visual-card-heading h2 {
   font-size: 28px;
 }
-.visual-card-heading > span {
+.visual-card-heading
+ span {
   color: var(--muted);
   font-size: 11px;
 }
@@ -4354,7 +4373,8 @@ select:focus-visible {
   padding-bottom: 0;
   border-bottom: 1px solid var(--line);
 }
-.mood-bars > div {
+.mood-bars
+ div {
   flex: 1;
   height: 100%;
   display: flex;
@@ -4374,7 +4394,8 @@ select:focus-visible {
   min-height: 15px;
   background: var(--teal);
 }
-.mood-bars > div:nth-child(2n) i {
+.mood-bars
+ div:nth-child(2n) i {
   background: var(--coral);
 }
 .mood-bars small {
@@ -4454,7 +4475,7 @@ select:focus-visible {
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   margin-top: 25px;
-  
+
 }
 .public-stat-grid article {
   min-height: 230px;
@@ -4563,7 +4584,8 @@ select:focus-visible {
   gap: 16px;
   align-items: flex-start;
 }
-.conversation-card .bot-message > div {
+.conversation-card .bot-message
+ div {
   max-width: 650px;
   padding: 18px 20px;
   border: 1px solid var(--line);
@@ -4594,7 +4616,8 @@ select:focus-visible {
     min-height: 280px;
     padding: 24px 18px;
   }
-  .conversation-card .bot-message > div {
+  .conversation-card .bot-message
+ div {
     max-width: calc(100% - 50px);
   }
   .conversation-card .chat-input {
@@ -4715,7 +4738,8 @@ select:focus-visible {
     border-radius: 50%;
     background: var(--mint);
   }
-  .conversation-card .bot-message > div {
+  .conversation-card .bot-message
+ div {
     max-width: 650px;
     padding: 17px 19px;
     border: 1px solid var(--line);
@@ -4879,7 +4903,8 @@ select:focus-visible {
   color: var(--teal);
   font-size: 15px;
 }
-.conversation-card .bot-message > div {
+.conversation-card .bot-message
+ div {
   padding: 16px 18px;
   border: 1px solid var(--line);
   border-radius: 14px 14px 14px 3px;
@@ -4942,7 +4967,8 @@ select:focus-visible {
     padding: 0 12px;
   }
 
-  .history-table.full-table .table-row > span:nth-child(4),
+  .history-table.full-table .table-row
+ span:nth-child(4),
   .history-table.full-table .table-head span:nth-child(4) {
     display: none;
   }
@@ -5125,11 +5151,13 @@ select:focus-visible {
     padding: 0 12px;
     min-height: 64px;
   }
-  .history-table.full-table .table-row > span:nth-child(4),
+  .history-table.full-table .table-row
+ span:nth-child(4),
   .history-table.full-table .table-head span:nth-child(4) {
     display: none;
   }
-  .history-table.full-table .table-row > button {
+  .history-table.full-table .table-row
+ button {
     width: 32px;
     height: 32px;
   }
@@ -5139,7 +5167,8 @@ select:focus-visible {
   .history-toolbar {
     gap: 10px;
   }
-  .history-toolbar > button {
+  .history-toolbar
+ button {
     flex: 1;
     min-height: 42px;
     padding-inline: 12px;
@@ -5209,7 +5238,8 @@ select:focus-visible {
   border-radius: 14px;
   background: var(--paper);
 }
-.evaluation-progress > span {
+.evaluation-progress
+ span {
   display: block;
   margin-bottom: 16px;
   color: var(--muted);
@@ -5301,7 +5331,8 @@ select:focus-visible {
   gap: 12px;
   margin-top: 34px;
 }
-.evaluation-page .save-row > button {
+.evaluation-page .save-row
+ button {
   display: inline-flex;
   width: auto;
   min-width: 142px;
@@ -5325,10 +5356,12 @@ select:focus-visible {
 .evaluation-page .save-row .button-primary {
   min-width: 176px;
 }
-.evaluation-page .save-row > button:hover {
+.evaluation-page .save-row
+ button:hover {
   transform: translateY(-1px);
 }
-.evaluation-page .save-row > button:focus-visible {
+.evaluation-page .save-row
+ button:focus-visible {
   outline: 2px solid var(--coral);
   outline-offset: 3px;
 }
@@ -5336,7 +5369,8 @@ select:focus-visible {
   .evaluation-page .save-row {
     justify-content: stretch;
   }
-  .evaluation-page .save-row > button {
+  .evaluation-page .save-row
+ button {
     flex: 1;
     min-width: 0;
     padding-inline: 12px;
@@ -5638,7 +5672,8 @@ select:focus-visible {
   justify-content: space-between;
   gap: 16px;
 }
-.echart-card header > div {
+.echart-card header
+ div {
   display: flex;
   align-items: flex-start;
   gap: 12px;
@@ -5656,7 +5691,8 @@ select:focus-visible {
   font-weight: 500;
   letter-spacing: -0.04em;
 }
-.echart-card header > span {
+.echart-card header
+ span {
   color: var(--muted);
   font-size: 10px;
   white-space: nowrap;
@@ -5686,7 +5722,8 @@ select:focus-visible {
   .echart-card h2 {
     font-size: 18px;
   }
-  .echart-card header > span {
+  .echart-card header
+ span {
     max-width: 90px;
     text-align: right;
     white-space: normal;
@@ -5711,7 +5748,8 @@ select:focus-visible {
 .daily-checkin-card .field-group:last-of-type {
   border-bottom: 0;
 }
-.daily-checkin-card .field-group > label,
+.daily-checkin-card .field-group
+ label,
 .field-label-row label {
   color: var(--teal);
   font-size: 13px;
@@ -5847,7 +5885,8 @@ select:focus-visible {
     min-height: 66px;
     padding: 0 12px;
   }
-  .history-table.full-table .table-row > span:nth-child(4),
+  .history-table.full-table .table-row
+ span:nth-child(4),
   .history-table.full-table .table-head span:nth-child(4) {
     display: none;
   }
@@ -6064,7 +6103,7 @@ select:focus-visible {
 /* Botão de Ações (X e ···) */
 .history-table .action-button {
   background: transparent;
-  
+
   cursor: pointer;
   color: var(--muted);
   font-size: 1.25rem;
@@ -6122,7 +6161,8 @@ select:focus-visible {
     padding: 0 10px;
   }
 
-  .history-table.full-table .table-row > span:nth-child(4),
+  .history-table.full-table .table-row
+ span:nth-child(4),
   .history-table.full-table .table-head span:nth-child(4) {
     display: none;
   }
@@ -6153,7 +6193,8 @@ select:focus-visible {
   gap: 16px;
   padding: 18px 20px 0;
 }
-.echart-card header > div {
+.echart-card header
+ div {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -6390,7 +6431,8 @@ select:focus-visible {
   letter-spacing: -.035em;
 }
 
-.section-heading-line > p {
+.section-heading-line
+ p {
   max-width: 280px;
   margin: 0;
   color: var(--muted);
@@ -6449,7 +6491,8 @@ select:focus-visible {
   letter-spacing: -.045em;
 }
 
-.dignidade-content > p:not(.card-index) {
+.dignidade-content
+ p:not(.card-index) {
   max-width: 650px;
   margin: 0 0 20px;
   color: color-mix(in srgb, var(--mineral) 82%, transparent);
@@ -6519,7 +6562,8 @@ select:focus-visible {
     gap: 12px;
   }
 
-  .section-heading-line > p {
+  .section-heading-line
+ p {
     text-align: left;
   }
 
@@ -6593,7 +6637,8 @@ select:focus-visible {
   border-bottom: 1px solid color-mix(in srgb, var(--teal) 10%, var(--line));
 }
 
-.daily-checkin-card .field-group > label,
+.daily-checkin-card .field-group
+ label,
 .daily-checkin-card .field-label-row label {
   color: var(--teal);
   font-size: 12px;
@@ -6707,7 +6752,8 @@ select:focus-visible {
   font-style: normal;
 }
 
-.insight-card > p:not(.insight-disclaimer) {
+.insight-card
+ p:not(.insight-disclaimer) {
   color: color-mix(in srgb, var(--mineral) 82%, transparent);
   line-height: 1.65;
 }
