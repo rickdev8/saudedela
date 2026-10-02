@@ -5078,7 +5078,129 @@ select:focus-visible {
   }
 }
 
-/* Página inicial: hero, evidências, dados e chamadas editoriais. */
+.history-search-filter {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.history-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: min(100%, 360px);
+}
+
+.history-search input {
+  width: 100%;
+  height: 44px;
+  padding: 0 42px;
+  border: 1px solid rgba(43, 76, 74, 0.18);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.history-search input::placeholder {
+  color: #8b9291;
+}
+
+.history-search input:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(43, 76, 74, 0.08);
+}
+
+.history-search-icon {
+  position: absolute;
+  left: 15px;
+  z-index: 1;
+  color: var(--teal);
+  font-size: 21px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.history-search-clear {
+  position: absolute;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #777;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.history-search-clear:hover {
+  background: rgba(43, 76, 74, 0.08);
+  color: var(--teal);
+}
+
+.history-filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.history-filter label {
+  color: #68706f;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.history-filter select {
+  height: 44px;
+  padding: 0 34px 0 13px;
+  border: 1px solid rgba(43, 76, 74, 0.18);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  outline: none;
+}
+
+.history-filter select:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(43, 76, 74, 0.08);
+}
+
+@media (max-width: 800px) {
+  .history-search-filter {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .history-search {
+    width: 100%;
+  }
+
+  .history-filter {
+    justify-content: space-between;
+  }
+
+  .history-filter select {
+    flex: 1;
+  }
+}
 
 .hero-copy h1 {
   max-width: 650px;
