@@ -7173,6 +7173,96 @@ select:focus-visible {
   mask-composite: intersect;
   animation: l4 1s infinite steps(10);
 }
+/* Correções de responsividade: ciclo e assistente */
+.cycle-page .calendar-grid .day {
+  display: grid;
+  place-items: center;
+  width: clamp(30px, 5vw, 42px);
+  height: clamp(30px, 5vw, 42px);
+  min-width: 0;
+  min-height: 0;
+  aspect-ratio: 1 / 1;
+  padding: 0;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.cycle-page .calendar-grid .day.selected,
+.cycle-page .calendar-grid .day.today {
+  width: clamp(30px, 5vw, 42px);
+  height: clamp(30px, 5vw, 42px);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+}
+
+@media (max-width: 760px) {
+  .cycle-page .calendar-grid .day,
+  .cycle-page .calendar-grid .day.selected,
+  .cycle-page .calendar-grid .day.today {
+    width: min(10vw, 38px) !important;
+    height: min(10vw, 38px) !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    aspect-ratio: 1 / 1;
+    padding: 0 !important;
+    border-radius: 50% !important;
+  }
+
+  .assistant-page .chat-header {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+  }
+
+  .assistant-page .chat-header > span {
+    min-width: 0;
+    line-height: 1.35;
+  }
+
+  .assistant-page .chat-header > span:last-child {
+    width: 100%;
+    font-size: 10px;
+  }
+
+  .assistant-page h1,
+  .assistant-page .assistant-intro h1 {
+    font-size: clamp(2rem, 10vw, 3rem);
+    line-height: 1;
+  }
+
+  .assistant-page .tracking-lead {
+    max-width: 100%;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .assistant-page .conversation-card h2,
+  .assistant-page .conversation-card h3 {
+    font-size: 1rem;
+  }
+
+  .assistant-page .conversation-body,
+  .assistant-page .chat-input {
+    font-size: 13px;
+  }
+
+  .assistant-page .bot-message p,
+  .assistant-page .user-message {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .assistant-page .chat-header,
+  .assistant-page .chat-input {
+    padding-inline: 14px;
+  }
+
+  .assistant-page .chat-input input {
+    min-width: 0;
+    font-size: 13px;
+  }
+}
+
 @keyframes l4 {
   to {
     transform: rotate(1turn);
