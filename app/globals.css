@@ -3325,11 +3325,11 @@ select:focus-visible {
 }
 .tracking-content {
   display: block;
-  max-width: 920px;
+  max-width:1350px;
 }
 .entry-card,
 .insight-card {
-  padding: 32px;
+  padding: 32;
   border: 1px solid var(--line);
 }
 .entry-card {

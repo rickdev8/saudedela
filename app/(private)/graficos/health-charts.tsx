@@ -48,8 +48,6 @@ const flowColorByLabel: Record<string, string> = {
   Intenso: colors.wine,
 };
 
-const indicatorColors = [colors.gold, colors.petrol, colors.coral, colors.wine];
-
 type DashboardData = {
   referenceMonth: string;
   totalRegistros: number;
@@ -71,11 +69,13 @@ function monthLabel(ref: string) {
 export function HealthCharts() {
   const [data, setData] = useState<DashboardData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
     fetch("/api/dashboard")
       .then((res) => res.json())
       .then((json) => {
+        console.log("📊 DASHBOARD DATA:", json); // temporário, pra depurar — remove depois
         if (json.error) {
           throw new Error(json.error);
         }
@@ -83,6 +83,7 @@ export function HealthCharts() {
       })
       .catch((err) => {
         console.error("ERRO DASHBOARD (frontend):", err);
+        setErrorMessage(err.message ?? "Erro ao carregar os gráficos.");
       })
       .finally(() => {
         setIsLoading(false);
@@ -93,6 +94,14 @@ export function HealthCharts() {
     return (
       <div className={styles.echartsGrid}>
         <p className={styles.message}>Carregando gráficos...</p>
+      </div>
+    );
+  }
+
+  if (errorMessage) {
+    return (
+      <div className={styles.echartsGrid}>
+        <p className={styles.message}>{errorMessage}</p>
       </div>
     );
   }
@@ -109,7 +118,7 @@ export function HealthCharts() {
 
   const periodLabel = monthLabel(data.referenceMonth);
 
-  // ---------- 1. Humor ao longo da semana: categórico, sem escala falsa ----------
+  // ---------- 1. Humor ao longo da semana ----------
   const moodOption = {
     ...base,
     grid: { left: 90, right: 24, top: 18, bottom: 28 },
@@ -142,7 +151,7 @@ export function HealthCharts() {
     },
   };
 
-  // ---------- 2. Sintomas registrados: ranking, barra horizontal ----------
+  // ---------- 2. Sintomas registrados ----------
   const symptomOption = {
     ...base,
     grid: { left: 110, right: 30, top: 18, bottom: 20 },
@@ -170,82 +179,41 @@ export function HealthCharts() {
     ],
   };
 
-  const gaugeCenters = [
+  // ---------- 3. Indicadores do período: 4 mini-gauges ----------
+  const gaugeCenters: [string, string][] = [
     ["25%", "30%"],
     ["75%", "30%"],
     ["25%", "72%"],
     ["75%", "72%"],
   ];
-  
-  const indicatorColors = [
-    colors.petrol,
-    colors.coral,
-    colors.gold,
-    colors.wine,
-  ];
-  
+
+  const indicatorColors = [colors.petrol, colors.coral, colors.gold, colors.wine];
+
   const indicatorsOption = {
     ...base,
-  
     series: data.indicators.slice(0, 4).map((indicator, idx) => ({
       type: "gauge",
-  
       center: gaugeCenters[idx] ?? ["50%", "50%"],
-  
-      // AUMENTADO
       radius: "38%",
-  
       min: 0,
       max: indicator.max,
-  
       startAngle: 210,
       endAngle: -30,
-  
-      progress: {
-        show: true,
-        width: 11,
-        itemStyle: {
-          color: indicatorColors[idx % 4],
-        },
-      },
-  
-      axisLine: {
-        lineStyle: {
-          width: 11,
-          color: [[1, colors.line]],
-        },
-      },
-  
-      axisTick: {
-        show: false,
-      },
-  
-      splitLine: {
-        show: false,
-      },
-  
-      axisLabel: {
-        show: false,
-      },
-  
-      pointer: {
-        show: false,
-      },
-  
-      anchor: {
-        show: false,
-      },
-  
+      progress: { show: true, width: 11, itemStyle: { color: indicatorColors[idx % 4] } },
+      axisLine: { lineStyle: { width: 11, color: [[1, colors.line]] } },
+      axisTick: { show: false },
+      splitLine: { show: false },
+      axisLabel: { show: false },
+      pointer: { show: false },
+      anchor: { show: false },
       detail: {
         valueAnimation: true,
         fontSize: 20,
         fontWeight: 700,
         color: colors.ink,
         offsetCenter: [0, "0%"],
-  
         formatter: () => `${indicator.value}`,
       },
-  
       title: {
         show: true,
         offsetCenter: [0, "75%"],
@@ -253,17 +221,11 @@ export function HealthCharts() {
         fontWeight: 500,
         color: colors.muted,
       },
-  
-      data: [
-        {
-          value: indicator.value,
-          name: indicator.label,
-        },
-      ],
+      data: [{ value: indicator.value, name: indicator.label }],
     })),
   };
 
-  // ---------- 4. Fluxo menstrual: donut — níveis somam o total de dias do mês ----------
+  // ---------- 4. Fluxo menstrual: donut ----------
   const flowTotal = data.flowLevels.reduce((sum, f) => sum + f.value, 0);
 
   const flowOption = {
@@ -309,7 +271,7 @@ export function HealthCharts() {
     },
   };
 
-  // ---------- 5. Intensidade dos registros: calendário heatmap ----------
+  // ---------- 5. Intensidade dos registros ----------
   const maxIntensity = Math.max(1, ...data.calendarData.map(([, value]) => value));
 
   const calendarOption = {
