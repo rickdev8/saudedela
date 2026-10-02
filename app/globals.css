@@ -497,6 +497,7 @@ h2 em {
   padding-bottom: 7px;
 }
 .chat-window {
+  border-radius: 5px;
   background: var(--mineral);
   color: var(--ink);
 }
@@ -664,6 +665,7 @@ h2 em {
   display: flex;
   margin-top: 23px;
   padding-top: 16px;
+  gap: 10px;
   border-top: 1px solid var(--line);
   color: var(--muted);
   font-size: 11px;
@@ -676,6 +678,7 @@ h2 em {
 .yellow-dot {
   width: 7px;
   height: 7px;
+
   border-radius: 50%;
   background: var(--sun);
 }
