@@ -6978,6 +6978,39 @@ select:focus-visible {
   }
 }
 
+/* Avaliação: formulário e percurso lado a lado */
+.evaluation-page .evaluation-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  align-items: start;
+  gap: 28px;
+}
+
+.evaluation-page .evaluation-card {
+  min-width: 0;
+  width: auto;
+}
+
+.evaluation-page .evaluation-aside {
+  display: flex;
+  width: auto;
+  min-width: 0;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.evaluation-page .evaluation-progress,
+.evaluation-page .evaluation-aside > .insight-card {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+  .evaluation-page .evaluation-content {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Loader */
 .loader {
   width: 28px;
