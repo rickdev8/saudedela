@@ -7000,7 +7000,7 @@ select:focus-visible {
 }
 
 .evaluation-page .evaluation-progress,
-.evaluation-page .evaluation-aside > .insight-card {
+.evaluation-page .evaluation-aside .insight-card {
   width: 100%;
   box-sizing: border-box;
 }
@@ -7173,5 +7173,212 @@ select:focus-visible {
 @keyframes l4 {
   to {
     transform: rotate(1turn);
+  }
+}
+
+/* Revisão responsiva final */
+@media (max-width: 760px) {
+  html,
+  body {
+    min-width: 0;
+    overflow-x: hidden;
+  }
+
+  .section-wrap,
+  .site-header,
+  .tracking-main,
+  .private-main {
+    width: min(100% - 32px, 680px);
+  }
+
+  .site-header {
+    height: 72px;
+  }
+
+  .site-header nav {
+    display: none;
+  }
+
+  .hero,
+  .track-section,
+  .cycle-section,
+  .data-intro,
+  .evaluation-page .evaluation-hero,
+  .evaluation-page .evaluation-content,
+  .auth-layout,
+  .assistant-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .hero {
+    min-height: auto;
+    padding: 52px 0 72px;
+  }
+
+  h1 {
+    max-width: 100%;
+    font-size: clamp(2.55rem, 12vw, 4rem);
+  }
+
+  h2 {
+    font-size: clamp(1.65rem, 8vw, 2.45rem);
+  }
+
+  .hero-description,
+  .tracking-lead {
+    max-width: 100%;
+    font-size: 16px;
+  }
+
+  .hero-actions,
+  .save-row,
+  .history-toolbar,
+  .history-filters,
+  .footer-links,
+  .footer-bottom {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .hero-actions > *,
+  .save-row > *,
+  .history-toolbar > *,
+  .history-filters > * {
+    width: 100%;
+  }
+
+  .button-primary,
+  .button-outline,
+  .save-button,
+  .download-button,
+  .period-button {
+    width: 100%;
+    min-width: 0;
+    justify-content: center;
+  }
+
+  .data-topic-grid,
+  .public-stat-grid,
+  .stats-grid,
+  .footer-links,
+  .form-grid,
+  .chart-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .evidence-card,
+  .dignidade-banner,
+  .daily-checkin-card,
+  .evaluation-card,
+  .insight-card,
+  .source-panel,
+  .data-board {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .dignidade-banner {
+    grid-template-columns: 1fr;
+  }
+
+  .dignidade-side {
+    align-items: flex-start;
+    border-top: 1px solid color-mix(in srgb, var(--mint) 28%, transparent);
+    border-left: 0;
+    padding-top: 18px;
+    padding-left: 0;
+    text-align: left;
+  }
+
+  .history-search,
+  .history-filter-select,
+  .history-search input,
+  .history-filter-select select,
+  .custom-symptom-field input,
+  textarea,
+  input,
+  select {
+    max-width: 100%;
+  }
+
+  .history-search {
+    width: 100%;
+  }
+
+  .calendar-grid {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .table-wrap,
+  .history-table,
+  .data-table {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .echarts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .echart-card,
+  .echart-card.wide,
+  .echart-card.compact {
+    grid-column: 1;
+    min-width: 0;
+  }
+
+  .evaluation-page .evaluation-card,
+  .evaluation-page .evaluation-aside {
+    width: 100%;
+  }
+
+  .evaluation-page .evaluation-content {
+    gap: 24px;
+  }
+
+  .evaluation-page .evaluation-progress button {
+    white-space: normal;
+  }
+
+  .assistant-section {
+    padding: 28px 20px;
+  }
+}
+
+@media (max-width: 420px) {
+  .section-wrap,
+  .site-header,
+  .tracking-main,
+  .private-main,
+  .evaluation-page .evaluation-hero,
+  .evaluation-page .evaluation-content,
+  .evaluation-page .tracking-footer {
+    width: min(100% - 24px, 680px);
+  }
+
+  .brand {
+    font-size: 18px;
+  }
+
+  .pulse-mark {
+    width: 24px;
+    height: 24px;
+  }
+
+  .public-stat-grid,
+  .data-topic-grid {
+    gap: 10px;
+  }
+
+  .daily-checkin-card,
+  .evaluation-card,
+  .insight-card {
+    padding: 20px 16px;
+  }
+
+  .mood-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
