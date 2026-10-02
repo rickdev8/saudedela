@@ -6889,6 +6889,146 @@ select:focus-visible {
   }
 }
 
+/* Ajuste final da avaliação */
+.evaluation-page .tracking-main {
+  width: 100%;
+}
+
+.evaluation-page .evaluation-hero,
+.evaluation-page .evaluation-content,
+.evaluation-page .tracking-footer {
+  width: min(100% - 48px, 1180px);
+  margin-inline: auto;
+}
+
+.evaluation-page .evaluation-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  align-items: end;
+  gap: 56px;
+}
+
+.evaluation-page .evaluation-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  align-items: start;
+  gap: 32px;
+}
+
+.evaluation-page .evaluation-card {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+.evaluation-page .evaluation-aside {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.evaluation-page .evaluation-progress,
+.evaluation-page .evaluation-note,
+.evaluation-page .evaluation-aside .insight-card {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.evaluation-page .evaluation-progress {
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--paper);
+}
+
+.evaluation-page .evaluation-progress > span {
+  display: block;
+  margin-bottom: 12px;
+}
+
+.evaluation-page .evaluation-progress button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  text-align: left;
+}
+
+.evaluation-page .evaluation-progress button:last-child {
+  border-bottom: 0;
+}
+
+.evaluation-page .evaluation-progress button b {
+  min-width: 22px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.evaluation-page .evaluation-progress button.active,
+.evaluation-page .evaluation-progress button.done {
+  color: var(--teal);
+}
+
+.evaluation-page .evaluation-progress button.active b {
+  color: var(--coral);
+}
+
+.evaluation-page .evaluation-note {
+  padding: 20px;
+  border-radius: 14px;
+  background: var(--mint);
+}
+
+.evaluation-page .evaluation-note p {
+  margin: 10px 0 0;
+  color: var(--teal);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+@media (max-width: 900px) {
+  .evaluation-page .evaluation-hero,
+  .evaluation-page .evaluation-content {
+    grid-template-columns: 1fr;
+  }
+
+  .evaluation-page .evaluation-hero {
+    gap: 28px;
+  }
+
+  .evaluation-page .evaluation-card {
+    order: 1;
+  }
+
+  .evaluation-page .evaluation-aside {
+    order: 2;
+  }
+
+  .evaluation-page .evaluation-progress button {
+    min-height: 44px;
+    white-space: normal;
+    line-height: 1.35;
+  }
+}
+
+@media (max-width: 560px) {
+  .evaluation-page .evaluation-hero,
+  .evaluation-page .evaluation-content,
+  .evaluation-page .tracking-footer {
+    width: min(100% - 32px, 1180px);
+  }
+}
+
 /* Loader */
 .loader {
   width: 28px;
