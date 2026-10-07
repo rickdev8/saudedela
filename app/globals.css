@@ -575,8 +575,8 @@ h2 em {
   margin-top: 8px;
 }
 .source-chips span {
-  padding: 5px 8px;
-  border: 1px solid var(--line);
+  padding: 5px 0;
+  border: 0;
   color: var(--teal);
   font-size: 9px;
   font-weight: 700;
@@ -7260,6 +7260,83 @@ select:focus-visible {
   .assistant-page .chat-input input {
     min-width: 0;
     font-size: 13px;
+  }
+}
+
+/* Assistente: entrada expansível e fontes discretas */
+.assistant-page .source-chips span,
+.conversation-card .source-chips span {
+  border: 0;
+  padding: 5px 0;
+  background: transparent;
+}
+
+.assistant-page .chat-input,
+.conversation-card .chat-input {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  min-height: 58px;
+  padding: 10px 12px 10px 16px;
+}
+
+.assistant-page .chat-input textarea,
+.conversation-card .chat-input textarea {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  min-height: 38px;
+  max-height: 180px;
+  padding: 9px 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: 1.45;
+  resize: none;
+  overflow-y: auto;
+  field-sizing: content;
+}
+
+.assistant-page .chat-input button,
+.conversation-card .chat-input button {
+  display: inline-grid;
+  flex: 0 0 40px;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--coral);
+  color: var(--mineral);
+  cursor: pointer;
+}
+
+.assistant-page .chat-input button svg,
+.conversation-card .chat-input button svg {
+  width: 19px;
+  height: 19px;
+  fill: currentColor;
+}
+
+.assistant-page .chat-input button:disabled,
+.conversation-card .chat-input button:disabled {
+  cursor: not-allowed;
+  opacity: .45;
+}
+
+@media (max-width: 760px) {
+  .assistant-page .chat-input,
+  .conversation-card .chat-input {
+    gap: 8px;
+    padding-inline: 12px;
+  }
+
+  .assistant-page .chat-input textarea,
+  .conversation-card .chat-input textarea {
+    font-size: 14px;
   }
 }
 
