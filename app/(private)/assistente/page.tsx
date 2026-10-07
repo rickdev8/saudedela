@@ -202,22 +202,25 @@ export default function AssistentePage() {
             </div>
 
             <div className="chat-input">
-              <input
-                type="text"
+              <textarea
                 value={message}
                 onChange={(event) => setMessage(event.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Digite uma pergunta"
                 aria-label="Digite uma pergunta"
                 disabled={isSending}
+                rows={1}
               />
-               <button
+              <button
                 type="button"
                 onClick={handleSendMessage}
                 disabled={!message.trim() || isSending}
                 aria-label="Enviar mensagem"
               >
-                {isSending ? "Enviando..." : "Enviar"}
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M4 4.8 20 12 4 19.2l2.2-5.9L15 12l-8.8-1.3L4 4.8Z" />
+                </svg>
+                <span className="sr-only">{isSending ? "Enviando" : "Enviar mensagem"}</span>
               </button>
             </div>
           
