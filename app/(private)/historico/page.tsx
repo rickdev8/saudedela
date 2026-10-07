@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState, Fragment } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { AppSidebar } from "@/app/(private)/sidebar/app-sidebar";
 import { useAuth } from "@/app/context/auth";
 import { Loader } from "@/components/ui/loaders/loader-main";
@@ -82,8 +82,6 @@ export default function HistoricoPage() {
   const [page, setPage] = useState(1);
   const [insight, setInsight] = useState<Insight | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [expandedId, setExpandedId] = useState<string | null>(null);
-
   const [isDownloading, setIsDownloading] = useState(false);
 
   async function downloadReport() {
@@ -149,10 +147,6 @@ export default function HistoricoPage() {
       });
   }, []);
   
-  function toggleExpanded(id: string) {
-    setExpandedId((current) => (current === id ? null : id));
-  }
-
   return (
     <main className="tracking-page">
       <AppSidebar active="/historico" />
@@ -214,94 +208,33 @@ export default function HistoricoPage() {
                     <th>Fluxo</th>
                     <th>Humor</th>
                     <th>Sintomas</th>
-                    <th></th>
+                    <th>Dor</th>
+                    <th>Energia</th>
+                    <th>Sono</th>
+                    <th>Observações</th>
                   </tr>
                 </thead>
                 <tbody>
                   {entries.length === 0 ? (
                     <tr>
-                      <td colSpan={5} className="table-empty">
+                      <td colSpan={8} className="table-empty">
                         Nenhum registro encontrado ainda.
                       </td>
                     </tr>
                   ) : (
                     entries.map((entry) => (
-                      <Fragment key={entry.id}>
-                        <tr
-                          className={`table-row ${
-                            expandedId === entry.id ? "expanded" : ""
-                          }`}
-                        >
-                          <td>
-                            <strong className="date-text">
-                              {formatDate(entry.date)}
-                            </strong>
-                          </td>
-                          <td>
-                            {entry.flow
-                              ? flowLabels[entry.flow] ?? entry.flow
-                              : "—"}
-                          </td>
-                          <td>{entry.mood ?? "—"}</td>
-                          <td>
-                            {entry.symptoms.length > 0
-                              ? entry.symptoms.join(", ")
-                              : "Nenhum sintoma"}
-                          </td>
-                          <td className="action-cell">
-                            <button
-                              className="action-button"
-                              aria-label={`Mais opções para ${formatDate(
-                                entry.date
-                              )}`}
-                              onClick={() => toggleExpanded(entry.id)}
-                            >
-                              {expandedId === entry.id ? "×" : "···"}
-                            </button>
-                          </td>
-                        </tr>
-
-                        {expandedId === entry.id && (
-                          <tr className="table-row-expanded">
-                            <td colSpan={5}>
-                              <div className="table-row-detail">
-                                <div>
-                                  <span>Intensidade da dor</span>
-                                  <strong>
-                                    {entry.painIntensity
-                                      ? painLabels[entry.painIntensity] ??
-                                        entry.painIntensity
-                                      : "—"}
-                                  </strong>
-                                </div>
-                                <div>
-                                  <span>Energia</span>
-                                  <strong>
-                                    {entry.energy
-                                      ? energyLabels[entry.energy] ??
-                                        entry.energy
-                                      : "—"}
-                                  </strong>
-                                </div>
-                                <div>
-                                  <span>Sono</span>
-                                  <strong>
-                                    {entry.sleep
-                                      ? sleepLabels[entry.sleep] ?? entry.sleep
-                                      : "—"}
-                                  </strong>
-                                </div>
-                                {entry.notes && (
-                                  <div className="table-row-detail-note">
-                                    <span>Observação</span>
-                                    <p>{entry.notes}</p>
-                                  </div>
-                                )}
-                              </div>
-                            </td>
-                          </tr>
-                        )}
-                      </Fragment>
+                      <tr className="table-row" key={entry.id}>
+                        <td>
+                          <strong className="date-text">{formatDate(entry.date)}</strong>
+                        </td>
+                        <td>{entry.flow ? flowLabels[entry.flow] ?? entry.flow : "—"}</td>
+                        <td>{entry.mood ?? "—"}</td>
+                        <td>{entry.symptoms.length > 0 ? entry.symptoms.join(", ") : "Nenhum sintoma"}</td>
+                        <td>{entry.painIntensity ? painLabels[entry.painIntensity] ?? entry.painIntensity : "—"}</td>
+                        <td>{entry.energy ? energyLabels[entry.energy] ?? entry.energy : "—"}</td>
+                        <td>{entry.sleep ? sleepLabels[entry.sleep] ?? entry.sleep : "—"}</td>
+                        <td>{entry.notes || "—"}</td>
+                      </tr>
                     ))
                   )}
                 </tbody>
