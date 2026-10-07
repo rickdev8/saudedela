@@ -3,10 +3,13 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { AppSidebar } from "@/app/(private)/sidebar/app-sidebar";
 import { useAuth } from "@/app/context/auth";
-import { Loader } from "@/components/ui/loaders/loader-main";
+
 import { History } from "@/components/ui/loaders/loader-history";
 
-type HeadlinePart = { text: string; emphasis: boolean };
+type HeadlinePart = {
+  text: string;
+  emphasis: boolean;
+};
 
 type Insight = {
   status: "insufficient_data" | "normal" | "attention";
@@ -62,6 +65,15 @@ const sleepLabels: Record<string, string> = {
   good: "Bom",
 };
 
+const FILTER_OPTIONS: { value: string; label: string; param?: string }[] = [
+  { value: "all", label: "Todos" },
+  { value: "flow", label: "Fluxo" },
+  { value: "mood", label: "Humor" },
+  { value: "pain", label: "Dor" },
+  { value: "energy", label: "Energia" },
+  { value: "sleep", label: "Sono" },
+];
+
 function formatDate(isoDate: string) {
   return new Date(isoDate)
     .toLocaleDateString("pt-BR", {
@@ -73,29 +85,54 @@ function formatDate(isoDate: string) {
     .replace(".", "");
 }
 
+function useDebouncedValue<T>(value: T, delay: number) {
+  const [debounced, setDebounced] = useState(value);
 
+  useEffect(() => {
+    const timeout = setTimeout(() => setDebounced(value), delay);
+    return () => clearTimeout(timeout);
+  }, [value, delay]);
+
+  return debounced;
+}
 
 export default function HistoricoPage() {
   const { logout } = useAuth();
+
   const [entries, setEntries] = useState<SymptomEntry[]>([]);
   const [pagination, setPagination] = useState<Pagination | null>(null);
+
   const [page, setPage] = useState(1);
+
   const [insight, setInsight] = useState<Insight | null>(null);
+
   const [isLoading, setIsLoading] = useState(true);
   const [isDownloading, setIsDownloading] = useState(false);
 
+  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("all");
+
+  const debouncedSearch = useDebouncedValue(search, 400);
+
   async function downloadReport() {
     setIsDownloading(true);
+
     try {
       const response = await fetch("/api/report");
+
       if (!response.ok) return;
 
       const blob = await response.blob();
+
       const url = URL.createObjectURL(blob);
+
       const link = document.createElement("a");
+
       link.href = url;
       link.download = "relatorio-saudedela.pdf";
+
       link.click();
+
       URL.revokeObjectURL(url);
     } finally {
       setIsDownloading(false);
@@ -103,9 +140,19 @@ export default function HistoricoPage() {
   }
 
   useEffect(() => {
+    setPage(1);
+  }, [debouncedSearch, filter]);
+
+  useEffect(() => {
     setIsLoading(true);
 
-    fetch(`/api/acompanhe-se?page=${page}`)
+    const params = new URLSearchParams({ page: String(page) });
+
+    if (debouncedSearch.trim()) {
+      params.set("search", debouncedSearch.trim());
+    }
+
+    fetch(`/api/acompanhe-se?${params.toString()}`)
       .then((res) => res.json())
       .then((data) => {
         setEntries(Array.isArray(data.entries) ? data.entries : []);
@@ -114,30 +161,40 @@ export default function HistoricoPage() {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [page]);
+  }, [page, debouncedSearch, filter]);
 
   const hasFetchedInsight = useRef(false);
 
   useEffect(() => {
     if (hasFetchedInsight.current) return;
+
     hasFetchedInsight.current = true;
 
-    const cached = sessionStorage.getItem(INSIGHT_CACHE_KEY);
-    if (cached) {
-      setInsight(JSON.parse(cached));
-      return;
+    const cachedRaw = sessionStorage.getItem(INSIGHT_CACHE_KEY);
+
+    if (cachedRaw) {
+      try {
+        const cached = JSON.parse(cachedRaw);
+        if (cached) {
+          setInsight(cached);
+          return;
+        }
+        sessionStorage.removeItem(INSIGHT_CACHE_KEY);
+      } catch {
+        sessionStorage.removeItem(INSIGHT_CACHE_KEY);
+      }
     }
-  
+
     fetch("/api/insight")
       .then(async (res) => {
         const data = await res.json();
-  
+
         if (!res.ok) {
           console.error("ERRO INSIGHT (backend):", data);
           setInsight(null);
           return;
         }
-  
+
         setInsight(data);
         sessionStorage.setItem(INSIGHT_CACHE_KEY, JSON.stringify(data));
       })
@@ -150,10 +207,11 @@ export default function HistoricoPage() {
   return (
     <main className="tracking-page">
       <AppSidebar active="/historico" />
+
       <div className="tracking-main">
-       
         <section className="content-page section-wrap">
           <p className="tracking-context">Acompanhe-se</p>
+
           <div className="history-heading-row">
             <div className="history-heading-copy">
               <h1>
@@ -161,33 +219,89 @@ export default function HistoricoPage() {
                 <br />
                 <em>tem percebido.</em>
               </h1>
+
               <p className="tracking-lead">
-                Um registro simples das suas observações ao longo do tempo. Use
-                esse espaço para reconhecer ritmos e preparar conversas mais
-                claras.
+                Um registro simples das suas observações ao longo do tempo.
+                Use esse espaço para reconhecer ritmos e preparar conversas
+                mais claras.
               </p>
             </div>
+
             {insight && (
-              <aside className="insight-card history-insight" aria-label="Insight do seu histórico">
+              <aside
+                className="insight-card history-insight"
+                aria-label="Insight do seu histórico"
+              >
                 <div className="insight-top">
                   <span className="card-index">INSIGHT</span>
-                  <span className="insight-status">{insight.status === "attention" ? "Atenção" : "Seu ritmo"}</span>
+
+                  <span className="insight-status">
+                    {insight.status === "attention" ? "Atenção" : "Seu ritmo"}
+                  </span>
                 </div>
+
                 <h2>
                   {insight.headlineParts.map((part, index) => (
-                    <span key={`${part.text}-${index}`} className={part.emphasis ? "insight-emphasis" : undefined}>
+                    <span
+                      key={`${part.text}-${index}`}
+                      className={part.emphasis ? "insight-emphasis" : undefined}
+                    >
                       {part.text}{" "}
                     </span>
                   ))}
                 </h2>
+
                 <p>{insight.description}</p>
               </aside>
             )}
           </div>
+
+          {/* BARRA DE PESQUISA E FILTRO */}
+
           <div className="history-toolbar">
-            <button className="period-button">
-              Junho 2024 <span>⌄</span>
-            </button>
+            <div className="history-search-filter">
+              <div className="history-search">
+                <span className="history-search-icon" aria-hidden="true">
+                  ⌕
+                </span>
+
+                <input
+                  type="search"
+                  placeholder="Pesquisar no histórico..."
+                  value={search}
+                  onChange={(event) => setSearch(event.target.value)}
+                  aria-label="Pesquisar no histórico"
+                />
+
+                {search && (
+                  <button
+                    type="button"
+                    className="history-search-clear"
+                    onClick={() => setSearch("")}
+                    aria-label="Limpar pesquisa"
+                  >
+                    ×
+                  </button>
+                )}
+              </div>
+
+              <div className="history-filter">
+                <label htmlFor="history-filter">Filtrar por</label>
+
+                <select
+                  id="history-filter"
+                  value={filter}
+                  onChange={(event) => setFilter(event.target.value)}
+                >
+                  {FILTER_OPTIONS.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
             <button
               className="download-button"
               onClick={downloadReport}
@@ -196,6 +310,8 @@ export default function HistoricoPage() {
               {isDownloading ? "Gerando..." : "Baixar relatório em PDF"}
             </button>
           </div>
+
+          {/* TABELA */}
 
           {isLoading ? (
             <History show={isLoading} />
@@ -214,8 +330,9 @@ export default function HistoricoPage() {
                     <th>Observações</th>
                   </tr>
                 </thead>
+
                 <tbody>
-                  {entries.length === 0 ? (
+                  {visibleEntries.length === 0 ? (
                     <tr>
                       <td colSpan={8} className="table-empty">
                         Nenhum registro encontrado ainda.
@@ -242,6 +359,8 @@ export default function HistoricoPage() {
             </div>
           )}
 
+          {/* PAGINAÇÃO */}
+
           {pagination && pagination.totalPages > 1 && (
             <div className="pagination-row">
               <button
@@ -250,14 +369,14 @@ export default function HistoricoPage() {
               >
                 Anterior
               </button>
+
               <span>
                 Página {pagination.page} de {pagination.totalPages}
               </span>
+
               <button
                 onClick={() =>
-                  setPage((current) =>
-                    Math.min(pagination.totalPages, current + 1)
-                  )
+                  setPage((current) => Math.min(pagination.totalPages, current + 1))
                 }
                 disabled={page === pagination.totalPages}
               >

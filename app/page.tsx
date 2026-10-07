@@ -332,7 +332,7 @@ export default function Page({ pulseMarkIcon }: AssistantHomeSectionProps) {
             <span>
               <i className="yellow-dot" /> sintomas registrados
             </span>
-            <strong>4 anotações</strong>
+            <strong >4 anotações</strong>
           </div>
         </div>
       </section>
