@@ -7324,7 +7324,7 @@ select:focus-visible {
 .tracking-page .history-table td {
   height: auto;
   min-width: 0;
-  padding: 10px 12px;
+  padding: 16px 18px;
   border-bottom: 1px solid var(--line);
   color: var(--ink);
   font-size: 12px;
@@ -7392,6 +7392,39 @@ select:focus-visible {
 
   .tracking-page .history-table th {
     font-size: 9px;
+  }
+}
+
+/* Histórico: ocupar melhor o espaço disponível */
+.tracking-page .history-section {
+  width: min(100% - 48px, 1240px);
+}
+
+.tracking-page .table-wrapper {
+  width: 100%;
+}
+
+.tracking-page .history-table th,
+.tracking-page .history-table td {
+  padding: 18px 20px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.tracking-page .history-table th {
+  padding-block: 15px;
+  font-size: 11px;
+}
+
+@media (max-width: 760px) {
+  .tracking-page .history-section {
+    width: min(100% - 32px, 680px);
+  }
+
+  .tracking-page .history-table th,
+  .tracking-page .history-table td {
+    padding: 12px 10px;
+    font-size: 11px;
   }
 }
 
