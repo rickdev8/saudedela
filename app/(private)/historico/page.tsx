@@ -109,15 +109,33 @@ export default function HistoricoPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isDownloading, setIsDownloading] = useState(false);
   const [sortOrder, setSortOrder] = useState<"normal" | "newest" | "oldest">("normal");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const visibleEntries = useMemo(() => {
-    if (sortOrder === "normal") return entries;
+    const normalizedSearch = searchTerm.trim().toLocaleLowerCase("pt-BR");
+    const filtered = normalizedSearch
+      ? entries.filter((entry) =>
+          [
+            formatDate(entry.date),
+            entry.flow,
+            entry.mood,
+            ...entry.symptoms,
+            entry.notes,
+          ]
+            .filter(Boolean)
+            .join(" ")
+            .toLocaleLowerCase("pt-BR")
+            .includes(normalizedSearch),
+        )
+      : entries;
 
-    return [...entries].sort((a, b) => {
+    if (sortOrder === "normal") return filtered;
+
+    return [...filtered].sort((a, b) => {
       const difference = new Date(a.date).getTime() - new Date(b.date).getTime();
       return sortOrder === "newest" ? -difference : difference;
     });
-  }, [entries, sortOrder]);
+  }, [entries, searchTerm, sortOrder]);
 
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("all");
@@ -269,6 +287,16 @@ export default function HistoricoPage() {
           {/* BARRA DE PESQUISA E FILTRO */}
 
           <div className="history-toolbar">
+            <label className="history-search">
+              <span className="sr-only">Pesquisar no histórico</span>
+              <input
+                type="search"
+                value={searchTerm}
+                onChange={(event) => setSearchTerm(event.target.value)}
+                placeholder="Pesquisar no histórico"
+                aria-label="Pesquisar no histórico"
+              />
+            </label>
             <button className="period-button">
               Junho 2024 <span>⌄</span>
             </button>
