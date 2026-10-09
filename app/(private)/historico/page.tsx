@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { AppSidebar } from "@/app/(private)/sidebar/app-sidebar";
 import { useAuth } from "@/app/context/auth";
 import { Loader } from "@/components/ui/loaders/loader-main";
@@ -83,6 +83,16 @@ export default function HistoricoPage() {
   const [insight, setInsight] = useState<Insight | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isDownloading, setIsDownloading] = useState(false);
+  const [sortOrder, setSortOrder] = useState<"normal" | "newest" | "oldest">("normal");
+
+  const visibleEntries = useMemo(() => {
+    if (sortOrder === "normal") return entries;
+
+    return [...entries].sort((a, b) => {
+      const difference = new Date(a.date).getTime() - new Date(b.date).getTime();
+      return sortOrder === "newest" ? -difference : difference;
+    });
+  }, [entries, sortOrder]);
 
   async function downloadReport() {
     setIsDownloading(true);
@@ -188,6 +198,20 @@ export default function HistoricoPage() {
             <button className="period-button">
               Junho 2024 <span>⌄</span>
             </button>
+            <label className="history-sort-control">
+              <span>Filtrar por</span>
+              <select
+                value={sortOrder}
+                onChange={(event) =>
+                  setSortOrder(event.target.value as "normal" | "newest" | "oldest")
+                }
+                aria-label="Filtrar por ordem de data"
+              >
+                <option value="normal">Normal</option>
+                <option value="newest">Mais recentes</option>
+                <option value="oldest">Mais antigos</option>
+              </select>
+            </label>
             <button
               className="download-button"
               onClick={downloadReport}
@@ -215,14 +239,14 @@ export default function HistoricoPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {entries.length === 0 ? (
+                  {visibleEntries.length === 0 ? (
                     <tr>
                       <td colSpan={8} className="table-empty">
                         Nenhum registro encontrado ainda.
                       </td>
                     </tr>
                   ) : (
-                    entries.map((entry) => (
+                    visibleEntries.map((entry) => (
                       <tr className="table-row" key={entry.id}>
                         <td>
                           <strong className="date-text">{formatDate(entry.date)}</strong>
