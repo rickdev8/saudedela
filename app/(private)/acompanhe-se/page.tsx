@@ -83,6 +83,7 @@ export default function AcompanheSePage() {
   const [isSaving, setIsSaving] = useState(false);
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState("");
+  const completedSections = [mood, selectedSymptoms.length > 0, painIntensity, energy, sleep, notes.trim()].filter(Boolean).length;
 
   function toggleSymptom(item: string) {
     setSelectedSymptoms((current) =>
@@ -170,6 +171,10 @@ export default function AcompanheSePage() {
             <span>Período acompanhado</span>
             <strong>12 — 18 JUN</strong>
             <small>7 dias registrados neste ciclo</small>
+            <div className="entry-progress" aria-label={`${completedSections} de 6 seções preenchidas`}>
+              <span style={{ width: `${(completedSections / 6) * 100}%` }} />
+            </div>
+            <small>{completedSections} de 6 seções preenchidas</small>
           </div>
         </section>
 
@@ -192,6 +197,7 @@ export default function AcompanheSePage() {
                     type="button"
                     className={mood === item ? "mood selected" : "mood"}
                     onClick={() => { setMood(item); setSaved(false); }}
+                    aria-pressed={mood === item}
                     key={item}
                   >
                     <i className={`mood-dot mood-${index}`} />
@@ -213,6 +219,7 @@ export default function AcompanheSePage() {
                           : "symptom"
                       }
                       onClick={() => toggleSymptom(item)}
+                      aria-pressed={selectedSymptoms.includes(item)}
                       key={item}
                     >
                       {item}
@@ -225,6 +232,7 @@ export default function AcompanheSePage() {
                     <button
                       className="symptom selected"
                       onClick={() => toggleSymptom(item)}
+                      aria-pressed={selectedSymptoms.includes(item)}
                       key={item}
                     >
                       {item}
@@ -277,6 +285,7 @@ export default function AcompanheSePage() {
                       painIntensity === item ? "choice selected" : "choice"
                     }
                     onClick={() => setPainIntensity(item)}
+                    aria-pressed={painIntensity === item}
                     key={item}
                   >
                     {item}
@@ -297,6 +306,7 @@ export default function AcompanheSePage() {
                     type="button"
                     className={sleep === item ? "choice selected" : "choice"}
                     onClick={() => setSleep(item)}
+                    aria-pressed={sleep === item}
                     key={item}
                   >
                     {item}
@@ -315,6 +325,15 @@ export default function AcompanheSePage() {
               />
               <small>{notes.length}/500</small>
             </div>
+            {(saved || apiError) && (
+              <p
+                className={apiError ? "form-feedback error" : "form-feedback success"}
+                role={apiError ? "alert" : "status"}
+                aria-live="polite"
+              >
+                {apiError || "Seu registro foi salvo com segurança."}
+              </p>
+            )}
             <div className="save-row">
               <button
                 type="button"
