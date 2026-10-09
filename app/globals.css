@@ -7427,6 +7427,40 @@ select:focus-visible {
 }
 
 /* Histórico: tabela compacta e proporcional */
+.history-sort-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.history-sort-control select {
+  min-width: 154px;
+  padding: 10px 32px 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+@media (max-width: 760px) {
+  .history-sort-control {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .history-sort-control select {
+    flex: 1;
+    max-width: 220px;
+  }
+}
+
 .tracking-page .table-wrapper {
   width: 100%;
   max-width: 100%;

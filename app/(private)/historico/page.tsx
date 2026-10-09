@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { AppSidebar } from "@/app/(private)/sidebar/app-sidebar";
 import { useAuth } from "@/app/context/auth";
 
@@ -108,6 +108,16 @@ export default function HistoricoPage() {
 
   const [isLoading, setIsLoading] = useState(true);
   const [isDownloading, setIsDownloading] = useState(false);
+  const [sortOrder, setSortOrder] = useState<"normal" | "newest" | "oldest">("normal");
+
+  const visibleEntries = useMemo(() => {
+    if (sortOrder === "normal") return entries;
+
+    return [...entries].sort((a, b) => {
+      const difference = new Date(a.date).getTime() - new Date(b.date).getTime();
+      return sortOrder === "newest" ? -difference : difference;
+    });
+  }, [entries, sortOrder]);
 
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("all");
@@ -259,49 +269,23 @@ export default function HistoricoPage() {
           {/* BARRA DE PESQUISA E FILTRO */}
 
           <div className="history-toolbar">
-            <div className="history-search-filter">
-              <div className="history-search">
-                <span className="history-search-icon" aria-hidden="true">
-                  ⌕
-                </span>
-
-                <input
-                  type="search"
-                  placeholder="Pesquisar no histórico..."
-                  value={search}
-                  onChange={(event) => setSearch(event.target.value)}
-                  aria-label="Pesquisar no histórico"
-                />
-
-                {search && (
-                  <button
-                    type="button"
-                    className="history-search-clear"
-                    onClick={() => setSearch("")}
-                    aria-label="Limpar pesquisa"
-                  >
-                    ×
-                  </button>
-                )}
-              </div>
-
-              <div className="history-filter">
-                <label htmlFor="history-filter">Filtrar por</label>
-
-                <select
-                  id="history-filter"
-                  value={filter}
-                  onChange={(event) => setFilter(event.target.value)}
-                >
-                  {FILTER_OPTIONS.map((opt) => (
-                    <option key={opt.value} value={opt.value}>
-                      {opt.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
+            <button className="period-button">
+              Junho 2024 <span>⌄</span>
+            </button>
+            <label className="history-sort-control">
+              <span>Filtrar por</span>
+              <select
+                value={sortOrder}
+                onChange={(event) =>
+                  setSortOrder(event.target.value as "normal" | "newest" | "oldest")
+                }
+                aria-label="Filtrar por ordem de data"
+              >
+                <option value="normal">Normal</option>
+                <option value="newest">Mais recentes</option>
+                <option value="oldest">Mais antigos</option>
+              </select>
+            </label>
             <button
               className="download-button"
               onClick={downloadReport}
@@ -339,7 +323,7 @@ export default function HistoricoPage() {
                       </td>
                     </tr>
                   ) : (
-                    entries.map((entry) => (
+                    visibleEntries.map((entry) => (
                       <tr className="table-row" key={entry.id}>
                         <td>
                           <strong className="date-text">{formatDate(entry.date)}</strong>
