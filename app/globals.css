@@ -7909,6 +7909,120 @@ select:focus-visible {
   }
 }
 
+/* Paleta compartilhada: registro diário e avaliação */
+.tracking-page,
+.evaluation-page {
+  --page-accent: var(--teal);
+  --page-accent-soft: var(--mint);
+  --page-surface: var(--paper);
+  --page-background: var(--mineral);
+  --page-border: var(--line);
+  background: var(--page-background);
+  color: var(--ink);
+}
+
+.tracking-page .tracking-main,
+.evaluation-page .tracking-main {
+  background: var(--page-background);
+}
+
+.tracking-page .daily-checkin-card,
+.tracking-page .period-summary,
+.evaluation-page .evaluation-card,
+.evaluation-page .evaluation-progress,
+.evaluation-page .evaluation-note,
+.evaluation-page .insight-card {
+  border-color: var(--page-border);
+  background: var(--page-surface);
+  color: var(--ink);
+}
+
+.tracking-page .tracking-hero h1,
+.evaluation-page .tracking-hero h1,
+.tracking-page .card-heading h2,
+.evaluation-page .card-heading h2 {
+  color: var(--teal);
+}
+
+.tracking-page .mood.selected,
+.tracking-page .choice.selected,
+.tracking-page .symptom.selected,
+.evaluation-page .symptom.selected,
+.evaluation-page .choice.selected {
+  border-color: var(--teal);
+  background: var(--mint);
+  color: var(--teal);
+  box-shadow: inset 0 0 0 1px var(--teal);
+}
+
+.tracking-page .save-button,
+.evaluation-page .button-primary {
+  background: var(--teal);
+  color: var(--mineral);
+}
+
+.tracking-page .save-button:hover,
+.evaluation-page .button-primary:hover {
+  background: var(--petrol);
+}
+
+.tracking-page .energy-field input[type="range"] {
+  width: 100%;
+  height: 8px;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--coral), var(--coral)) no-repeat, var(--line);
+  background-size: 100% 100%;
+  cursor: pointer;
+  accent-color: var(--coral);
+}
+
+.tracking-page .energy-field input[type="range"]::-webkit-slider-runnable-track {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--line);
+}
+
+.tracking-page .energy-field input[type="range"]::-webkit-slider-thumb {
+  width: 22px;
+  height: 22px;
+  margin-top: -7px;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 3px solid var(--paper);
+  border-radius: 50%;
+  background: var(--coral);
+  box-shadow: 0 2px 7px rgba(140, 21, 80, .22);
+}
+
+.tracking-page .energy-field input[type="range"]::-moz-range-track {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--line);
+}
+
+.tracking-page .energy-field input[type="range"]::-moz-range-progress {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--coral);
+}
+
+.tracking-page .energy-field input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border: 3px solid var(--paper);
+  border-radius: 50%;
+  background: var(--coral);
+  box-shadow: 0 2px 7px rgba(140, 21, 80, .22);
+}
+
+.tracking-page .energy-field input[type="range"]:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--coral) 35%, transparent);
+  outline-offset: 4px;
+}
+
 /* Assistente: entrada expansível e fontes discretas */
 .assistant-page .source-chips span,
 .conversation-card .source-chips span {
@@ -8477,4 +8591,57 @@ select:focus-visible {
     height: 24px;
     padding: 0;
   }
+}
+
+/* Override final da paleta compartilhada */
+.tracking-page .tracking-main,
+.evaluation-page .tracking-main { background: var(--mineral); }
+
+.tracking-page .tracking-hero h1,
+.evaluation-page .tracking-hero h1,
+.tracking-page .card-heading h2,
+.evaluation-page .card-heading h2 { color: var(--teal); }
+
+.tracking-page .period-summary,
+.tracking-page .daily-checkin-card,
+.evaluation-page .evaluation-card,
+.evaluation-page .evaluation-progress,
+.evaluation-page .evaluation-note,
+.evaluation-page .insight-card {
+  background: var(--paper);
+  border-color: var(--line);
+}
+
+.tracking-page .save-button,
+.evaluation-page .button-primary { background: var(--teal); }
+
+.tracking-page .energy-field input[type="range"] {
+  appearance: none;
+  -webkit-appearance: none;
+  accent-color: var(--coral);
+}
+
+.tracking-page .energy-field input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  margin-top: -7px;
+  border: 3px solid var(--paper);
+  border-radius: 50%;
+  background: var(--coral);
+  box-shadow: 0 2px 7px rgba(140, 21, 80, .22);
+}
+
+.tracking-page .energy-field input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border: 3px solid var(--paper);
+  border-radius: 50%;
+  background: var(--coral);
+}
+
+.tracking-page .energy-field input[type="range"]:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--coral) 35%, transparent);
+  outline-offset: 4px;
 }
