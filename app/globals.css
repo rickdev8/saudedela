@@ -7183,9 +7183,32 @@ select:focus-visible {
 .tracking-page .history-toolbar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 16px;
   margin: 0 0 16px;
+}
+
+.tracking-page .history-search {
+  flex: 1 1 280px;
+  min-width: 220px;
+}
+
+.tracking-page .history-search input {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+}
+
+.tracking-page .history-sort-control {
+  flex: 0 0 auto;
+}
+
+.tracking-page .history-toolbar .download-button {
+  flex: 0 0 auto;
 }
 
 .tracking-page .table-wrapper {
