@@ -7449,6 +7449,95 @@ select:focus-visible {
   }
 }
 
+/* Busca do histórico: rótulo e controles alinhados */
+.tracking-page .history-toolbar {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) auto auto auto;
+  align-items: end;
+  gap: 14px;
+}
+
+.tracking-page .history-search {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.tracking-page .history-search-label {
+  color: var(--teal);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.tracking-page .history-search input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.tracking-page .history-search input::placeholder {
+  color: var(--muted);
+}
+
+.tracking-page .history-search input:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--teal) 14%, transparent);
+}
+
+.tracking-page .history-sort-control {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 44px;
+}
+
+.tracking-page .history-sort-control > span {
+  color: var(--teal);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .tracking-page .history-toolbar {
+    grid-template-columns: 1fr 1fr;
+    align-items: end;
+  }
+
+  .tracking-page .history-search {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 560px) {
+  .tracking-page .history-toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .tracking-page .history-search,
+  .tracking-page .period-button,
+  .tracking-page .history-sort-control,
+  .tracking-page .download-button {
+    width: 100%;
+  }
+
+  .tracking-page .history-sort-control {
+    justify-content: space-between;
+  }
+}
+
 /* Histórico: tabela compacta e proporcional */
 .history-sort-control {
   display: inline-flex;

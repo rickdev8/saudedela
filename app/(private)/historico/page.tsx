@@ -288,7 +288,7 @@ export default function HistoricoPage() {
 
           <div className="history-toolbar">
             <label className="history-search">
-              <span className="sr-only">Pesquisar no histórico</span>
+              <span className="history-search-label">Pesquisar por</span>
               <input
                 type="search"
                 value={searchTerm}
