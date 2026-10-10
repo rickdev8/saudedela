@@ -47,6 +47,7 @@ export default function CriarContaPage() {
     email: string;
     password: string;
     confirmPassword: string;
+    age: number;
   };
 
   const {
@@ -73,6 +74,7 @@ export default function CriarContaPage() {
             name: data.name,
             email: data.email,
             password: data.password,
+            age: data.age,
           }),
         },
       );
@@ -123,6 +125,24 @@ export default function CriarContaPage() {
                 id="name"
                 type="text"
                 placeholder="Como você gostaria de ser chamada?"
+              />
+            </label>
+
+            <label htmlFor="age">
+              Idade
+              <input
+                {...register("age", {
+                  required: "Digite sua idade",
+                  valueAsNumber: true,
+                  min: { value: 13, message: "A idade mínima é 13 anos" },
+                  max: { value: 120, message: "Digite uma idade válida" },
+                })}
+                id="age"
+                type="number"
+                min="13"
+                max="120"
+                inputMode="numeric"
+                placeholder="Ex.: 28"
               />
             </label>
 

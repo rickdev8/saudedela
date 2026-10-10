@@ -187,6 +187,10 @@ export default function AvaliacaoPage() {
         </section>
         <section className="tracking-content section-wrap evaluation-content">
           <div className="entry-card evaluation-card">
+            <div className="mobile-step-summary" aria-live="polite">
+              <span>Etapa {Math.min(step + 1, STEPS.length)} de {STEPS.length}</span>
+              <strong>{STEPS[Math.min(step, STEPS.length - 1)]}</strong>
+            </div>
             {step === 0 && (
               <>
                 <div className="card-heading">
