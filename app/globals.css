@@ -8089,6 +8089,44 @@ select:focus-visible {
   text-decoration: none;
 }
 
+/* Avaliação mobile: etapa contextual dentro do card */
+.mobile-step-summary {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .evaluation-page .period-summary {
+    display: none;
+  }
+
+  .evaluation-page .mobile-step-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin: -4px 0 24px;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--mint);
+    color: var(--teal);
+  }
+
+  .evaluation-page .mobile-step-summary span {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .evaluation-page .mobile-step-summary strong {
+    font-size: 12px;
+    font-weight: 700;
+    text-align: right;
+  }
+}
+
 /* Paleta compartilhada: registro diário e avaliação */
 .tracking-page,
 .evaluation-page {
