@@ -7909,6 +7909,61 @@ select:focus-visible {
   }
 }
 
+/* Confirmações e referências */
+.tracking-page .symptom,
+.tracking-page .choice,
+.tracking-page .mood {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.tracking-page .symptom > span {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  color: var(--teal);
+  font-size: 12px;
+  line-height: 1;
+}
+
+.tracking-page .save-button,
+.tracking-page .save-button:hover,
+.tracking-page .save-button:focus-visible {
+  background: var(--teal);
+  color: var(--mineral);
+  border-color: var(--teal);
+}
+
+.tracking-page .save-button:hover {
+  box-shadow: 0 8px 18px rgba(43, 76, 74, .2);
+  filter: brightness(.92);
+}
+
+.assistant-page .source-chips,
+.conversation-card .source-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+
+.assistant-page .source-chips span,
+.conversation-card .source-chips span {
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  border-radius: 0;
+  padding: 4px 0 3px;
+  background: transparent;
+  color: var(--teal);
+  text-decoration: none;
+}
+
 /* Paleta compartilhada: registro diário e avaliação */
 .tracking-page,
 .evaluation-page {
@@ -7962,8 +8017,10 @@ select:focus-visible {
 }
 
 .tracking-page .save-button:hover,
+.tracking-page .save-button:focus-visible,
 .evaluation-page .button-primary:hover {
-  background: var(--petrol);
+  background: var(--teal);
+  color: var(--mineral);
 }
 
 .tracking-page .energy-field input[type="range"] {
@@ -8644,4 +8701,17 @@ select:focus-visible {
 .tracking-page .energy-field input[type="range"]:focus-visible {
   outline: 3px solid color-mix(in srgb, var(--coral) 35%, transparent);
   outline-offset: 4px;
+}
+
+/* Último override: referências visíveis e sublinhadas */
+.assistant-page .source-chips span,
+.conversation-card .source-chips span {
+  display: inline-block;
+  padding: 4px 0 3px;
+  border: 0;
+  border-bottom: 1px solid var(--teal);
+  border-radius: 0;
+  background: transparent;
+  color: var(--teal);
+  text-decoration: none;
 }
