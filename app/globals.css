@@ -7969,13 +7969,14 @@ select:focus-visible {
   display: none;
 }
 
-@media (max-width: 760px) {
-  .evaluation-page .period-summary {
+@media (max-width: 1023px) {
+  .evaluation-page .period-summary,
+  .evaluation-page .mobile-step-summary {
     display: none;
   }
 
   .evaluation-page .mobile-step-summary {
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: space-between;
     gap: 16px;
