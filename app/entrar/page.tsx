@@ -131,8 +131,14 @@ export default function EntrarPage() {
               <span />
               <Link href="#recuperar">Esqueci minha senha</Link>
             </div>
-            <button className="button-primary auth-submit" type="submit">
-              Entrar
+            <button
+              className="button-primary auth-submit"
+              type="submit"
+              disabled={isSubmitting}
+              aria-busy={isSubmitting}
+            >
+              {isSubmitting && <span className="auth-spinner" aria-hidden="true" />}
+              <span>{isSubmitting ? "Entrando..." : "Entrar"}</span>
             </button>
           </form>
           <p className="auth-switch">
