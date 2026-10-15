@@ -12,15 +12,12 @@ export async function GET() {
         { status: 401 }
       )
     }
-
-    const response = await fetch(`${process.env.BACKEND_URL}/auth/me`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      cache: "no-store",
-    })
-
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/me`, {
+        method: "GET",
+        credentials: "include",
+        cache: "no-store",
+      })
+      
     const data = await response.json().catch(() => null)
 
     if (!response.ok) {
