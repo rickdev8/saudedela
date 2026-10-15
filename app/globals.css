@@ -8094,13 +8094,14 @@ select:focus-visible {
   display: none;
 }
 
-@media (max-width: 760px) {
-  .evaluation-page .period-summary {
+@media (max-width: 1023px) {
+  .evaluation-page .period-summary,
+  .evaluation-page .mobile-step-summary {
     display: none;
   }
 
   .evaluation-page .mobile-step-summary {
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: space-between;
     gap: 16px;
@@ -8241,6 +8242,37 @@ select:focus-visible {
 .tracking-page .energy-field input[type="range"]:focus-visible {
   outline: 3px solid color-mix(in srgb, var(--coral) 35%, transparent);
   outline-offset: 4px;
+}
+
+/* Autenticação: feedback de envio */
+.auth-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.auth-submit:disabled {
+  cursor: wait;
+  opacity: .82;
+}
+
+.auth-spinner {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: auth-spin .7s linear infinite;
+}
+
+@keyframes auth-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-spinner { animation-duration: 1.5s; }
 }
 
 /* Assistente: entrada expansível e fontes discretas */
