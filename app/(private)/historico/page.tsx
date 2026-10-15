@@ -218,7 +218,6 @@ export default function HistoricoPage() {
         const data = await res.json();
 
         if (!res.ok) {
-          console.error("ERRO INSIGHT (backend):", data);
           setInsight(null);
           return;
         }

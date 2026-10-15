@@ -1,64 +1,90 @@
-"use client"
+"use client";
 
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react"
-import { useRouter } from "next/navigation"
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  type ReactNode,
+} from "react";
+import { useRouter } from "next/navigation";
 
-type User = { id: string; name: string; email: string }
+type User = {
+  id: string;
+  name: string;
+  email: string;
+};
 
 type AuthContextType = {
-  user: User | null
-  isLoading: boolean
-  logout: () => Promise<void>
-  refetchUser: () => Promise<void>
-}
+  user: User | null;
+  isLoading: boolean;
+  setUser: (user: User | null) => void;
+  logout: () => Promise<void>;
+};
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined)
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export function AuthProvider({ children }: { children: ReactNode }): ReactNode {
-  const [user, setUser] = useState<User | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const router = useRouter()
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
   async function fetchUser() {
     try {
-      const response = await fetch("/api/acompanhe-se")
+      const response = await fetch("/api/auth/me");
+      const data = await response.json();
 
       if (!response.ok) {
-        setUser(null)
-        return
+        setUser(null);
+        return;
       }
 
-      const data = await response.json()
-      setUser(data.user)
-    } catch {
-      setUser(null)
+      setUser(data.user ?? null);
+    } catch (error) {
+      console.error("Erro ao restaurar sessão:", error);
+      setUser(null);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   }
 
   useEffect(() => {
-    fetchUser()
-  }, [])
+    fetchUser();
+  }, []);
 
   async function logout() {
-    await fetch("/api/auth/logout", { method: "POST" })
-    setUser(null)
-    console.log("logout")
-    router.push("/entrar")
+    try {
+      await fetch("/api/auth/logout", {
+        method: "POST",
+      });
+    } finally {
+      setUser(null);
+      router.push("/entrar");
+    }
   }
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, logout, refetchUser: fetchUser }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        isLoading,
+        setUser,
+        logout,
+      }}
+    >
       {children}
     </AuthContext.Provider>
-  )
+  );
 }
 
 export function useAuth() {
-  const context = useContext(AuthContext)
+  const context = useContext(AuthContext);
+
   if (!context) {
-    throw new Error("useAuth precisa ser usado dentro de um AuthProvider")
+    throw new Error(
+      "useAuth precisa ser usado dentro de um AuthProvider"
+    );
   }
-  return context
+
+  return context;
 }
