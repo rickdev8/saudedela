@@ -197,8 +197,10 @@ export default function CriarContaPage() {
               className="button-primary auth-submit"
               type="submit"
               disabled={isSubmitting}
+              aria-busy={isSubmitting}
             >
-              {isSubmitting ? "Criando conta..." : "Criar conta"}
+              {isSubmitting && <span className="auth-spinner" aria-hidden="true" />}
+              <span>{isSubmitting ? "Criando conta..." : "Criar conta"}</span>
             </button>
           </form>
           <p className="auth-switch">
