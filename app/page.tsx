@@ -116,7 +116,7 @@ function EvidenceCard() {
   );
 }
 
-export default function Page({ pulseMarkIcon }: AssistantHomeSectionProps) {
+export default function Page() {
   return (
     <main id="inicio">
       <Header />
@@ -258,7 +258,7 @@ export default function Page({ pulseMarkIcon }: AssistantHomeSectionProps) {
 
             <div className="bot-message">
               <span className="bot-avatar">
-                {pulseMarkIcon ?? <span className="pulse-mark">◌</span>}
+               
               </span>
 
               <div>
