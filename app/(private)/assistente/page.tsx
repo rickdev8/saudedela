@@ -65,7 +65,7 @@ export default function AssistentePage() {
         .map((m) => ({ role: m.role, content: m.content }));
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/assistant/ask`,
+        `${process.env.BACKEND_URL}/assistant/ask`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
