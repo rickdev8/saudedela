@@ -65,8 +65,7 @@ export default function CriarContaPage() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(
-        `${process.env.BACKEND_URL}/api/auth/register`,
+      const response = await fetch('/api/auth/register',
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
