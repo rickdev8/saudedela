@@ -75,14 +75,28 @@ export default function CicloPage() {
     if (!value || typeof value !== "object") return null;
 
     const window = value as {
-      ovulationDay?: unknown;
       fertileDays?: unknown;
+      fertilePeriod?: {
+        cycleDays?: unknown;
+        startDay?: unknown;
+        endDay?: unknown;
+      };
+      ovulationDay?: unknown;
+      ovulation?: {
+        cycleDay?: unknown;
+      };
       estimated?: unknown;
+      confidence?: unknown;
+      message?: unknown;
     };
-    const fertileDays = Array.isArray(window.fertileDays)
-      ? window.fertileDays.map(Number).filter((day) => Number.isInteger(day) && day >= 1 && day <= 31)
+
+    const rawFertileDays = window.fertileDays ?? window.fertilePeriod?.cycleDays;
+    const fertileDays = Array.isArray(rawFertileDays)
+      ? rawFertileDays
+          .map(Number)
+          .filter((day) => Number.isInteger(day) && day >= 1 && day <= 31)
       : [];
-    const ovulationDay = Number(window.ovulationDay);
+    const ovulationDay = Number(window.ovulationDay ?? window.ovulation?.cycleDay);
 
     if (fertileDays.length === 0 && !Number.isInteger(ovulationDay)) return null;
 
@@ -90,6 +104,8 @@ export default function CicloPage() {
       fertileDays,
       ovulationDay,
       estimated: window.estimated !== false,
+      confidence: typeof window.confidence === "string" ? window.confidence : undefined,
+      message: typeof window.message === "string" ? window.message : undefined,
     };
   }
 
@@ -100,14 +116,9 @@ export default function CicloPage() {
         if (data && data.daysSelected) {
           setSelected(data.daysSelected);
           setRegularity(data.regularity);
-
-          if (data.cycleLengthDays) setCycleLength(data.cycleLengthDays);
-
-          const window = buildFertileWindow(data);
-          if (window) setFertileWindow(window);
-
-          setFertileWindow(normalizeFertileWindow(data.fertileWindow));
-
+          setFertileWindow(
+            normalizeFertileWindow(data.fertileWindow ?? data),
+          );
           setCycleSaved(true);
         }
       })
@@ -159,13 +170,9 @@ export default function CicloPage() {
         return;
       }
 
-
-      const window = buildFertileWindow(result);
-      if (window) setFertileWindow(window);
-
-
-      setFertileWindow(normalizeFertileWindow(result.fertileWindow));
-
+      setFertileWindow(
+        normalizeFertileWindow(result.fertileWindow ?? result),
+      );
       setCycleSaved(true);
     } catch {
       setApiError("Não foi possível conectar ao servidor");
@@ -298,6 +305,9 @@ export default function CicloPage() {
                       </>
                     )}
                   </div>
+                  {fertileWindow?.message && (
+                    <p className="cycle-disclaimer">{fertileWindow.message}</p>
+                  )}
                 </section>
 
                 <aside className="cycle-side">
