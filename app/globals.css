@@ -47,10 +47,28 @@ a {
   color: inherit;
   text-decoration: none;
 }
-.section-wrap {
-  width: min(1180px, calc(100% - 64px));
-  margin-inline: auto;
+
+/* Calendário fértil: prioridade sobre o estado selecionado */
+.cycle-page .calendar-grid .day.fertile {
+  border-color: color-mix(in srgb, var(--coral) 45%, var(--line));
+  background: var(--blush);
+  color: var(--teal);
 }
+
+.cycle-page .calendar-grid .day.fertile.ovulation {
+  border: 2px solid var(--coral);
+  background: var(--coral);
+  color: var(--paper);
+}
+
+.cycle-page .calendar-grid .day.fertile::after {
+  background: var(--coral);
+}
+
+.cycle-page .calendar-grid .day.fertile.ovulation::after {
+  background: var(--paper);
+}
+
 .site-header {
   width: min(1180px, calc(100% - 64px));
   margin: 0 auto;
@@ -8001,6 +8019,64 @@ select:focus-visible {
     font-weight: 700;
     text-align: right;
   }
+}
+
+/* Calendário: período fértil e ovulação estimada */
+.cycle-page .calendar-grid .day.fertile {
+  position: relative;
+  border-color: color-mix(in srgb, var(--coral) 45%, var(--line));
+  background: var(--blush);
+  color: var(--teal);
+  font-weight: 700;
+}
+
+.cycle-page .calendar-grid .day.fertile::after {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--coral);
+  content: "";
+}
+
+.cycle-page .calendar-grid .day.ovulation {
+  border: 2px solid var(--coral);
+  background: var(--coral);
+  color: var(--paper);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--coral) 30%, transparent);
+}
+
+.cycle-page .calendar-grid .day.ovulation::after {
+  background: var(--paper);
+}
+
+.cycle-page .calendar-grid .day.today {
+  box-shadow: 0 0 0 2px var(--teal);
+}
+
+.cycle-page .calendar-legend {
+  flex-wrap: wrap;
+  row-gap: 10px;
+}
+
+.cycle-page .legend-fertile,
+.cycle-page .legend-ovulation {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border: 0;
+  border-radius: 50%;
+}
+
+.cycle-page .legend-fertile {
+  background: var(--blush);
+  box-shadow: inset 0 0 0 1px var(--coral);
+}
+
+.cycle-page .legend-ovulation {
+  background: var(--coral);
 }
 
 /* Dados públicos: programas governamentais */
