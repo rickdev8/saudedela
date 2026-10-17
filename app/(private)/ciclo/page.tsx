@@ -20,6 +20,7 @@ type FertileWindow = {
   ovulationDay: number | null;
   fertileDays: number[];
   estimated?: boolean;
+  message?: string;
 };
 
 // "YYYY-MM-DD" -> dia do mês, só se pertencer ao mês exibido
@@ -29,7 +30,9 @@ function toDayOfMonth(dateStr?: string | null) {
   return y === year && m === month ? d : null;
 }
 
-// converte a resposta do back (ovulation / fertilePeriod) para dias do mês
+// Converte a resposta do back (ovulation / fertilePeriod, com DATAS reais)
+// para dias do mês exibido. Não usa cycleDays: eles são "dia do ciclo",
+// não "dia do mês".
 function buildFertileWindow(data: any): FertileWindow | null {
   const period = data?.fertilePeriod;
   if (!period?.startDate || !period?.endDate) return null;
@@ -48,6 +51,7 @@ function buildFertileWindow(data: any): FertileWindow | null {
     ovulationDay: toDayOfMonth(data.ovulation?.date),
     fertileDays,
     estimated: true,
+    message: typeof data.message === "string" ? data.message : undefined,
   };
 }
 
@@ -61,53 +65,15 @@ export default function CicloPage() {
   const [regularity, setRegularity] = useState("Regular");
   const [cycleLength, setCycleLength] = useState(28);
   const [cycleSaved, setCycleSaved] = useState(false);
-
-  const duration = selected.length;
-
   const [fertileWindow, setFertileWindow] = useState<FertileWindow | null>(
     null,
   );
 
-  const today = new Date();
-  const todayDay = today.getDate();
+  const duration = selected.length;
+  const todayDay = new Date().getDate();
 
-  function normalizeFertileWindow(value: unknown) {
-    if (!value || typeof value !== "object") return null;
-
-    const window = value as {
-      fertileDays?: unknown;
-      fertilePeriod?: {
-        cycleDays?: unknown;
-        startDay?: unknown;
-        endDay?: unknown;
-      };
-      ovulationDay?: unknown;
-      ovulation?: {
-        cycleDay?: unknown;
-      };
-      estimated?: unknown;
-      confidence?: unknown;
-      message?: unknown;
-    };
-
-    const rawFertileDays = window.fertileDays ?? window.fertilePeriod?.cycleDays;
-    const fertileDays = Array.isArray(rawFertileDays)
-      ? rawFertileDays
-          .map(Number)
-          .filter((day) => Number.isInteger(day) && day >= 1 && day <= 31)
-      : [];
-    const ovulationDay = Number(window.ovulationDay ?? window.ovulation?.cycleDay);
-
-    if (fertileDays.length === 0 && !Number.isInteger(ovulationDay)) return null;
-
-    return {
-      fertileDays,
-      ovulationDay,
-      estimated: window.estimated !== false,
-      confidence: typeof window.confidence === "string" ? window.confidence : undefined,
-      message: typeof window.message === "string" ? window.message : undefined,
-    };
-  }
+  // Previsão só existe no modo "salvo". No modo edição nada dela aparece.
+  const prediction = cycleSaved ? fertileWindow : null;
 
   useEffect(() => {
     fetch("/api/ciclo")
@@ -116,9 +82,8 @@ export default function CicloPage() {
         if (data && data.daysSelected) {
           setSelected(data.daysSelected);
           setRegularity(data.regularity);
-          setFertileWindow(
-            normalizeFertileWindow(data.fertileWindow ?? data),
-          );
+          if (data.cycleLengthDays) setCycleLength(data.cycleLengthDays);
+          setFertileWindow(buildFertileWindow(data));
           setCycleSaved(true);
         }
       })
@@ -137,6 +102,12 @@ export default function CicloPage() {
         : [...current, day].sort((a, b) => a - b),
     );
   };
+
+  function handleEdit() {
+    setApiError(null);
+    setFertileWindow(null); // limpa os resquícios da previsão anterior
+    setCycleSaved(false);
+  }
 
   async function handleSubmit() {
     setApiError(null);
@@ -170,9 +141,7 @@ export default function CicloPage() {
         return;
       }
 
-      setFertileWindow(
-        normalizeFertileWindow(result.fertileWindow ?? result),
-      );
+      setFertileWindow(buildFertileWindow(result));
       setCycleSaved(true);
     } catch {
       setApiError("Não foi possível conectar ao servidor");
@@ -219,7 +188,9 @@ export default function CicloPage() {
             <>
               <div className="cycle-layout">
                 <section
-                  className={`calendar-card ${cycleSaved ? "" : "calendar-editing"}`}
+                  className={`calendar-card ${
+                    cycleSaved ? "calendar-saved" : "calendar-editing"
+                  }`}
                   aria-label="Calendário menstrual"
                 >
                   <div className="calendar-heading">
@@ -254,18 +225,45 @@ export default function CicloPage() {
                   </div>
 
                   <div className="calendar-grid">
-                    {days.map((day) => (
-                      <button
-                        key={day}
-                        type="button"
-                        className={`day ${selected.includes(day) ? "selected" : ""} ${cycleSaved && fertileWindow?.fertileDays.includes(day) ? "fertile" : ""} ${cycleSaved && fertileWindow?.ovulationDay === day ? "ovulation" : ""} ${cycleSaved && day === todayDay ? "today" : ""}`}
-                        onClick={() => !cycleSaved && toggleDay(day)}
-                        aria-pressed={selected.includes(day)}
-                        aria-label={`${day === todayDay ? `${day}, hoje` : `Dia ${day}`}${fertileWindow?.fertileDays.includes(day) ? ", período fértil" : ""}${fertileWindow?.ovulationDay === day ? ", ovulação estimada" : ""}`}
-                      >
-                        {day}
-                      </button>
-                    ))}
+                    {days.map((day) => {
+                      const isSelected = selected.includes(day);
+                      const isFertile =
+                        prediction?.fertileDays.includes(day) ?? false;
+                      const isOvulation = prediction?.ovulationDay === day;
+                      const isToday = cycleSaved && day === todayDay;
+
+                      const className = [
+                        "day",
+                        isSelected && "selected",
+                        isFertile && !isOvulation && "fertile",
+                        isOvulation && "ovulation",
+                        isToday && "today",
+                      ]
+                        .filter(Boolean)
+                        .join(" ");
+
+                      const label = [
+                        day === todayDay ? `${day}, hoje` : `Dia ${day}`,
+                        isSelected ? "menstruação" : "",
+                        isFertile ? "período fértil" : "",
+                        isOvulation ? "ovulação estimada" : "",
+                      ]
+                        .filter(Boolean)
+                        .join(", ");
+
+                      return (
+                        <button
+                          key={day}
+                          type="button"
+                          className={className}
+                          onClick={() => !cycleSaved && toggleDay(day)}
+                          aria-pressed={isSelected}
+                          aria-label={label}
+                        >
+                          {day}
+                        </button>
+                      );
+                    })}
                   </div>
 
                   <div className="calendar-legend">
@@ -273,16 +271,28 @@ export default function CicloPage() {
                       <i className="legend-period" />{" "}
                       {cycleSaved ? "Seu padrão" : "Dias selecionados"}
                     </span>
-                    {cycleSaved && <span><i className="legend-today" /> Hoje</span>}
-                    {cycleSaved && fertileWindow && (
+
+                    {cycleSaved && (
+                      <span>
+                        <i className="legend-today" /> Hoje
+                      </span>
+                    )}
+
+                    {prediction && (
                       <>
-                        <span><i className="legend-fertile" /> Período fértil</span>
-                        <span><i className="legend-ovulation" /> Ovulação estimada</span>
+                        <span>
+                          <i className="legend-fertile" /> Período fértil
+                        </span>
+                        <span>
+                          <i className="legend-ovulation" /> Ovulação
+                          estimada
+                        </span>
                       </>
                     )}
                   </div>
-                  {cycleSaved && fertileWindow?.message && (
-                    <p className="cycle-disclaimer">{fertileWindow.message}</p>
+
+                  {prediction?.message && (
+                    <p className="cycle-disclaimer">{prediction.message}</p>
                   )}
                 </section>
 
@@ -367,7 +377,7 @@ export default function CicloPage() {
                       <button
                         type="button"
                         className="button-outline edit-cycle"
-                        onClick={() => setCycleSaved(false)}
+                        onClick={handleEdit}
                       >
                         Editar meu padrão
                       </button>
