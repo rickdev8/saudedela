@@ -9170,3 +9170,117 @@ select:focus-visible {
   color: var(--teal);
   text-decoration: none;
 }
+
+/* Override final: marcadores férteis consistentes */
+.cycle-page .calendar-grid .day {
+  position: relative;
+  overflow: visible;
+}
+
+.cycle-page .calendar-grid .day.fertile,
+.cycle-page .calendar-grid .day.ovulation,
+.cycle-page .calendar-grid .day.fertile.ovulation {
+  border-color: transparent !important;
+  background: transparent !important;
+  color: var(--ink) !important;
+  font-weight: 400 !important;
+  box-shadow: none !important;
+}
+
+.cycle-page .calendar-grid .day.fertile::after,
+.cycle-page .calendar-grid .day.ovulation::after {
+  position: absolute;
+  top: calc(50% + 12px);
+  left: 50%;
+  display: block;
+  margin: 0;
+  content: "";
+  transform: translateX(-50%);
+}
+
+.cycle-page .calendar-grid .day.fertile::after {
+  width: 6px;
+  height: 6px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--coral);
+}
+
+.cycle-page .calendar-grid .day.ovulation::after,
+.cycle-page .calendar-grid .day.fertile.ovulation::after {
+  width: 8px;
+  height: 8px;
+  border: 1.5px solid var(--coral);
+  border-radius: 50%;
+  background: transparent;
+}
+
+.cycle-page .calendar-grid .day.selected.fertile::after {
+  background: var(--blush);
+}
+
+.cycle-page .calendar-grid .day.selected.ovulation::after,
+.cycle-page .calendar-grid .day.selected.fertile.ovulation::after {
+  border-color: var(--blush);
+  background: transparent;
+}
+
+.cycle-page .calendar-grid .day.today.fertile::after,
+.cycle-page .calendar-grid .day.today.ovulation::after {
+  top: calc(50% + 9px);
+}
+
+.cycle-page .calendar-legend {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+}
+
+.cycle-page .calendar-legend > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.cycle-page .calendar-legend .legend-fertile,
+.cycle-page .calendar-legend .legend-ovulation,
+.cycle-page .calendar-legend .legend-today {
+  display: inline-block;
+  flex: 0 0 auto;
+  margin: 0;
+  border-radius: 50%;
+}
+
+.cycle-page .calendar-legend .legend-fertile {
+  width: 6px;
+  height: 6px;
+  background: var(--coral);
+}
+
+.cycle-page .calendar-legend .legend-ovulation {
+  width: 8px;
+  height: 8px;
+  border: 1.5px solid var(--coral);
+  background: transparent;
+}
+
+.cycle-page .calendar-legend .legend-today {
+  width: 10px;
+  height: 10px;
+  border: 1.5px solid var(--teal);
+  background: transparent;
+}
+
+@media (max-width: 380px) {
+  .cycle-page .calendar-grid .day.fertile::after,
+  .cycle-page .calendar-grid .day.ovulation::after {
+    top: calc(50% + 8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cycle-page .calendar-grid .day::after {
+    transition: none;
+  }
+}
