@@ -47,6 +47,55 @@ export default function DadosPage() {
               <span>e dignidade</span>
             </div>
           </section>
+          <section className="public-services" aria-labelledby="services-title">
+            <div className="section-heading-line services-heading">
+              <div>
+                <p className="card-index">Caminhos de cuidado</p>
+                <h2 id="services-title">Programas e serviços que podem ajudar.</h2>
+              </div>
+              <p>Links oficiais para acessar direitos, orientação, proteção e atendimento em saúde.</p>
+            </div>
+            <div className="public-services-grid">
+              <article className="public-service-card featured">
+                <span className="service-kicker">Saúde menstrual</span>
+                <h3>Programa Dignidade Menstrual</h3>
+                <p>Absorventes gratuitos para pessoas em situação de vulnerabilidade, com retirada em farmácias credenciadas.</p>
+                <a href="https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/d/dignidade-menstrual" target="_blank" rel="noreferrer">Acessar programa <span aria-hidden="true">↗</span></a>
+              </article>
+              <article className="public-service-card">
+                <span className="service-kicker">Atenção integral</span>
+                <h3>Política Nacional de Atenção Integral à Saúde da Mulher</h3>
+                <p>Diretrizes e ações do SUS para promover cuidado integral, prevenção e equidade.</p>
+                <a href="https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/s/saude-da-mulher" target="_blank" rel="noreferrer">Conhecer no Ministério da Saúde <span aria-hidden="true">↗</span></a>
+              </article>
+              <article className="public-service-card">
+                <span className="service-kicker">Acesso a medicamentos</span>
+                <h3>Farmácia Popular</h3>
+                <p>Medicamentos e itens de saúde gratuitos ou subsidiados em farmácias credenciadas.</p>
+                <a href="https://www.gov.br/saude/pt-br/composicao/sectics/farmacia-popular" target="_blank" rel="noreferrer">Encontrar atendimento <span aria-hidden="true">↗</span></a>
+              </article>
+              <article className="public-service-card safety-card">
+                <span className="service-kicker">Proteção e segurança</span>
+                <h3>Ligue 180 — Central de Atendimento à Mulher</h3>
+                <p>Orientação, acolhimento e encaminhamento para serviços da rede de atendimento à violência contra a mulher.</p>
+                <a href="https://www.gov.br/mulheres/pt-br/ligue180" target="_blank" rel="noreferrer">Saiba como buscar ajuda <span aria-hidden="true">↗</span></a>
+              </article>
+              <article className="public-service-card safety-card">
+                <span className="service-kicker">Emergência</span>
+                <h3>190 — Polícia Militar</h3>
+                <p>Em uma situação de risco imediato, ligue para o serviço de emergência da sua região.</p>
+                <a href="https://www.gov.br/pt-br/servicos/solicitar-atendimento-de-emergencia" target="_blank" rel="noreferrer">Orientações oficiais <span aria-hidden="true">↗</span></a>
+              </article>
+              <article className="public-service-card safety-card">
+                <span className="service-kicker">Rede de proteção</span>
+                <h3>Casa da Mulher Brasileira</h3>
+                <p>Atendimento integrado e gratuito para mulheres em situação de violência.</p>
+                <a href="https://www.gov.br/mulheres/pt-br/acesso-a-informacao/acoes-e-programas/casa-da-mulher-brasileira" target="_blank" rel="noreferrer">Conhecer a rede <span aria-hidden="true">↗</span></a>
+              </article>
+            </div>
+            <p className="services-note">Em perigo imediato, procure um local seguro e acione o serviço de emergência da sua região. Os canais oficiais podem orientar o próximo passo.</p>
+          </section>
+
           <section className="data-section-block" aria-labelledby="panorama-title">
             <div className="section-heading-line">
               <div>
