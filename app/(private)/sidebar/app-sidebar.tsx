@@ -15,8 +15,7 @@ const items = [
 ] as const;
 
 export function AppSidebar({ active }: { active: string }) {
-  const { user, logout } = useAuth();
-
+  const { user } = useAuth();
   return (
     <aside className="tracking-sidebar">
       <Link className="brand sidebar-brand" href="/">
