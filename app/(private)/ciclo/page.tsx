@@ -170,7 +170,7 @@ export default function CicloPage() {
             <>
               <div className="cycle-layout">
                 <section
-                  className="calendar-card"
+                  className={`calendar-card ${cycleSaved ? "" : "calendar-editing"}`}
                   aria-label="Calendário menstrual"
                 >
                   <div className="calendar-heading">
@@ -206,7 +206,7 @@ export default function CicloPage() {
                       <button
                         key={day}
                         type="button"
-                        className={`day ${selected.includes(day) ? "selected" : ""} ${fertileWindow?.fertileDays.includes(day) ? "fertile" : ""} ${fertileWindow?.ovulationDay === day ? "ovulation" : ""} ${day === todayDay ? "today" : ""}`}
+                        className={`day ${selected.includes(day) ? "selected" : ""} ${cycleSaved && fertileWindow?.fertileDays.includes(day) ? "fertile" : ""} ${cycleSaved && fertileWindow?.ovulationDay === day ? "ovulation" : ""} ${cycleSaved && day === todayDay ? "today" : ""}`}
                         onClick={() => !cycleSaved && toggleDay(day)}
                         aria-pressed={selected.includes(day)}
                         aria-label={`${day === todayDay ? `${day}, hoje` : `Dia ${day}`}${fertileWindow?.fertileDays.includes(day) ? ", período fértil" : ""}${fertileWindow?.ovulationDay === day ? ", ovulação estimada" : ""}`}
@@ -218,23 +218,17 @@ export default function CicloPage() {
                   <div className="calendar-legend">
                     <span>
                       <i className="legend-period" />{" "}
-                      {cycleSaved ? "Seu padrão" : "Dias de menstruação"}
+                      {cycleSaved ? "Seu padrão" : "Dias selecionados"}
                     </span>
-                    <span>
-                      <i className="legend-today" /> Hoje
-                    </span>
-                    {fertileWindow && (
+                    {cycleSaved && <span><i className="legend-today" /> Hoje</span>}
+                    {cycleSaved && fertileWindow && (
                       <>
-                        <span>
-                          <i className="legend-fertile" /> Período fértil
-                        </span>
-                        <span>
-                          <i className="legend-ovulation" /> Ovulação estimada
-                        </span>
+                        <span><i className="legend-fertile" /> Período fértil</span>
+                        <span><i className="legend-ovulation" /> Ovulação estimada</span>
                       </>
                     )}
                   </div>
-                  {fertileWindow?.message && (
+                  {cycleSaved && fertileWindow?.message && (
                     <p className="cycle-disclaimer">{fertileWindow.message}</p>
                   )}
                 </section>
