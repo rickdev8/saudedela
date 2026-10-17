@@ -12,7 +12,7 @@ export async function GET() {
         { status: 401 }
       )
     }
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/me`, {
+    const response = await fetch(`${process.env.BACKEND_URL}/auth/me`, {
         method: "GET",
         credentials: "include",
         cache: "no-store",
