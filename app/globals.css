@@ -50,15 +50,19 @@ a {
 
 /* Calendário fértil: prioridade sobre o estado selecionado */
 .cycle-page .calendar-grid .day.fertile {
-  border-color: color-mix(in srgb, var(--coral) 45%, var(--line));
-  background: var(--blush);
-  color: var(--teal);
+  border: 2px solid var(--coral) !important;
+  border-radius: 50%;
+  background: var(--blush) !important;
+  color: var(--teal) !important;
+  font-weight: 700;
 }
 
 .cycle-page .calendar-grid .day.fertile.ovulation {
-  border: 2px solid var(--coral);
-  background: var(--coral);
-  color: var(--paper);
+  border: 3px solid var(--coral) !important;
+  border-radius: 50%;
+  background: var(--coral) !important;
+  color: var(--paper) !important;
+  box-shadow: 0 0 0 4px var(--blush), 0 4px 12px color-mix(in srgb, var(--coral) 30%, transparent);
 }
 
 .cycle-page .calendar-grid .day.fertile::after {

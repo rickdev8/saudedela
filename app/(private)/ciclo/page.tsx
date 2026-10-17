@@ -37,6 +37,28 @@ export default function CicloPage() {
   const today = new Date();
   const todayDay = today.getDate();
 
+  function normalizeFertileWindow(value: unknown) {
+    if (!value || typeof value !== "object") return null;
+
+    const window = value as {
+      ovulationDay?: unknown;
+      fertileDays?: unknown;
+      estimated?: unknown;
+    };
+    const fertileDays = Array.isArray(window.fertileDays)
+      ? window.fertileDays.map(Number).filter((day) => Number.isInteger(day) && day >= 1 && day <= 31)
+      : [];
+    const ovulationDay = Number(window.ovulationDay);
+
+    if (fertileDays.length === 0 && !Number.isInteger(ovulationDay)) return null;
+
+    return {
+      fertileDays,
+      ovulationDay,
+      estimated: window.estimated !== false,
+    };
+  }
+
   useEffect(() => {
     fetch("/api/ciclo")
       .then((res) => res.json())
@@ -45,9 +67,7 @@ export default function CicloPage() {
           setSelected(data.daysSelected);
           setDuration(data.durationDays);
           setRegularity(data.regularity);
-          if (data.fertileWindow?.fertileDays) {
-            setFertileWindow(data.fertileWindow);
-          }
+          setFertileWindow(normalizeFertileWindow(data.fertileWindow));
           setCycleSaved(true);
         }
       })
@@ -86,9 +106,7 @@ export default function CicloPage() {
         return;
       }
 
-      if (result.fertileWindow?.fertileDays) {
-        setFertileWindow(result.fertileWindow);
-      }
+      setFertileWindow(normalizeFertileWindow(result.fertileWindow));
       setCycleSaved(true);
     } catch {
       setApiError("Não foi possível conectar ao servidor");
