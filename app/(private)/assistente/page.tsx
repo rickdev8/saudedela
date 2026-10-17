@@ -64,8 +64,7 @@ export default function AssistentePage() {
         .slice(-MAX_HISTORY_MESSAGES)
         .map((m) => ({ role: m.role, content: m.content }));
 
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/assistant/ask`,
+      const response = await fetch(`/api/assistant`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
