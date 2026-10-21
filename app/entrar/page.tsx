@@ -53,6 +53,7 @@ export default function EntrarPage() {
   } = useForm<Inputs>();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
 
   const router = useRouter();
@@ -128,12 +129,17 @@ export default function EntrarPage() {
                 <input
                   {...register("password")}
                   id="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="Digite sua senha"
                 />
 
-                <button type="button" aria-label="Mostrar senha">
-                  Mostrar
+                <button
+                  type="button"
+                  aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+                  aria-pressed={showPassword}
+                  onClick={() => setShowPassword((visible) => !visible)}
+                >
+                  {showPassword ? "Ocultar" : "Mostrar"}
                 </button>
               </div>
               {errors.password && <span>{errors.password.message}</span>}
