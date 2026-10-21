@@ -58,6 +58,8 @@ export default function CriarContaPage() {
   } = useForm<Inputs>();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -163,29 +165,49 @@ export default function CriarContaPage() {
 
             <label htmlFor="password">
               Senha
-              <input
-                {...register("password", {
-                  required: "Crie uma senha",
-                  minLength: { value: 8, message: "Mínimo de 8 caracteres" },
-                })}
-                id="password"
-                type="password"
-                placeholder="Crie uma senha"
-              />
+              <div className="password-field">
+                <input
+                  {...register("password", {
+                    required: "Crie uma senha",
+                    minLength: { value: 8, message: "Mínimo de 8 caracteres" },
+                  })}
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Crie uma senha"
+                />
+                <button
+                  type="button"
+                  aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+                  aria-pressed={showPassword}
+                  onClick={() => setShowPassword((visible) => !visible)}
+                >
+                  {showPassword ? "Ocultar" : "Mostrar"}
+                </button>
+              </div>
             </label>
 
             <label htmlFor="confirmPassword">
               Confirme sua senha
-              <input
-                {...register("confirmPassword", {
-                  required: "Confirme sua senha",
-                  validate: (value) =>
-                    value === watch("password") || "As senhas não coincidem",
-                })}
-                id="confirmPassword"
-                type="password"
-                placeholder="Repita sua senha"
-              />
+              <div className="password-field">
+                <input
+                  {...register("confirmPassword", {
+                    required: "Confirme sua senha",
+                    validate: (value) =>
+                      value === watch("password") || "As senhas não coincidem",
+                  })}
+                  id="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                  placeholder="Repita sua senha"
+                />
+                <button
+                  type="button"
+                  aria-label={showConfirmPassword ? "Ocultar senha" : "Mostrar senha"}
+                  aria-pressed={showConfirmPassword}
+                  onClick={() => setShowConfirmPassword((visible) => !visible)}
+                >
+                  {showConfirmPassword ? "Ocultar" : "Mostrar"}
+                </button>
+              </div>
             </label>
 
             <p className="privacy-note">

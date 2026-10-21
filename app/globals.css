@@ -9237,7 +9237,8 @@ select:focus-visible {
   gap: 10px 18px;
 }
 
-.cycle-page .calendar-legend > span {
+.cycle-page .calendar-legend 
+ span {
   display: inline-flex;
   align-items: center;
   gap: 7px;
