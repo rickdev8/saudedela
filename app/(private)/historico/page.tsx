@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { AppSidebar } from "@/app/(private)/sidebar/app-sidebar";
 import { useAuth } from "@/app/context/auth";
 
@@ -36,8 +36,6 @@ type Pagination = {
   totalPages: number;
 };
 
-const INSIGHT_CACHE_KEY = "saudedela:insight";
-
 const flowLabels: Record<string, string> = {
   none: "Sem fluxo",
   light: "Leve",
@@ -65,15 +63,6 @@ const sleepLabels: Record<string, string> = {
   good: "Bom",
 };
 
-const FILTER_OPTIONS: { value: string; label: string; param?: string }[] = [
-  { value: "all", label: "Todos" },
-  { value: "flow", label: "Fluxo" },
-  { value: "mood", label: "Humor" },
-  { value: "pain", label: "Dor" },
-  { value: "energy", label: "Energia" },
-  { value: "sleep", label: "Sono" },
-];
-
 function formatDate(isoDate: string) {
   return new Date(isoDate)
     .toLocaleDateString("pt-BR", {
@@ -83,17 +72,6 @@ function formatDate(isoDate: string) {
     })
     .toUpperCase()
     .replace(".", "");
-}
-
-function useDebouncedValue<T>(value: T, delay: number) {
-  const [debounced, setDebounced] = useState(value);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => setDebounced(value), delay);
-    return () => clearTimeout(timeout);
-  }, [value, delay]);
-
-  return debounced;
 }
 
 export default function HistoricoPage() {
@@ -137,11 +115,6 @@ export default function HistoricoPage() {
     });
   }, [entries, searchTerm, sortOrder]);
 
-  const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState("all");
-
-  const debouncedSearch = useDebouncedValue(search, 400);
-
   async function downloadReport() {
     setIsDownloading(true);
 
@@ -167,18 +140,11 @@ export default function HistoricoPage() {
     }
   }
 
-  useEffect(() => {
-    setPage(1);
-  }, [debouncedSearch, filter]);
-
+  // Registros (paginação)
   useEffect(() => {
     setIsLoading(true);
 
     const params = new URLSearchParams({ page: String(page) });
-
-    if (debouncedSearch.trim()) {
-      params.set("search", debouncedSearch.trim());
-    }
 
     fetch(`/api/acompanhe-se?${params.toString()}`)
       .then((res) => res.json())
@@ -189,48 +155,27 @@ export default function HistoricoPage() {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [page, debouncedSearch, filter]);
+  }, [page]);
 
-  const hasFetchedInsight = useRef(false);
-
+  // Insight: o servidor decide se regenera (só muda com novo registro)
   useEffect(() => {
-    if (hasFetchedInsight.current) return;
-
-    hasFetchedInsight.current = true;
-
-    const cachedRaw = sessionStorage.getItem(INSIGHT_CACHE_KEY);
-
-    if (cachedRaw) {
-      try {
-        const cached = JSON.parse(cachedRaw);
-        if (cached) {
-          setInsight(cached);
-          return;
-        }
-        sessionStorage.removeItem(INSIGHT_CACHE_KEY);
-      } catch {
-        sessionStorage.removeItem(INSIGHT_CACHE_KEY);
-      }
-    }
+    let cancelled = false;
 
     fetch("/api/insight")
       .then(async (res) => {
         const data = await res.json();
-
-        if (!res.ok) {
-          setInsight(null);
-          return;
-        }
-
-        setInsight(data);
-        sessionStorage.setItem(INSIGHT_CACHE_KEY, JSON.stringify(data));
+        if (!cancelled) setInsight(res.ok ? data : null);
       })
       .catch((err) => {
         console.error("ERRO INSIGHT (fetch falhou):", err);
-        setInsight(null);
+        if (!cancelled) setInsight(null);
       });
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
-  
+
   return (
     <main className="tracking-page">
       <AppSidebar active="/historico" />

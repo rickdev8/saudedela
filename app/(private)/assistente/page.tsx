@@ -244,9 +244,9 @@ export default function AssistentePage() {
 
             <button
               type="button"
-              onClick={() => handleSuggestion("Como registrar sintomas?")}
+              onClick={() => handleSuggestion("Sintomas comuns durante o ciclo")}
             >
-              Como registrar sintomas?
+              Sintomas comuns durante o ciclo
             </button>
           </div>
         </section>
