@@ -2803,16 +2803,7 @@ select:focus-visible {
 
 
 
-.visual-card,
-.entry-card,
-.insight-card,
-.calendar-card,
-.cycle-form-card,
-.conversation-card,
-.public-stat-grid article,
-.period-summary {
-  box-shadow: 0 8px 24px rgba(23, 19, 19, 0.06);
-}
+
 @media (max-width: 450px) {
   h1 {
     font-size: 3.25rem;
@@ -4065,8 +4056,6 @@ select:focus-visible {
   grid-template-columns: repeat(3, 1fr);
   gap: 1px;
   margin-top: 25px;
-  background: var(--line);
-  border: 1px solid var(--line);
 }
 .public-stat-grid article {
   min-height: 230px;
@@ -4581,7 +4570,6 @@ select:focus-visible {
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   margin-top: 25px;
-
 }
 .public-stat-grid article {
   min-height: 230px;
@@ -5202,7 +5190,6 @@ select:focus-visible {
   width: 100%;
   height: 44px;
   padding: 0 42px;
-  background: #fff;
   color: var(--ink);
   font-family: inherit;
   font-size: 14px;
@@ -5216,9 +5203,6 @@ select:focus-visible {
   color: #8b9291;
 }
 
-.history-search input:focus {
-  box-shadow: 0 0 0 3px rgba(43, 76, 74, 0.08);
-}
 
 .history-search-icon {
   position: absolute;
@@ -7017,7 +7001,6 @@ select:focus-visible {
   display: flex;
   align-items: center;
   min-height: 42px;
-  background: var(--paper);
   color: var(--muted);
 }
 
@@ -7057,11 +7040,6 @@ select:focus-visible {
   appearance: auto;
 }
 
-.history-search:focus-within,
-.history-filter-select:focus-within {
-  border-color: var(--teal);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--teal) 12%, transparent);
-}
 
 @media (max-width: 700px) {
   .history-toolbar {
@@ -7575,7 +7553,6 @@ select:focus-visible {
   width: 100%;
   min-height: 44px;
   padding: 0 14px;
-  background: var(--paper);
   color: var(--ink);
   font: inherit;
   outline: none;

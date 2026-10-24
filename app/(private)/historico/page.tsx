@@ -296,9 +296,6 @@ export default function HistoricoPage() {
                 aria-label="Pesquisar no histórico"
               />
             </label>
-            <button className="period-button">
-              Junho 2024 <span>⌄</span>
-            </button>
             <label className="history-sort-control">
               <span>Filtrar por</span>
               <select

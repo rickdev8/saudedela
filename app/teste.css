@@ -2770,16 +2770,7 @@ select:focus-visible {
   outline: 2px solid var(--coral);
   outline-offset: 3px;
 }
-.visual-card,
-.entry-card,
-.insight-card,
-.calendar-card,
-.cycle-form-card,
-.conversation-card,
-.public-stat-grid article,
-.period-summary {
-  box-shadow: 0 8px 24px rgba(23, 19, 19, 0.06);
-}
+
 @media (max-width: 450px) {
   h1 {
     font-size: 3.25rem;
@@ -4256,7 +4247,6 @@ select:focus-visible {
   min-height: 230px;
   padding: 28px;
   background: var(--paper);
-  border: 1px solid var(--line);
 }
 .public-stat-grid span {
   color: var(--coral);
