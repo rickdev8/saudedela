@@ -390,7 +390,7 @@ export default function AvaliacaoPage() {
                   {isSaving ? <Loader show={isSaving} /> : "Concluir avaliação"}
                 </button>
               ) : (
-                <Link className="button-outline" href="/avaliacao/historico">
+                <Link className="button-outline" href="/historico">
                   Ver histórico de avaliações
                 </Link>
               )}
