@@ -208,8 +208,9 @@ export default function AssistentePage() {
                 placeholder="Digite uma pergunta"
                 aria-label="Digite uma pergunta"
                 disabled={isSending}
-                rows={1}
-              />
+  rows={1}
+                    maxLength={1000}
+                  />
               <button
                 type="button"
                 onClick={handleSendMessage}
