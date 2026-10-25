@@ -293,8 +293,9 @@ export default function HistoricoPage() {
                 value={searchTerm}
                 onChange={(event) => setSearchTerm(event.target.value)}
                 placeholder="Pesquisar no histórico"
-                aria-label="Pesquisar no histórico"
-              />
+  aria-label="Pesquisar no histórico"
+                    maxLength={100}
+                  />
             </label>
             <button className="period-button">
               Junho 2024 <span>⌄</span>
