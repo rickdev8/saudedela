@@ -14,7 +14,7 @@ const avatarOptions = [
 ] as const;
 
 const avatarUrl = (seed: string, skin: string, hair: string) =>
-  `https://api.dicebear.com/9.x/lorelei/svg?seed=${seed}&backgroundColor=f1f5ee&skinColor=${skin}&hairColor=${hair}&beardProbability=0`;
+  `https://api.dicebear.com/9.x/avataaars/svg?seed=${seed}&backgroundColor=f1f5ee&skinColor=${skin}&hairColor=${hair}&top=longHairBigHair&facialHairProbability=0&accessoriesProbability=0`;
 
 const items = [
   ["/ciclo", "◷", "Meu ciclo"],
