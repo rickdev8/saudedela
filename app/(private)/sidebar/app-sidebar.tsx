@@ -13,8 +13,8 @@ const avatarOptions = [
   { id: "profundo", label: "Pele retinta", skin: "4a312c", hair: "17120f" },
 ] as const;
 
-const avatarUrl = (seed: string, skin: string, hair: string) =>
-  `https://api.dicebear.com/9.x/avataaars/svg?seed=${seed}&backgroundColor=f1f5ee&skinColor=${skin}&hairColor=${hair}&top=longHairBigHair&facialHairProbability=0&accessoriesProbability=0`;
+const avatarUrl = (seed: string, skin: string) =>
+  `https://api.dicebear.com/9.x/lorelei/svg?seed=${seed}&backgroundColor=f1f5ee&skinColor=${skin}`;
 
 const items = [
   ["/ciclo", "◷", "Meu ciclo"],
@@ -47,7 +47,7 @@ export function AppSidebar({ active }: { active: string }) {
         >
           <img
             className="avatar avatar-image"
-            src={avatarUrl(selectedAvatar.id, selectedAvatar.skin, selectedAvatar.hair)}
+            src={avatarUrl(selectedAvatar.id, selectedAvatar.skin)}
             alt={`Avatar selecionado: ${selectedAvatar.label}`}
           />
         </button>
@@ -74,7 +74,7 @@ export function AppSidebar({ active }: { active: string }) {
                     setIsAvatarMenuOpen(false);
                   }}
                 >
-                  <img src={avatarUrl(option.id, option.skin, option.hair)} alt="" />
+                  <img src={avatarUrl(option.id, option.skin)} alt="" />
                   <span>{option.label}</span>
                 </button>
               ))}
