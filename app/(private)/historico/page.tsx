@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AppSidebar } from "@/app/(private)/sidebar/app-sidebar";
 import { useAuth } from "@/app/context/auth";
 
@@ -89,6 +89,8 @@ export default function HistoricoPage() {
   const [sortOrder, setSortOrder] = useState<"normal" | "newest" | "oldest">("normal");
   const [searchTerm, setSearchTerm] = useState("");
 
+  const lastRefreshAt = useRef(0);
+
   const visibleEntries = useMemo(() => {
     const normalizedSearch = searchTerm.trim().toLocaleLowerCase("pt-BR");
     const filtered = normalizedSearch
@@ -140,41 +142,79 @@ export default function HistoricoPage() {
     }
   }
 
-  // Registros (paginação)
-  useEffect(() => {
-    setIsLoading(true);
+  // Registros. "silent" rebusca sem mostrar o loader (usado ao voltar pra aba).
+  const loadEntries = useCallback(
+    async (options?: { silent?: boolean }) => {
+      if (!options?.silent) setIsLoading(true);
 
-    const params = new URLSearchParams({ page: String(page) });
+      try {
+        const params = new URLSearchParams({ page: String(page) });
+        const res = await fetch(`/api/acompanhe-se?${params.toString()}`, {
+          cache: "no-store",
+        });
+        const data = await res.json();
 
-    fetch(`/api/acompanhe-se?${params.toString()}`)
-      .then((res) => res.json())
-      .then((data) => {
         setEntries(Array.isArray(data.entries) ? data.entries : []);
         setPagination(data.pagination ?? null);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [page]);
+      } catch (err) {
+        console.error("ERRO REGISTROS (fetch falhou):", err);
+      } finally {
+        if (!options?.silent) setIsLoading(false);
+      }
+    },
+    [page],
+  );
 
-  // Insight: o servidor decide se regenera (só muda com novo registro)
   useEffect(() => {
+    loadEntries();
+  }, [loadEntries]);
+
+  // Ao voltar pra aba/janela, rebusca os registros em silêncio.
+  // Se chegou sintoma novo, o totalCount muda e o insight é refeito (efeito abaixo).
+  useEffect(() => {
+    function refresh() {
+      if (document.visibilityState !== "visible") return;
+
+      const now = Date.now();
+      if (now - lastRefreshAt.current < 1000) return; // focus + visibilitychange disparam juntos
+      lastRefreshAt.current = now;
+
+      loadEntries({ silent: true });
+    }
+
+    document.addEventListener("visibilitychange", refresh);
+    window.addEventListener("focus", refresh);
+
+    return () => {
+      document.removeEventListener("visibilitychange", refresh);
+      window.removeEventListener("focus", refresh);
+    };
+  }, [loadEntries]);
+
+  // Insight: refeito sempre que a quantidade de registros muda.
+  // O servidor decide se gera um novo ou devolve o já salvo.
+  const totalCount = pagination?.totalCount;
+
+  useEffect(() => {
+    if (totalCount === undefined) return;
+
     let cancelled = false;
 
-    fetch("/api/insight")
+    fetch("/api/insight", { cache: "no-store" })
       .then(async (res) => {
         const data = await res.json();
-        if (!cancelled) setInsight(res.ok ? data : null);
+
+        // se falhar numa atualização, mantém o insight que já estava na tela
+        if (!cancelled && res.ok) setInsight(data);
       })
       .catch((err) => {
         console.error("ERRO INSIGHT (fetch falhou):", err);
-        if (!cancelled) setInsight(null);
       });
 
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [totalCount]);
 
   return (
     <main className="tracking-page">
