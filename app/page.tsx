@@ -302,7 +302,7 @@ export default function Page() {
             sinais podem revelar padrões importantes para você — e para a sua
             próxima consulta.
           </p>
-          <a className="button-primary" href="#comecar">
+          <a className="button-primary" href="/acompanhe-se">
             Começar meu acompanhamento
           </a>
         </div>
