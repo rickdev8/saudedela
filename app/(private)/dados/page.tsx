@@ -50,7 +50,6 @@ export default function DadosPage() {
           <section className="public-services" aria-labelledby="services-title">
             <div className="section-heading-line services-heading">
               <div>
-                <p className="card-index">Caminhos de cuidado</p>
                 <h2 id="services-title">Programas e serviços que podem ajudar.</h2>
               </div>
               <p>Links oficiais para acessar direitos, orientação, proteção e atendimento em saúde.</p>
@@ -99,7 +98,6 @@ export default function DadosPage() {
           <section className="data-section-block" aria-labelledby="panorama-title">
             <div className="section-heading-line">
               <div>
-                <p className="card-index">Panorama</p>
                 <h2 id="panorama-title">O que os dados ajudam a enxergar.</h2>
               </div>
               <p>Indicadores selecionados para abrir conversas sobre acesso, prevenção e cuidado.</p>

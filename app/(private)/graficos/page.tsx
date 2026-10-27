@@ -5,26 +5,31 @@ import { useAuth } from "@/app/context/auth";
 import { HealthCharts } from "./health-charts";
 
 export default function GraficosPage() {
-    const { logout } = useAuth()
+  const { logout } = useAuth();
 
   return (
     <main className="tracking-page">
       <AppSidebar active="/graficos" />
+
       <div className="tracking-main">
-      
-        <section className="content-page section-wrap">
+        <section
+          className="content-page section-wrap"
+          style={{ display: "flex", flexDirection: "column", gap: "25px" }}
+        >
           <p className="tracking-context">Acompanhe-se</p>
+
           <h1>
             Seus padrões,
             <br />
             <em>em perspectiva.</em>
           </h1>
+
           <p className="tracking-lead">
             Visualizações simples para ajudar você a perceber recorrências nas
             suas anotações. Elas não substituem uma avaliação profissional.
           </p>
-          <HealthCharts />
 
+          <HealthCharts />
         </section>
       </div>
     </main>

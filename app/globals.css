@@ -1676,7 +1676,6 @@ select:focus-visible {
 }
 .card-index {
   display: block;
-  margin-bottom: 15px;
   color: var(--coral);
   font-size: 10px;
   font-weight: 700;
@@ -1689,9 +1688,7 @@ select:focus-visible {
   color: var(--muted);
   font-size: 11px;
 }
-.field-group {
-  margin-top: 32px;
-}
+
 .field-group label {
   display: block;
   margin-bottom: 13px;
@@ -4145,6 +4142,7 @@ select:focus-visible {
   color: var(--coral);
 }
 .source-panel p {
+  margin-top: 20px;
   max-width: 390px;
   color: #ffe0d2;
   font-size: 13px;

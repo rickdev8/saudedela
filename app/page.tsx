@@ -165,7 +165,7 @@ export default function Page() {
             <div className="stat">
               <span>01</span>
               <strong>
-                42,8<span>%</span>
+                42,8<span>      %</span>
               </strong>
               <p>
                 das mulheres realizaram
@@ -175,7 +175,7 @@ export default function Page() {
             <div className="stat">
               <span>02</span>
               <strong>
-                +18,4<span>%</span>
+                +18,4<span>      %</span>
               </strong>
               <p>
                 na busca por atendimento
@@ -283,8 +283,11 @@ export default function Page() {
             <span className="chat-input-copy">
               <strong>Pronta para ajudar</strong>
               <span>Digite uma pergunta...</span>
+              
             </span>
-            <span className="chat-submit" aria-hidden="true">↗</span>
+            <span className="chat-submit" aria-hidden="true">  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="#ffffff">
+    <path d="M4 4.8 20 12 4 19.2l2.2-5.9L15 12l-8.8-1.3L4 4.8Z" />
+</svg></span>
           </Link>
         </div>
       </section>

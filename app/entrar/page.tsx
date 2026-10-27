@@ -147,11 +147,6 @@ export default function EntrarPage() {
               {errors.password && <span>{errors.password.message}</span>}
             </label>
 
-            <div className="auth-row">
-              <span />
-              <Link href="#recuperar">Esqueci minha senha</Link>
-            </div>
-
             {apiError && (
               <p role="alert" className="auth-error">
                 {apiError}

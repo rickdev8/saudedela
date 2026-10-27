@@ -1,9 +1,8 @@
 "use client";
 
-
 import { AppSidebar } from "@/app/(private)/sidebar/app-sidebar";
 import { useAuth } from "@/app/context/auth";
-import { useState, type KeyboardEvent } from "react";
+import { useEffect, useMemo, useState, type KeyboardEvent } from "react";
 import { Loader } from "@/components/ui/loaders/loader-main";
 
 const symptoms = [
@@ -37,6 +36,69 @@ const history = [
     symptoms: "Nenhum sintoma",
   },
 ];
+
+// Máximo de dias sem registro para ainda considerar o mesmo ciclo/período
+const CYCLE_GAP_DAYS = 3;
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+type TrackedPeriod = {
+  start: Date;
+  end: Date;
+  days: number;
+};
+
+// Normaliza qualquer data para meia-noite no fuso LOCAL (evita bug de UTC)
+function startOfLocalDay(value: string | Date) {
+  const d = new Date(value);
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+}
+
+function computeTrackedPeriod(dates: string[]): TrackedPeriod | null {
+  const uniqueDays = Array.from(
+    new Set(
+      dates
+        .map((value) => new Date(value))
+        .filter((d) => !Number.isNaN(d.getTime()))
+        .map((d) => startOfLocalDay(d).getTime()),
+    ),
+  ).sort((a, b) => b - a); // mais recente primeiro
+
+  if (uniqueDays.length === 0) return null;
+
+  // Anda para trás enquanto o intervalo entre registros for pequeno
+  let count = 1;
+  let startTs = uniqueDays[0];
+  for (let i = 1; i < uniqueDays.length; i++) {
+    const gap = Math.round((startTs - uniqueDays[i]) / DAY_MS);
+    if (gap > CYCLE_GAP_DAYS) break;
+    startTs = uniqueDays[i];
+    count++;
+  }
+
+  return { start: new Date(startTs), end: new Date(uniqueDays[0]), days: count };
+}
+
+function formatDayMonth(date: Date) {
+  const month = date
+    .toLocaleDateString("pt-BR", { month: "short" })
+    .replace(".", "")
+    .toUpperCase();
+  return `${String(date.getDate()).padStart(2, "0")} ${month}`;
+}
+
+function formatPeriodRange(period: TrackedPeriod) {
+  const start = formatDayMonth(period.start);
+  const end = formatDayMonth(period.end);
+  if (start === end) return start;
+
+  // Mesmo mês: "12 — 18 JUN" | meses diferentes: "28 JUN — 04 JUL"
+  const sameMonth =
+    period.start.getMonth() === period.end.getMonth() &&
+    period.start.getFullYear() === period.end.getFullYear();
+  return sameMonth
+    ? `${start.split(" ")[0]} — ${end}`
+    : `${start} — ${end}`;
+}
 
 function PulseMark() {
   return (
@@ -83,7 +145,51 @@ export default function AcompanheSePage() {
   const [isSaving, setIsSaving] = useState(false);
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState("");
+  const [entryDates, setEntryDates] = useState<string[]>([]);
+  const [periodLoading, setPeriodLoading] = useState(true);
+
   const completedSections = [mood, selectedSymptoms.length > 0, painIntensity, energy, sleep, notes.trim()].filter(Boolean).length;
+
+  const trackedPeriod = useMemo(
+    () => computeTrackedPeriod(entryDates),
+    [entryDates],
+  );
+
+  // Carrega os registros existentes para montar o "Período acompanhado"
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadEntries() {
+      try {
+        const response = await fetch("/api/acompanhe-se", {
+          cache: "no-store",
+        });
+        if (!response.ok) throw new Error("Falha ao carregar registros.");
+
+        const data = await response.json();
+        const list: Array<{ date?: string; createdAt?: string }> = Array.isArray(
+          data,
+        )
+          ? data
+          : (data.entries ?? data.data ?? []);
+
+        const dates = list
+          .map((item) => item.date ?? item.createdAt)
+          .filter((value): value is string => Boolean(value));
+
+        if (!cancelled) setEntryDates(dates);
+      } catch {
+        // Mantém o card vazio; não bloqueia o registro do dia
+      } finally {
+        if (!cancelled) setPeriodLoading(false);
+      }
+    }
+
+    loadEntries();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   function toggleSymptom(item: string) {
     setSelectedSymptoms((current) =>
@@ -100,11 +206,13 @@ export default function AcompanheSePage() {
     setLoading(true);
     setIsSaving(true);
     try {
+      const entryDate = new Date().toISOString();
+
       const response = await fetch("/api/acompanhe-se", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          date: new Date().toISOString(),
+          date: entryDate,
           flow,
           mood,
           symptoms: selectedSymptoms,
@@ -118,6 +226,8 @@ export default function AcompanheSePage() {
       if (!response.ok)
         throw new Error("Não foi possível salvar seu registro.");
 
+      // Atualiza o card de período imediatamente
+      setEntryDates((current) => [...current, entryDate]);
       setSaved(true);
     } catch (error) {
       setApiError(
@@ -157,7 +267,7 @@ export default function AcompanheSePage() {
     <main className="tracking-page">
       <AppSidebar active="/acompanhe-se" />
       <div className="tracking-main">
-       
+
         <section className="tracking-hero section-wrap">
           <div>
             <h1>Como você está hoje?</h1>
@@ -169,8 +279,28 @@ export default function AcompanheSePage() {
           </div>
           <div className="period-summary">
             <span>Período acompanhado</span>
-            <strong>12 — 18 JUN</strong>
-            <small>7 dias registrados neste ciclo</small>
+            {periodLoading ? (
+              <>
+                <strong>—</strong>
+                <small>Carregando registros...</small>
+              </>
+            ) : trackedPeriod ? (
+              <>
+                <strong>{formatPeriodRange(trackedPeriod)}</strong>
+                <small>
+                  {trackedPeriod.days}{" "}
+                  {trackedPeriod.days === 1
+                    ? "dia registrado"
+                    : "dias registrados"}{" "}
+                  neste ciclo
+                </small>
+              </>
+            ) : (
+              <>
+                <strong>Sem registros ainda</strong>
+                <small>Salve seu primeiro registro para começar</small>
+              </>
+            )}
             <div className="entry-progress" aria-label={`${completedSections} de 6 seções preenchidas`}>
               <span style={{ width: `${(completedSections / 6) * 100}%` }} />
             </div>
@@ -248,9 +378,9 @@ export default function AcompanheSePage() {
                       value={customSymptom}
                       onChange={(event) => setCustomSymptom(event.target.value)}
                       onKeyDown={handleCustomSymptomKeyDown}
-  placeholder="Digite um sintoma"
-                    maxLength={100}
-                  />
+                      placeholder="Digite um sintoma"
+                      maxLength={100}
+                    />
                     <button type="button" onClick={addCustomSymptom}>
                       Adicionar
                     </button>
