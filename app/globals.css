@@ -6373,6 +6373,81 @@ select:focus-visible {
   color: var(--teal);
 }
 
+
+.auth-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid #e8c5c9;
+  border-radius: 12px;
+  background: #fff5f5;
+  color: #70212d;
+  animation: auth-alert-enter 180ms ease-out;
+}
+
+.auth-alert-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #8f1d2c;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.auth-alert-content {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.auth-alert-content strong {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.auth-alert-content p {
+  margin: 0;
+  color: #70464b;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.auth-alert-link {
+  align-self: flex-start;
+  margin-top: 3px;
+  color: #8f1d2c;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@keyframes auth-alert-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-alert {
+    animation: none;
+  }
+}
+
+
 /* --- Área Expandida de Detalhes --- */
 .history-table .table-row-expanded td {
   padding: 0; /* Remove padding do TD para que o DIV interno controle o espaçamento */

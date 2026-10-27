@@ -67,26 +67,31 @@ export default function CriarContaPage() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('/api/auth/register',
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: data.name,
-            email: data.email,
-            password: data.password,
-            age: data.age,
-          }),
-        },
-      );
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          password: data.password,
+          age: data.age,
+        }),
+      });
 
       const result = await response.json();
 
       if (!response.ok) {
+        const errorCode = result.code ?? result.error?.code;
+
+        if (errorCode === "EMAIL_IN_USE" || result.error === "EMAIL_IN_USE") {
+          setApiError("EMAIL_IN_USE");
+          return;
+        }
+
         setApiError(
           result.error?.fieldErrors
             ? "Verifique os campos"
-            : (result.error ?? "Erro ao criar conta"),
+            : (result.message ?? result.error ?? "Erro ao criar conta"),
         );
         return;
       }
@@ -206,7 +211,9 @@ export default function CriarContaPage() {
                 />
                 <button
                   type="button"
-                  aria-label={showConfirmPassword ? "Ocultar senha" : "Mostrar senha"}
+                  aria-label={
+                    showConfirmPassword ? "Ocultar senha" : "Mostrar senha"
+                  }
                   aria-pressed={showConfirmPassword}
                   onClick={() => setShowConfirmPassword((visible) => !visible)}
                 >
@@ -225,9 +232,44 @@ export default function CriarContaPage() {
               disabled={isSubmitting}
               aria-busy={isSubmitting}
             >
-              {isSubmitting && <span className="auth-spinner" aria-hidden="true" />}
+              {isSubmitting && (
+                <span className="auth-spinner" aria-hidden="true" />
+              )}
               <span>{isSubmitting ? "Criando conta..." : "Criar conta"}</span>
             </button>
+            {apiError && (
+  <div
+    className={`auth-alert ${
+      apiError === "EMAIL_IN_USE" ? "auth-alert-email" : ""
+    }`}
+    role="alert"
+    aria-live="polite"
+  >
+    <span className="auth-alert-icon" aria-hidden="true">
+      !
+    </span>
+
+    <div className="auth-alert-content">
+      <strong>
+        {apiError === "EMAIL_IN_USE"
+          ? "Este e-mail já está cadastrado"
+          : "Não foi possível criar sua conta"}
+      </strong>
+
+      <p>
+        {apiError === "EMAIL_IN_USE"
+          ? "Você já tem uma conta com este e-mail. Entre nela ou utilize outro endereço."
+          : apiError}
+      </p>
+
+      {apiError === "EMAIL_IN_USE" && (
+        <Link href="/entrar" className="auth-alert-link">
+          Ir para entrar →
+        </Link>
+      )}
+    </div>
+  </div>
+)}
           </form>
           <p className="auth-switch">
             Já tem conta? <Link href="/entrar">Entrar</Link>
