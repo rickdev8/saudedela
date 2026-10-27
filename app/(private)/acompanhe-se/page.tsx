@@ -248,8 +248,9 @@ export default function AcompanheSePage() {
                       value={customSymptom}
                       onChange={(event) => setCustomSymptom(event.target.value)}
                       onKeyDown={handleCustomSymptomKeyDown}
-                      placeholder="Digite um sintoma"
-                    />
+  placeholder="Digite um sintoma"
+                    maxLength={100}
+                  />
                     <button type="button" onClick={addCustomSymptom}>
                       Adicionar
                     </button>

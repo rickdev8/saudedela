@@ -124,6 +124,7 @@ export default function CriarContaPage() {
                   minLength: { value: 2, message: "Nome muito curto" },
                 })}
                 id="name"
+                maxLength={100}
                 type="text"
                 placeholder="Como você gostaria de ser chamada?"
               />
@@ -139,6 +140,7 @@ export default function CriarContaPage() {
                   max: { value: 120, message: "Digite uma idade válida" },
                 })}
                 id="age"
+                maxLength={3}
                 type="number"
                 min="13"
                 max="120"
@@ -158,6 +160,7 @@ export default function CriarContaPage() {
                   },
                 })}
                 id="email"
+                maxLength={254}
                 type="email"
                 placeholder="voce@email.com"
               />
@@ -172,6 +175,7 @@ export default function CriarContaPage() {
                     minLength: { value: 8, message: "Mínimo de 8 caracteres" },
                   })}
                   id="password"
+                  maxLength={128}
                   type={showPassword ? "text" : "password"}
                   placeholder="Crie uma senha"
                 />
@@ -196,6 +200,7 @@ export default function CriarContaPage() {
                       value === watch("password") || "As senhas não coincidem",
                   })}
                   id="confirmPassword"
+                  maxLength={128}
                   type={showConfirmPassword ? "text" : "password"}
                   placeholder="Repita sua senha"
                 />

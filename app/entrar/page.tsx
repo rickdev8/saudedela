@@ -115,8 +115,9 @@ export default function EntrarPage() {
             <label htmlFor="email">
               E-mail
               <input
-                {...register("email")}
-                id="email"
+      {...register("email")}
+                  maxLength={254}
+                  id="email"
                 type="email"
                 placeholder="voce@email.com"
               />
@@ -129,6 +130,7 @@ export default function EntrarPage() {
                 <input
                   {...register("password")}
                   id="password"
+                  maxLength={128}
                   type={showPassword ? "text" : "password"}
                   placeholder="Digite sua senha"
                 />

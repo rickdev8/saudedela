@@ -115,9 +115,14 @@ const items = [
 ] as const;
 
 export function AppSidebar({ active }: { active: string }) {
-  const { user } = useAuth();
+
+
 
   const [selectedAvatar, setSelectedAvatar] = useState<Avatar>(femaleAvatars[0]);
+
+  const { user, logout } = useAuth();
+  
+
   const [isAvatarMenuOpen, setIsAvatarMenuOpen] = useState(false);
 
   return (
@@ -211,6 +216,10 @@ export function AppSidebar({ active }: { active: string }) {
             {label}
           </Link>
         ))}
+        <button className="sidebar-link sidebar-logout" type="button" onClick={logout}>
+          <i aria-hidden="true">↪</i>
+          Sair
+        </button>
       </nav>
     </aside>
   );

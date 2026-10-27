@@ -1521,6 +1521,15 @@ select:focus-visible {
   font-weight: 700;
   box-shadow: 0 6px 16px rgba(23, 19, 19, .06);
 }
+.sidebar-logout {
+  width: 100%;
+  border: 0;
+  text-align: left;
+  cursor: pointer;
+}
+.sidebar-logout:hover {
+  color: var(--coral);
+}
 .sidebar-link:hover {
   border-color: var(--line);
   background: color-mix(in srgb, var(--mint) 58%, var(--paper));

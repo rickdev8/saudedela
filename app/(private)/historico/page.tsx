@@ -278,8 +278,9 @@ export default function HistoricoPage() {
                 value={searchTerm}
                 onChange={(event) => setSearchTerm(event.target.value)}
                 placeholder="Pesquisar no histórico"
-                aria-label="Pesquisar no histórico"
-              />
+  aria-label="Pesquisar no histórico"
+                    maxLength={100}
+                  />
             </label>
             <label className="history-sort-control">
               <span>Filtrar por</span>
