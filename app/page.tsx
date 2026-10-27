@@ -257,8 +257,8 @@ export default function Page() {
             </div>
 
             <div className="bot-message">
-              <span className="bot-avatar">
-               
+              <span className="bot-avatar" aria-hidden="true">
+                <PulseMark />
               </span>
 
               <div>
@@ -279,13 +279,12 @@ export default function Page() {
             </div>
           </div>
 
-          <Link
-            href="/assistente"
-            className="chat-input"
-            style={{ cursor: "pointer", textDecoration: "none" }}
-          >
-            <span>Digite uma pergunta...</span>
-            <span>↗</span>
+          <Link href="/assistente" className="chat-input">
+            <span className="chat-input-copy">
+              <strong>Pronta para ajudar</strong>
+              <span>Digite uma pergunta...</span>
+            </span>
+            <span className="chat-submit" aria-hidden="true">↗</span>
           </Link>
         </div>
       </section>
